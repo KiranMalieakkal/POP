@@ -18,15 +18,14 @@ public class ReceiptController {
         this.service = service;
     }
 
-    @GetMapping
-    public String sayHello(){
-        return "Azure Successful";
+    @GetMapping("")
+    public ResponseEntity<List<Receipt>> getReceipts(@RequestParam String email) {
+        List<Receipt> receipts = service.getReceipts(email);
+        if(receipts.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(receipts);
     }
-
-//    @GetMapping("")
-//    public ResponseEntity<List<Receipt>> getReceipts(@RequestParam String email) {
-//        List<Receipt> receipts = service.getReceipts(email);
-//    }
 
 }
 

@@ -1,9 +1,8 @@
 package com.javatars.pop.repository;
 
-import com.javatars.pop.model.Receipt;
+import com.javatars.pop.model.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 @Repository
 public class UserRepository {
@@ -14,7 +13,8 @@ public class UserRepository {
         this.userRepo = userRepo;
     }
 
-//    public List<Receipt> getReceipts(String email) {
-//        userRepo.
-//    }
+    public User getReceipts(String email) {
+        User user = userRepo.getUserByEmail(email);
+        return user;
+    }
 }

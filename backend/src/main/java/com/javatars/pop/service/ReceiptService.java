@@ -1,6 +1,6 @@
 package com.javatars.pop.service;
 
-import com.javatars.pop.model.Receipt;
+import com.javatars.pop.model.*;
 import com.javatars.pop.repository.ReceiptRepository;
 import com.javatars.pop.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,8 @@ public class ReceiptService {
         this.userRepository = userRepository;
     }
 
-//    public List<Receipt> getReceipts(String email) {
-//        return userRepository.getReceipts(email);
-//    }
+    public List<Receipt> getReceipts(String email) {
+        User user = userRepository.getReceipts(email);
+        return user.getReceipts();
+    }
 }

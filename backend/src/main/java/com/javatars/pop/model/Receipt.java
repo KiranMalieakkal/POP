@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -14,7 +13,6 @@ public class Receipt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @Column(unique = true)
     String company;
     double amount;
     String currency;

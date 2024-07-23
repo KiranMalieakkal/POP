@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,6 +26,6 @@ public class User {
     String email;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
-    private List<Receipt> receipts;
+    private List<Receipt> receipts = new ArrayList<>();
 
 }
