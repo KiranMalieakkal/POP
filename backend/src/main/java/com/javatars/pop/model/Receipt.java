@@ -33,4 +33,8 @@ public class Receipt {
     @ManyToOne()
     @JoinColumn(name="project_id")
     private Project project;
+
+    public ReceiptDtoOut getDto() {
+        return new ReceiptDtoOut(company, amount, currency, purchaseDate);
+    }
 }
