@@ -35,6 +35,6 @@ public class Receipt {
     private Project project;
 
     public ReceiptDtoOut getDto() {
-        return new ReceiptDtoOut(company, amount, currency, purchaseDate);
+        return new ReceiptDtoOut(id, company, amount, currency, purchaseDate, project.title, category.title);
     }
 }

@@ -1,5 +1,6 @@
 package com.javatars.pop.controller;
 
+import com.javatars.pop.model.FilterDto;
 import com.javatars.pop.model.ReceiptDtoOut;
 import com.javatars.pop.service.ReceiptService;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,19 @@ public class ReceiptController {
         this.service = service;
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<ReceiptDtoOut>> getReceipts(@RequestParam String email) {
         List<ReceiptDtoOut> receipts = service.getReceipts(email);
+        if(receipts.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(receipts);
+    }
+
+    @GetMapping("/filters")
+    public ResponseEntity<List<ReceiptDtoOut>> getReceiptsWithFilters(
+            @RequestParam String email, @RequestBody FilterDto filters) {
+        List<ReceiptDtoOut> receipts = service.getReceipts(email, filters);
         if(receipts.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
