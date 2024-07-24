@@ -2,5 +2,5 @@ package com.javatars.pop.model;
 
 import java.time.LocalDate;
 
-public record ReceiptDtoOut(String company, double amount, String currency, LocalDate purchaseDate) {
+public record ReceiptDtoOut(Long id, String company, double amount, String currency, LocalDate purchaseDate, String project, String category) {
 }
