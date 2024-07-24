@@ -23,6 +23,9 @@ function ListReceipts() {
     <>
       <h1>You are at List Receipts Section</h1>
       <button className="btn btn-primary" onClick={handleClick}>Click me</button>
+      {fetchError && (
+          <p className="text-red-500 break-words whitespace-normal text-center">{`Sorry , We are unable to retrieve your data. Please try again later. ERROR MESSAGE - ${fetchErrorLog}`}</p>
+        )}
     </>
   );
 }
