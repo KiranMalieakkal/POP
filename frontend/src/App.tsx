@@ -1,16 +1,17 @@
 import "./App.css";
-import LoginButton from "./components/LoginButton";
-import LogoutButton from "./components/LogoutButton";
-import Profile from "./components/Profile";
+import Home from "./components/Home";
+// import Profile from "./components/Profile";
+// import Tax from "./components/Tax";
+import Top_Nav from "./components/Top_Nav";
 
 function App() {
   return (
     <>
-      <main className="container">
-        <LoginButton />
-        <LogoutButton />
-        <Profile />
-      </main>
+        <Top_Nav/>
+        <Home/>
+        {/* <Profile /> */}
+        {/* <Tax/> */}
+      
     </>
   );
 }
