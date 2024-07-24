@@ -9,7 +9,6 @@ function App() {
   return (
     <>
         <BrowserRouter>
-        <Top_Nav/>
           <Routes>
             <Route
               path="/"
