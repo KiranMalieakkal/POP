@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Top_Nav from "./Top_Nav";
 
 const Home = () => {
   return (
     <>
-    <Top_Nav />
+      <Top_Nav />
       <div
         className="hero min-h-screen"
         style={{
@@ -24,7 +25,7 @@ const Home = () => {
               on top of your finances effortlessly.
             </p>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
-            Proof Of Purchase App{/* , Get Started */}
+              <Link to="/receipts">Get Started</Link>
             </button>
           </div>
         </div>
@@ -80,7 +81,10 @@ const Home = () => {
             </figure>
             <div className="card-body text-center">
               <h2 className="card-title self-center">Track your expenses.</h2>
-              <p>Our app allows you to store all your receipts in one place, making it simple to track your expenses.</p>
+              <p>
+                Our app allows you to store all your receipts in one place,
+                making it simple to track your expenses.
+              </p>
             </div>
           </div>
           <div className="card glass w-96">
@@ -92,12 +96,15 @@ const Home = () => {
             </figure>
             <div className="card-body text-center">
               <h2 className="card-title self-center">Life hack</h2>
-              <p>Our app provides a seamless solution for organizing, storing, and accessing your receipts.</p>
+              <p>
+                Our app provides a seamless solution for organizing, storing,
+                and accessing your receipts.
+              </p>
             </div>
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };
