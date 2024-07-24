@@ -1,14 +1,32 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import Dashboard from "./components/DashBoard";
+
 import Home from "./components/Home";
-// import Profile from "./components/Profile";
-// import Tax from "./components/Tax";
 import Top_Nav from "./components/Top_Nav";
+import TaxInfo from "./components/TaxInfo";
 
 function App() {
   return (
     <>
-        <Top_Nav/>
-        <Home/>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={<Home/>}
+            />
+            <Route
+              path="/taxinfo"
+              element={<TaxInfo/>}
+            />
+            <Route
+              path="/receipts/*"
+              element={<Dashboard />}
+            />
+          </Routes>
+        </BrowserRouter>
+
+        
         {/* <Profile /> */}
         {/* <Tax/> */}
       

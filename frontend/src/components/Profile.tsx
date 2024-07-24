@@ -5,6 +5,7 @@ const Profile = () => {
 
   return (
     <>
+      <h1>You are in profiles Page</h1>
       {isAuthenticated && (
         <article className="container">
           {/*   {JSON.stringify(user)} */}

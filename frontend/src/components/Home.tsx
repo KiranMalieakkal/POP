@@ -1,8 +1,10 @@
 import Footer from "./Footer";
+import Top_Nav from "./Top_Nav";
 
 const Home = () => {
   return (
     <>
+    <Top_Nav />
       <div
         className="hero min-h-screen"
         style={{
