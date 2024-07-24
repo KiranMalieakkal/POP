@@ -14,7 +14,6 @@ public class UserRepository {
     }
 
     public User getReceipts(String email) {
-        User user = userRepo.getUserByEmail(email);
-        return user;
+        return userRepo.getUserByEmail(email);
     }
 }

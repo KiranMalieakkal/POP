@@ -1,6 +1,6 @@
 package com.javatars.pop.controller;
 
-import com.javatars.pop.model.Receipt;
+import com.javatars.pop.model.ReceiptDtoOut;
 import com.javatars.pop.service.ReceiptService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +19,8 @@ public class ReceiptController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Receipt>> getReceipts(@RequestParam String email) {
-        List<Receipt> receipts = service.getReceipts(email);
+    public ResponseEntity<List<ReceiptDtoOut>> getReceipts(@RequestParam String email) {
+        List<ReceiptDtoOut> receipts = service.getReceipts(email);
         if(receipts.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

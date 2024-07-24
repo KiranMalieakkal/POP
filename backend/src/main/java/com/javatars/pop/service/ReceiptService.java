@@ -5,6 +5,7 @@ import com.javatars.pop.repository.ReceiptRepository;
 import com.javatars.pop.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,8 +19,9 @@ public class ReceiptService {
         this.userRepository = userRepository;
     }
 
-    public List<Receipt> getReceipts(String email) {
+    public List<ReceiptDtoOut> getReceipts(String email) {
         User user = userRepository.getReceipts(email);
-        return user.getReceipts();
+        if (user == null) return new ArrayList<>();
+        return user.getReceipts().stream().map(Receipt::getDto).toList();
     }
 }
