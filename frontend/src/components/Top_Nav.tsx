@@ -36,7 +36,7 @@ const Top_Nav = () => {
               <Link to="/"><a>Home</a></Link>
               </li>
               <li>
-                <Link to="taxinfo"><a>Tax</a></Link>
+                <Link to="7taxinfo"><a>Tax</a></Link>
               </li>
             </ul>
           </div>
@@ -51,7 +51,7 @@ const Top_Nav = () => {
               <Link to="/"><a className="active:bg-violet-700">Home</a></Link>
             </li>
             <li>
-              <Link to="taxinfo" ><a>Tax</a></Link>
+              <Link to="/taxinfo" ><a>Tax</a></Link>
             </li>
           </ul>
         </div>

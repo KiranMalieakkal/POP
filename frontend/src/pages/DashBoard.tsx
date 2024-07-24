@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Profile from "./Profile";
-import BottomNav from "./BottomNav";
+import BottomNav from "../components/BottomNav";
 
 import Tax from "./Tax";
 import ListReceipts from "./ListReceipts";
