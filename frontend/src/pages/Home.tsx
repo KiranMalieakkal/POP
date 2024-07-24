@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Footer from "./Footer";
-import Top_Nav from "./Top_Nav";
+import Footer from "../components/Footer";
+import Top_Nav from "../components/Top_Nav";
 
 const Home = () => {
   return (
