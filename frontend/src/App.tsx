@@ -4,6 +4,7 @@ import Dashboard from "./components/DashBoard";
 
 import Home from "./components/Home";
 import Top_Nav from "./components/Top_Nav";
+import TaxInfo from "./components/TaxInfo";
 
 function App() {
   return (
@@ -15,7 +16,11 @@ function App() {
               element={<Home/>}
             />
             <Route
-              path="/dashboard/*"
+              path="/taxinfo"
+              element={<TaxInfo/>}
+            />
+            <Route
+              path="/receipts/*"
               element={<Dashboard />}
             />
           </Routes>

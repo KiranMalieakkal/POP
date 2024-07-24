@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 /* import logo from "../assets/logo_pop.jpeg" */
@@ -32,10 +33,10 @@ const Top_Nav = () => {
                 <a></a>
               </li>
               <li>
-                <a>Home</a>
+              <Link to="/"><a>Home</a></Link>
               </li>
               <li>
-                <a>Tax</a>
+                <Link to="taxinfo"><a>Tax</a></Link>
               </li>
             </ul>
           </div>
@@ -47,10 +48,10 @@ const Top_Nav = () => {
         <div className="navbar-start hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a className="active:bg-violet-700">Home</a>
+              <Link to="/"><a className="active:bg-violet-700">Home</a></Link>
             </li>
             <li>
-              <a>Tax</a>
+              <Link to="taxinfo" ><a>Tax</a></Link>
             </li>
           </ul>
         </div>

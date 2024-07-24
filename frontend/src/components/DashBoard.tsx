@@ -20,7 +20,7 @@ function Dashboard() {
     <>
       <div className="">
         <Routes>
-          <Route path="receipts" element={<ListReceipts />} />
+          <Route path="" element={<ListReceipts />} />
           <Route path="addReceipt" element={<ListReceipts  />} />
           <Route path="profile" element={<Profile />} />
           <Route path="tax" element={<Tax />} />
