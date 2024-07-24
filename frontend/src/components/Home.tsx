@@ -24,7 +24,7 @@ const Home = () => {
               on top of your finances effortlessly.
             </p>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
-              Get Started
+            Proof Of Purchase App{/* , Get Started */}
             </button>
           </div>
         </div>
@@ -79,7 +79,7 @@ const Home = () => {
               />
             </figure>
             <div className="card-body text-center">
-              <h2 className="card-title">Track your expenses.</h2>
+              <h2 className="card-title self-center">Track your expenses.</h2>
               <p>Our app allows you to store all your receipts in one place, making it simple to track your expenses.</p>
             </div>
           </div>
@@ -91,7 +91,7 @@ const Home = () => {
               />
             </figure>
             <div className="card-body text-center">
-              <h2 className="card-title">Life hack</h2>
+              <h2 className="card-title self-center">Life hack</h2>
               <p>Our app provides a seamless solution for organizing, storing, and accessing your receipts.</p>
             </div>
           </div>

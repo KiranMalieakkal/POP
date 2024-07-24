@@ -1,3 +1,4 @@
+import Footer from "./Footer";
 import Top_Nav from "./Top_Nav";
 
 const TaxInfo = () => {
@@ -11,9 +12,10 @@ const TaxInfo = () => {
             "url(https://insight2wealth.com/wp-content/uploads/2020/08/shutterstock_318071399.jpg",
         }}
       >
-        <div className="hero-overlay bg-opacity-60"></div>
+        <div className="hero-overlay bg-opacity-0"></div>
         <div className="hero-content text-neutral-content text-left">
           <div className="max-w-md">
+            <h6>Proof Of Purchase app</h6>
             <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
             <p className="mb-5">
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
@@ -24,6 +26,7 @@ const TaxInfo = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
