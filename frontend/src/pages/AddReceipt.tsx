@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ReturnArrow from "/return-arrow.svg";
 import UploadingFile from "../components/UploadingFile";
+import { useNavigate } from "react-router-dom";
 
 type Receipt = {
   company: string;
@@ -18,6 +19,7 @@ function AddReceipt() {
     "Tax evasion project 2025",
     "Option 3",
   ];
+  const navigate = useNavigate();
 
   // -------------------------------------------------------------------------------------
   // useState to show component when extracting text from uploaded file
@@ -142,10 +144,14 @@ function AddReceipt() {
 
   // -------------------------------------------------------------------------------------
 
+  function handleClick() {
+    navigate(-1);
+  }
+
   return (
     <>
       <div className="bg-slate-100 size-full">
-        <button>
+        <button onClick={handleClick}>
           <img src={ReturnArrow} />
         </button>
         Add receipt
