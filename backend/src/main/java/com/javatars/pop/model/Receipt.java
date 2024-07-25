@@ -19,6 +19,7 @@ public class Receipt {
     LocalDate purchaseDate;
     @Column(columnDefinition = "TEXT")
     String textContent;
+    String fileName;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
@@ -34,7 +35,36 @@ public class Receipt {
     @JoinColumn(name="project_id")
     private Project project;
 
-    public ReceiptDtoOut getDto() {
-        return new ReceiptDtoOut(id, company, amount, currency, purchaseDate, project.title, category.title);
+    public ReceiptDtoOut getDtoOut() {
+        return new ReceiptDtoOut(id, company, amount, currency, purchaseDate,
+                project == null ? null : project.title, category == null ? null : category.title);
+    }
+
+    public Receipt() {
+    }
+
+    public Receipt(String company, double amount, String currency, LocalDate purchaseDate, String textContent) {
+        this.company = company;
+        this.amount = amount;
+        this.currency = currency;
+        this.purchaseDate = purchaseDate;
+        this.textContent = textContent;
+    }
+
+    public Receipt(ReceiptDtoGpt gptDtoReceipt) {
+        this.company = gptDtoReceipt.company();
+        this.amount = gptDtoReceipt.amount();
+        this.currency = gptDtoReceipt.currency();
+        this.purchaseDate = gptDtoReceipt.purchaseDate();
+        this.textContent = gptDtoReceipt.textContent();
+    }
+
+    public Receipt(ReceiptDtoGpt gptDtoReceipt, User user) {
+        this.company = gptDtoReceipt.company();
+        this.amount = gptDtoReceipt.amount();
+        this.currency = gptDtoReceipt.currency();
+        this.purchaseDate = gptDtoReceipt.purchaseDate();
+        this.textContent = gptDtoReceipt.textContent();
+        this.user = user;
     }
 }
