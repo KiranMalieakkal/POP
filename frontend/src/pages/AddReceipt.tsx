@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ReturnArrow from "/return-arrow.svg";
-import UploadingFile from "../components/Loading";
+import UploadingFile from "../components/UploadingFile";
 
 type Receipt = {
   company: string;
