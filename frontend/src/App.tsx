@@ -3,6 +3,7 @@ import "./App.css";
 import Dashboard from "./pages/DashBoard";
 import Home from "./pages/Home";
 import TaxInfo from "./pages/TaxInfo";
+import ViewReceipt from "./pages/ViewReceipt";
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
             <Route
               path="/receipts/*"
               element={<Dashboard />}
+            />
+            <Route
+              path="/viewreceipt/*"
+              element={<ViewReceipt />}
             />
           </Routes>
         </BrowserRouter>
