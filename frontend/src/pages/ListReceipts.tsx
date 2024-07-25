@@ -39,11 +39,13 @@ function ListReceipts() {
     project: null,
     category: null,
   });
+  const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
+  // const baseUrl2 = "http://localhost:8080/api/receipts";
 
   const { data, isError: fetchError } = useQuery({
     queryKey: ["fetch1"],
     queryFn: () =>
-      fetch(`http://localhost:8080/api/receipts?email=jane.smith@example.com`)
+      fetch(`${baseUrl}?email=jane.smith@example.com`)
         .then((response) => response.json())
         .then((data) => data)
         .catch((e) => {
@@ -54,16 +56,13 @@ function ListReceipts() {
   const { data: data2, refetch } = useQuery({
     queryKey: ["fetch2"],
     queryFn: () =>
-      fetch(
-        `http://localhost:8080/api/receipts/filters?email=jane.smith@example.com`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(filters),
-        }
-      )
+      fetch(`${baseUrl}/filters?email=jane.smith@example.com`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(filters),
+      })
         .then((response) => {
           // console.log("iam in the first line");
           return response.json();
