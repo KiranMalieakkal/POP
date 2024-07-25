@@ -10,8 +10,8 @@ public record ReceiptDtoOut(Long id,
                             String project,
                             String category) {
 
-    public ReceiptDtoOut {
-        if (project == null) project = "";
-    }
+//    public ReceiptDtoOut {
+//        if (project == null) project = "";
+//    }
 }
 //add text-content and image?
