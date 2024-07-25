@@ -1,13 +1,9 @@
 package com.javatars.pop.repository;
 
-import com.javatars.pop.model.FilterDto;
 import com.javatars.pop.model.Receipt;
-import com.javatars.pop.model.ReceiptDtoOut;
-import com.javatars.pop.model.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ReceiptRepository {
@@ -16,6 +12,17 @@ public class ReceiptRepository {
 
     public ReceiptRepository(ReceiptDbRepository receiptRepo) {
         this.receiptRepo = receiptRepo;
+    }
+
+    public Receipt findById(long id) {
+        return receiptRepo.findById(id);
+    }
+    public Receipt save(Receipt receipt) {
+        return receiptRepo.save(receipt);
+    }
+
+    public void delete(Receipt receipt) {
+        receiptRepo.delete(receipt);
     }
 
 //    public List<ReceiptDtoOut> getReceipts(List<>, FilterDto filters) {
