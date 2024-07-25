@@ -1,6 +1,11 @@
 spring:
     application:
         name: pop
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 10MB
+            max-request-size: 10MB
 
     config:
         import: optional:file:.env[.properties]
@@ -21,10 +26,13 @@ spring:
         init:
 #            mode: always
             platform: mssql
-#    cloud:
-#        azure:
-#            storage:
-#                blob:
-#                    connection-string: ${BLOB_URL}
-#blob:
-#    containerForImages: ${BLOB_IMG_CONT}
+    cloud:
+        azure:
+            storage:
+                blob:
+                    connection-string: ${BLOB_URL}
+blob:
+    containerForImages: ${BLOB_IMG_CONT}
+
+keys:
+    openai: ${OPENAI_API_KEY}

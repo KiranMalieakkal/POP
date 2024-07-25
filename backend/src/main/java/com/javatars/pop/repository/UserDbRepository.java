@@ -9,4 +9,6 @@ public interface UserDbRepository extends ListCrudRepository<User, Long> {
 
     public User getUserByEmail(String email);
 
+    public User getUserById(Long id);
+
 }

@@ -13,6 +13,18 @@ public class UserRepository {
         this.userRepo = userRepo;
     }
 
+    public User getUser(String email) {
+        return userRepo.getUserByEmail(email);
+    }
+
+    public User getUser(Long id) {
+        return userRepo.getUserById(id);
+    }
+
+    public void saveUser(User user) {
+        userRepo.save(user);
+    }
+
     public User getReceipts(String email) {
         return userRepo.getUserByEmail(email);
     }

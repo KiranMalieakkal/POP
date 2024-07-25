@@ -28,4 +28,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     private List<Receipt> receipts = new ArrayList<>();
 
+    public void addReceipt(Receipt receipt) {
+        receipts.add(receipt);
+    }
 }
