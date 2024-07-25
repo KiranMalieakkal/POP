@@ -1,30 +1,42 @@
-// This component should receive Props from it's parent component
-// The Props should be a function that sets the list of receipts.
-// That way this component can call the function and pass the new receipt as an argument
+import { useState } from "react";
+import ReturnArrow from "/return-arrow.svg";
+import UploadingFile from "../components/Loading";
 
-// todo: get a list of available projects to choose from in the drop-down menu.
-// todo: add dropzone for image/file
-// todo: add image/pdf preview in dropzone
-// todo: fill fields with data from POST-response
-// todo: collect data fields and send as a POST new receipt to server
-
-import React, { useState } from "react";
-import { useDropzone } from "react-dropzone";
+type Receipt = {
+  company: string;
+  amount: number;
+  date: string;
+  text_content: string;
+  project?: string;
+};
 
 function AddReceipt() {
-  // State to manage form inputs
-  const [formData, setFormData] = useState({
+  // todo: this is the list of existing project the user can choose from.
+  // it should be sent to the component as a prop
+  const existingProjects = [
+    "Kirans work commute 2024",
+    "Tax evasion project 2025",
+    "Option 3",
+  ];
+
+  // -------------------------------------------------------------------------------------
+  // useState to show component when extracting text from uploaded file
+  const [isLoading, setIsLoading] = useState(false);
+
+  // -------------------------------------------------------------------------------------
+  // formData is just a useState that stores an object.
+  // This object contains the current value of all the text fields.
+  const [formData, setFormData] = useState<Receipt>({
     company: "",
-    amount: "",
+    amount: 0,
     date: "",
     text_content: "",
     project: "",
   });
 
-  // State to manage uploaded files
-  const [files, setFiles] = useState<File[]>([]);
-
-  // Handle input change
+  // -------------------------------------------------------------------------------------
+  // Function to handle changes in the form fields
+  // When a change is made this function updates the useState that stores the field data
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -37,44 +49,118 @@ function AddReceipt() {
     });
   };
 
-  // Handle file drop
-  const onDrop = (acceptedFiles: File[]) => {
-    setFiles(acceptedFiles);
+  // -------------------------------------------------------------------------------------
+  // State to manage the selected file
+  const [file, setFile] = useState<File | null>(null);
+
+  // -------------------------------------------------------------------------------------
+  // Function to handle file selection
+  // It gets the file from the event and then sets the useState to that file
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsLoading(true);
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setFile(file);
+
+      // Create FormData and append the file
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/testtextextraction",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        if (!response.ok) {
+          setIsLoading(false);
+          throw new Error("Network response was not ok");
+        } else {
+          setIsLoading(false);
+        }
+
+        const result = await response.json();
+        autofillEmptyFields(result);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    }
   };
 
-  // Function to handle submitting form
-  const handleSubmit = async (e: React.FormEvent) => {
+  // -------------------------------------------------------------------------------------
+  // This function takes a Receipt object as argument and fills in the form fields
+  // it only fills them if they are empty
+  const autofillEmptyFields = (data: Receipt) => {
+    setFormData((prevFormData) => ({
+      company: prevFormData.company || data.company || "",
+      amount: prevFormData.amount || data.amount,
+      date: prevFormData.date || data.date,
+      text_content: prevFormData.text_content || data.text_content || "",
+      project: prevFormData.project || data.project || "",
+    }));
+  };
+
+  // -------------------------------------------------------------------------------------
+  // This sends all fields and file to server
+  const submitForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("Form was sent", formData, files);
-    // Handle form submission (e.g., send data to server)
+    // Construct form data to send
+    // Check if a file has been selected
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
+
+    // Construct form data to send
+    const formDataToSend = new FormData();
+    formDataToSend.append("file", file);
+    formDataToSend.append("company", formData.company);
+    formDataToSend.append("total_amount", formData.amount.toString()); // Convert amount to string
+    formDataToSend.append("date", formData.date);
+    formDataToSend.append("text_content", formData.text_content);
+    formDataToSend.append("project", formData.project || "");
+
+    try {
+      const response = await fetch("http://localhost:8080/api/create", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // todo: route back to ReceiptList.tsx once form is submitted
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  // -------------------------------------------------------------------------------------
 
   return (
     <>
       <div className="bg-slate-100 size-full">
-        <button className="btn border-2 border-black">{"return"}</button>
-        <h1>Add receipt</h1>
-        <form onSubmit={handleSubmit} className="border-2 border-black p-10">
-          <div
-            {...getRootProps()}
-            className={`border-2 border-dashed p-6 mt-4 ${
-              isDragActive ? "border-blue-500" : "border-gray-300"
-            }`}
-          >
-            <input {...getInputProps()} />
-            {isDragActive ? (
-              <p>Drop the files here ...</p>
-            ) : (
-              <p>Drag 'n' drop some files here, or click to select files</p>
-            )}
-          </div>
-          <br></br>
-          <br></br>
+        <button>
+          <img src={ReturnArrow} />
+        </button>
+        Add receipt
+        <form onSubmit={submitForm} className="p-10">
+          <input
+            className="file-input file-input-bordered file-input-primary w-full"
+            type="file"
+            onChange={handleFileChange}
+          />
+          {isLoading && <UploadingFile />}
+
+          <br />
+          <br />
           <label htmlFor="company">Purchased from</label>
-          <br></br>
+          <br />
           <input
             type="text"
             id="company"
@@ -85,10 +171,10 @@ function AddReceipt() {
             value={formData.company}
             onChange={handleChange}
           />
-          <br></br>
-          <br></br>
+          <br />
+          <br />
           <label htmlFor="amount">Amount</label>
-          <br></br>
+          <br />
           <input
             type="number"
             step="0.01"
@@ -99,10 +185,10 @@ function AddReceipt() {
             value={formData.amount}
             onChange={handleChange}
           />
-          <br></br>
-          <br></br>
+          <br />
+          <br />
           <label htmlFor="date">Date</label>
-          <br></br>
+          <br />
           <input
             type="date"
             id="date"
@@ -112,10 +198,10 @@ function AddReceipt() {
             value={formData.date}
             onChange={handleChange}
           />
-          <br></br>
-          <br></br>
+          <br />
+          <br />
           <label htmlFor="text_content">Text content (optional)</label>
-          <br></br>
+          <br />
           <textarea
             id="text_content"
             name="text_content"
@@ -123,34 +209,37 @@ function AddReceipt() {
             value={formData.text_content}
             onChange={handleChange}
           />
-          <br></br>
-          <br></br>
+          <br />
+          <br />
+
           <label htmlFor="project">Project (optional)</label>
           <br></br>
-          <select
-            id="project"
-            name="project"
-            className="select input-bordered w-full"
-            value={formData.project}
+          <input
+            list="existingProjects"
+            id="myInput"
+            name="myInput"
+            className="input input-bordered w-full"
             onChange={handleChange}
-          >
-            <option disabled value="">
-              pick one...
-            </option>
-            <option value="Hello">Hello</option>
-            <option value="darkness">darkness</option>
-            <option value="my old friend">my old friend</option>
-          </select>
+          />
+          <datalist id="existingProjects" className="bg-slate-500">
+            {existingProjects.map((option, index) => (
+              <option key={index} value={option} />
+            ))}
+          </datalist>
+
           <br></br>
           <br></br>
+
           <input
             type="submit"
             value="Save"
             className="btn btn-primary w-full"
           />
+          <br></br>
+          <br></br>
         </form>
-        <br></br>
-        <br></br>
+        <br />
+        <br />
       </div>
     </>
   );
