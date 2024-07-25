@@ -73,7 +73,7 @@ const ReceiptDetail = () => {
 
   const handleSave = async () => {
     const response = await fetch(
-      `http://localhost:8080/api/receipts/edit/${id}`, 
+      `http://localhost:8080/api/receipts/edit/${id}`,
       {
         method: "PUT",
         headers: {
@@ -248,7 +248,10 @@ const ReceiptDetail = () => {
                         />
                       </svg>
                     </button>
-                    <button className="badge badge-outline p-4 mt-2 bg-green-200" onClick={handleSave}>
+                    <button
+                      className="badge badge-outline p-4 mt-2 bg-green-200"
+                      onClick={handleSave}
+                    >
                       Save Changes
                     </button>
                   </>

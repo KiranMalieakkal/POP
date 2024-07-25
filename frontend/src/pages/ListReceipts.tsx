@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export type requestType = {
   company: string | null;
@@ -29,6 +30,7 @@ function ListReceipts() {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [receipts, setReceipts] = useState<receiptsType>([]);
   const [showFilter, setShowFilter] = useState(false);
+  const navigate = useNavigate();
   const [filters, setFilters] = useState({
     company: null,
     amountFrom: null,
@@ -147,6 +149,7 @@ function ListReceipts() {
 
   function handleViewReceipt(receipt: receiptType) {
     console.log(`You are viewing receipt with id  ${receipt.id}`);
+    navigate(`${receipt.id}`);
   }
 
   function deleteReceipt(id: number) {
