@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 type Receipt = {
   company: string;
   amount: number;
-  date: string;
-  text_content: string;
+  purchaseDate: string;
+  textContent: string;
   project?: string;
 };
 
@@ -31,8 +31,8 @@ function AddReceipt() {
   const [formData, setFormData] = useState<Receipt>({
     company: "",
     amount: 0,
-    date: "",
-    text_content: "",
+    purchaseDate: "",
+    textContent: "",
     project: "",
   });
 
@@ -70,7 +70,7 @@ function AddReceipt() {
 
       try {
         const response = await fetch(
-          "http://localhost:8080/api/testtextextraction",
+          "http://localhost:8080/api/receipts/textextraction",
           {
             method: "POST",
             body: formData,
@@ -99,9 +99,8 @@ function AddReceipt() {
     setFormData((prevFormData) => ({
       company: prevFormData.company || data.company || "",
       amount: prevFormData.amount || data.amount,
-      date: prevFormData.date || data.date,
-      text_content: prevFormData.text_content || data.text_content || "",
-      project: prevFormData.project || data.project || "",
+      purchaseDate: prevFormData.purchaseDate || data.purchaseDate,
+      textContent: prevFormData.textContent || data.textContent || "",
     }));
   };
 
@@ -114,6 +113,7 @@ function AddReceipt() {
     // Check if a file has been selected
     if (!file) {
       console.error("No file selected");
+      // todo: display user feedback if file is not present
       return;
     }
 
@@ -121,13 +121,15 @@ function AddReceipt() {
     const formDataToSend = new FormData();
     formDataToSend.append("file", file);
     formDataToSend.append("company", formData.company);
-    formDataToSend.append("total_amount", formData.amount.toString()); // Convert amount to string
-    formDataToSend.append("date", formData.date);
-    formDataToSend.append("text_content", formData.text_content);
+    formDataToSend.append("amount", formData.amount.toString()); // Convert amount to string
+    formDataToSend.append("purchaseDate", formData.purchaseDate);
+    formDataToSend.append("textContent", formData.textContent);
     formDataToSend.append("project", formData.project || "");
+    formDataToSend.append("email", "jane.smith@example.com"); // todo: do not hardcode email. should come from Auth0s JWT
+    formDataToSend.append("currency", "SEK"); // todo: currency is hardcoded here. should be set in form
 
     try {
-      const response = await fetch("http://localhost:8080/api/create", {
+      const response = await fetch("http://localhost:8080/api/receipts", {
         method: "POST",
         body: formDataToSend,
       });
@@ -136,14 +138,15 @@ function AddReceipt() {
         throw new Error("Network response was not ok");
       }
 
-      // todo: route back to ReceiptList.tsx once form is submitted
+      // Route back to ReceiptList.tsx once form is successfully submitted
+      navigate(-1);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
 
   // -------------------------------------------------------------------------------------
-
+  // Navigates back to the ReceiptsLists component
   function handleClick() {
     navigate(-1);
   }
@@ -201,7 +204,7 @@ function AddReceipt() {
             name="date"
             placeholder="date of purchase"
             className="input input-bordered w-full"
-            value={formData.date}
+            value={formData.purchaseDate}
             onChange={handleChange}
           />
           <br />
@@ -212,7 +215,7 @@ function AddReceipt() {
             id="text_content"
             name="text_content"
             className="input input-bordered w-full"
-            value={formData.text_content}
+            value={formData.textContent}
             onChange={handleChange}
           />
           <br />
