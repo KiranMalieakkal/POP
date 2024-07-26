@@ -153,14 +153,13 @@ function AddReceipt() {
 
   return (
     <>
-      <div className="bg-slate-100 size-full">
+      <div className=" size-full">
         <button onClick={handleClick}>
           <img src={ReturnArrow} />
         </button>
-        Add receipt
         <form onSubmit={submitForm} className="p-10">
           <input
-            className="file-input file-input-bordered file-input-primary w-full"
+            className="file-input file-input-primary w-full"
             type="file"
             onChange={handleFileChange}
           />
@@ -174,9 +173,8 @@ function AddReceipt() {
             type="text"
             id="company"
             name="company"
-            placeholder="purchased from..."
             required
-            className="input input-bordered w-full"
+            className="input w-full bg-slate-100"
             value={formData.company}
             onChange={handleChange}
           />
@@ -189,8 +187,7 @@ function AddReceipt() {
             step="0.01"
             id="amount"
             name="amount"
-            placeholder="total amount..."
-            className="input input-bordered w-full"
+            className="input w-full bg-slate-100"
             value={formData.amount}
             onChange={handleChange}
           />
@@ -203,7 +200,7 @@ function AddReceipt() {
             id="date"
             name="date"
             placeholder="date of purchase"
-            className="input input-bordered w-full"
+            className="input w-full bg-slate-100"
             value={formData.purchaseDate}
             onChange={handleChange}
           />
@@ -214,7 +211,7 @@ function AddReceipt() {
           <textarea
             id="text_content"
             name="text_content"
-            className="input input-bordered w-full"
+            className="input w-full bg-slate-100"
             value={formData.textContent}
             onChange={handleChange}
           />
@@ -227,7 +224,7 @@ function AddReceipt() {
             list="existingProjects"
             id="myInput"
             name="myInput"
-            className="input input-bordered w-full"
+            className="input w-full bg-slate-100"
             onChange={handleChange}
           />
           <datalist id="existingProjects" className="bg-slate-500">
