@@ -5,6 +5,7 @@ import BottomNav from "../components/BottomNav";
 import Tax from "./Tax";
 import ListReceipts from "./ListReceipts";
 import ViewReceipt from "./ViewReceipt";
+import ViewProject from "./ViewProject";
 
 function Dashboard() {
   // const { data } = useQuery({
@@ -24,6 +25,8 @@ function Dashboard() {
           <Route path="profile" element={<Profile />} />
           <Route path="tax" element={<Tax />} />
           <Route path=":id" element={<ViewReceipt />} />
+          
+          <Route path="viewproject" element={<ViewProject />} />
         </Routes>
       </div>
       <div>
