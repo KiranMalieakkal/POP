@@ -29,29 +29,31 @@ const Top_Nav = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
+              <li>{/* <a></a> */}</li>
               <li>
-                <a></a>
+                <Link to="/">Home </Link>
               </li>
               <li>
-              <Link to="/"><a>Home</a></Link>
-              </li>
-              <li>
-                <Link to="/taxinfo"><a>Tax</a></Link>
+                <Link to="/taxinfo">Tax</Link>
               </li>
             </ul>
           </div>
-        
-          <a className="text-xl flex"> <span role="img" aria-label="book">📘</span>
-          POP</a>
-        
+
+          <a className="text-xl flex">
+            {" "}
+            <span role="img" aria-label="book">
+              📘
+            </span>
+            POP
+          </a>
         </div>
         <div className="navbar-start hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <Link to="/"><a className="active:bg-violet-700">Home</a></Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/taxinfo" ><a>Tax</a></Link>
+              <Link to="/taxinfo">Tax</Link>
             </li>
           </ul>
         </div>

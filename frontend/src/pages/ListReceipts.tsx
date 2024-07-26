@@ -307,7 +307,16 @@ function ListReceipts() {
                   >
                     <th>
                       <label>
-                        <input type="checkbox" className="checkbox" />
+                        <input
+                          type="checkbox"
+                          className="checkbox"
+                          onSelect={() => {
+                            console.log(receipt);
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        />
                       </label>
                     </th>
                     <td className="p-2 border-b border-gray-300 text-left">
