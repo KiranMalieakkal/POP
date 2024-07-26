@@ -3,18 +3,6 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import BottomNav from "../components/BottomNav";
 
-// import logo from "../assets/logo_pop.jpeg";
-// const mockData = {
-//   id: 1,
-//   company: "Turkish",
-//   amount: "12300",
-//   currency: "SEK",
-//   purchaseDate: "2023-11-11",
-//   textContent: "some context",
-//   project: "Trip to Sri Lanka with family 2023",
-//   img: logo,
-// };
-
 type Params = {
   id: string;
 };
@@ -27,7 +15,7 @@ type Receipt = {
   purchaseDate: string;
   textContent?: string;
   project: string | null;
-  img?: string;
+  fileName?: string;
 };
 
 const ReceiptDetail = () => {
@@ -42,20 +30,30 @@ const ReceiptDetail = () => {
     purchaseDate: "",
     textContent: "",
     project: "",
-    img: "",
+    fileName: "",
   });
-  // const [receiptData, setReceiptData] = useState<Receipt>(mockData);
-
+  const [imgFile, setImgFile] = useState(" ");
   const [message, setMessage] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
 
+  // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
+  const baseUrl2 = "http://localhost:8080/api/receipts";
+
   useEffect(() => {
     const fetchReceiptData = async () => {
-      const response = await fetch(`http://localhost:8080/api/receipts/${id}`);
+      const response = await fetch(`${baseUrl2}/${id}`);
       const data = await response.json();
+      console.log(data);
       setReceiptData(data);
     };
     fetchReceiptData();
+    const fetchImg = async () => {
+      const response = await fetch(`${baseUrl2}/img/${id}`);
+      const imgData = await response.blob();
+      const url = URL.createObjectURL(imgData);
+      setImgFile(url);
+    };
+    fetchImg();
   }, [id]);
 
   if (!receiptData) {
@@ -73,7 +71,7 @@ const ReceiptDetail = () => {
 
   const handleSave = async () => {
     const response = await fetch(
-      `http://localhost:8080/api/receipts/edit/${id}`,
+      `${baseUrl2}/edit/${id}`,
       {
         method: "PUT",
         headers: {
@@ -104,7 +102,7 @@ const ReceiptDetail = () => {
     );
     if (confirmDelete) {
       const response = await fetch(
-        `http://localhost:8080/api/receipts/delete/${id}`,
+        `${baseUrl2}/delete/${id}`,
         {
           method: "DELETE",
         }
@@ -130,19 +128,21 @@ const ReceiptDetail = () => {
       <h1 className="pt-3 pr-6 pl-6 pb-2">
         <a href="/receipts">← Go back</a>
       </h1>
-      <div className="p-2 max-w-4xl mx-auto">
-        <div className="bg-white shadow-md rounded-lg p-6 flex flex-col  md:flex-row">
+      <div className="p-2 max-w-4xl mx-auto mb-12">
+        <div className="bg-white shadow-xl rounded-lg p-6 flex flex-col md:flex-row">
           {/* img section .......*/}
-          <div className="w-1/2 pr-4 ms:w-1/2 md:w-1/2 md:pr-4">
+          <div className=" h-full w-full md:w-1/2 md:pr-4 ms:w-full  ms:pr-0 h-112">
             <img
-              src={receiptData.img}
+              src={imgFile} /* {receiptData.img} */
               alt="Receipt"
-              className="w-full h-auto max-h-72 object-contain"
+              className="w-full h-92 max-h-92 object-contain max-h-full"
             />
           </div>
           {/* form section .......*/}
-          <div className="w-1/2 pl-4">
-            <h6 className="text-xl font-semibold mt-2">Receipt Details</h6>
+          <div className="w-full md:w-1/2 pl-4 sm:text-center md:text-left">
+            <h6 className="text-xl font-semibold mt-4 text-blue-900">
+              Receipt Details
+            </h6>
             {alertMessage && (
               <div className="alert alert-error mb-4">
                 <div>{alertMessage}</div>
@@ -161,7 +161,7 @@ const ReceiptDetail = () => {
                     className="input input-bordered w-full"
                   />
                 ) : (
-                  <p className="text-gray-700">{receiptData.company}</p>
+                  <p className="text-gray-700 pl-1">{receiptData.company}</p>
                 )}
               </div>
               <div>
@@ -173,10 +173,9 @@ const ReceiptDetail = () => {
                     value={receiptData.amount}
                     onChange={handleChange}
                     className="input input-bordered w-full"
-                    // required
                   />
                 ) : (
-                  <p className="text-gray-700">
+                  <p className="text-gray-700 ">
                     {receiptData.currency} {receiptData.amount}
                   </p>
                 )}
@@ -249,7 +248,7 @@ const ReceiptDetail = () => {
                       </svg>
                     </button>
                     <button
-                      className="badge badge-outline p-4 mt-2 bg-green-200"
+                      className="badge badge-outline p-4 mt-2 bg-blue-800 text-white"
                       onClick={handleSave}
                     >
                       Save Changes
@@ -257,16 +256,16 @@ const ReceiptDetail = () => {
                   </>
                 ) : (
                   <button
-                    className="badge badge-outline p-4"
+                    className="badge badge-outline  border-blue-800 p-4"
                     onClick={handleEdit}
                   >
-                    Edit 🖍️
+                    Edit 🖌️
                   </button>
                 )}
               </div>
               <div className="flex justify-end mt-6">
                 <button
-                  className="badge badge-outline p-4"
+                  className="badge badge-outline p-4  border-blue-800"
                   onClick={handleDelete}
                 >
                   Delete{"  "}

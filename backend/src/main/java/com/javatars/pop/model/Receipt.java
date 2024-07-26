@@ -36,7 +36,7 @@ public class Receipt {
     private Project project;
 
     public ReceiptDtoOut getDtoOut() {
-        return new ReceiptDtoOut(id, company, amount, currency, purchaseDate,
+        return new ReceiptDtoOut(id, company, amount, currency, purchaseDate, textContent, //I add textContent
                 project == null ? null : project.title, category == null ? null : category.title);
     }
 
