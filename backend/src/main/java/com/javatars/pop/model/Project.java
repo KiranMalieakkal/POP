@@ -13,9 +13,32 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-    String title;
+    private long id;
+    private String title;
 
     @OneToMany(mappedBy = "project", cascade = {CascadeType.ALL})
-    private List<Receipt> receiptList = new ArrayList<>();
+    private final List<Receipt> receiptList = new ArrayList<>();
+
+    @ManyToOne()
+    @JoinColumn(name="tax_category_id")
+    private TaxCategory taxCategory;
+
+    @ManyToOne()
+    @JoinColumn(name="user_id")
+    private User user;
+
+    public Project() {
+    }
+
+    public Project (String title, User user) {
+        this.title = title;
+        this.user = user;
+    }
+
+    public ProjectDto toProjectDto () {
+        return new ProjectDto(id, title, user == null ? null : user.id,
+                taxCategory == null ? null : taxCategory.id,
+                receiptList.stream().map(Receipt::getDtoOut).toList());
+    }
+
 }

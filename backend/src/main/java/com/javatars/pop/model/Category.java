@@ -14,10 +14,10 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
     @Column(unique = true)
-    String title;
+    private String title;
 
     @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL})
-    private List<Receipt> receiptList = new ArrayList<>();
+    private final List<Receipt> receiptList = new ArrayList<>();
 }
