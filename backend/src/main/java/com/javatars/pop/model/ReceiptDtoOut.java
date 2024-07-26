@@ -7,8 +7,10 @@ public record ReceiptDtoOut(Long id,
                             double amount,
                             String currency,
                             LocalDate purchaseDate,
+                            String textContent,
                             String project,
-                            String category) {
+                            String category
+                            ) {
 
 //    public ReceiptDtoOut {
 //        if (project == null) project = "";
