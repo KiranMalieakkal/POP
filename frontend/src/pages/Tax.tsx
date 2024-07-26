@@ -60,6 +60,11 @@ function Tax() {
     navigate("/receipts/selectTax");
   }
 
+  function handleClick(taxCategory) {
+    console.log(`clicked tax category with id ${taxCategory.id}`);
+    // navigate(taxCategory.id);
+  }
+
   return (
     <>
       <div className="mb-20">
@@ -87,7 +92,13 @@ function Tax() {
               <tbody>
                 {taxCategories?.map((taxCategory) =>
                   taxCategory?.projectDtoList?.map((project) => (
-                    <tr key={project.id} className="hover:bg-gray-100">
+                    <tr
+                      onClick={() => {
+                        handleClick(taxCategory);
+                      }}
+                      key={project.id}
+                      className="hover:bg-gray-100"
+                    >
                       <td className="p-2 border-b border-gray-300 text-left">
                         {project?.title}
                       </td>
