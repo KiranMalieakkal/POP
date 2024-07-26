@@ -6,6 +6,8 @@ import Tax from "./Tax";
 import ListReceipts from "./ListReceipts";
 import ViewReceipt from "./ViewReceipt";
 import SelectTax from "./SelectTax";
+import AddReceipt from "./AddReceipt";
+import ViewProject from "./ViewProject";
 
 function Dashboard() {
   // const { data } = useQuery({
@@ -21,11 +23,13 @@ function Dashboard() {
       <div className="">
         <Routes>
           <Route path="" element={<ListReceipts />} />
-          <Route path="addReceipt" element={<ListReceipts />} />
+          <Route path="add" element={<AddReceipt />} />
           <Route path="profile" element={<Profile />} />
           <Route path="tax" element={<Tax />} />
           <Route path=":id" element={<ViewReceipt />} />
           <Route path="selectTax" element={<SelectTax />} />
+
+          <Route path="viewproject" element={<ViewProject />} />
         </Routes>
       </div>
       <div>

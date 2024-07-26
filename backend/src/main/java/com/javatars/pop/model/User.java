@@ -28,7 +28,16 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     private List<Receipt> receipts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
+    private List<Project> projects = new ArrayList<>();
+
     public void addReceipt(Receipt receipt) {
         receipts.add(receipt);
     }
+
+    public void addProject(Project project) {
+        projects.add(project);
+    }
+
+
 }

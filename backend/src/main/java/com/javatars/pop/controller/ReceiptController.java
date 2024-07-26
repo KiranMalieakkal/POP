@@ -99,7 +99,7 @@ public class ReceiptController {
         }
     }
 
-    @GetMapping("/img/{id}")
+    @GetMapping("/{id}/img")
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
         byte[] content = blobService.getImage(id);
         // Set the content type to image/jpeg (you may need to adjust this for other image types)
@@ -109,7 +109,7 @@ public class ReceiptController {
     }
 
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ReceiptDtoOut> editReceipt(
             @PathVariable long id,
             @RequestBody ReceiptDtoOut updatedReceipt) {
@@ -134,7 +134,7 @@ public class ReceiptController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReceipt(@PathVariable long id) {
         Receipt receipt = service.findById(id);
         if (receipt != null) {
