@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import projectData from "../assets/projectData";
+// import projectData from "../assets/projectData";
 
 export type requestType = {
   company: string | null;
@@ -29,14 +29,14 @@ export type receiptsType = receiptType[];
 
 function Tax() {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
-  const [projects, setProjects] = useState([]);
+  const [taxCategories, setTaxCategories] = useState([]);
   const navigate = useNavigate();
 
-  const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
-  // const baseUrl2 = "http://localhost:8080/api/receipts";
+  const baseUrl = "https://pop-app-backend.azurewebsites.net/api/taxes/user";
+  // const baseUrl2 = "http://localhost:8080/api/taxes/user";
 
   const { data, isError: fetchError } = useQuery({
-    queryKey: ["fetch1"],
+    queryKey: ["fetch3"],
     queryFn: () =>
       fetch(`${baseUrl}?email=jane.smith@example.com`)
         .then((response) => response.json())
@@ -48,7 +48,7 @@ function Tax() {
 
   useEffect(() => {
     console.log("use effect 1");
-    setProjects(data);
+    setTaxCategories(data);
   }, [data]);
 
   const getTotalSum = (receipts): number => {
@@ -85,17 +85,17 @@ function Tax() {
                 </tr>
               </thead>
               <tbody>
-                {projectData.taxCategories.map((category) =>
-                  category.projects.map((project) => (
-                    <tr key={project.projectId} className="hover:bg-gray-100">
+                {taxCategories?.map((taxCategory) =>
+                  taxCategory?.projectDtoList?.map((project) => (
+                    <tr key={project.id} className="hover:bg-gray-100">
                       <td className="p-2 border-b border-gray-300 text-left">
-                        {project.projectName}
+                        {project?.title}
                       </td>
                       <td className="p-2 border-b border-gray-300 text-left">
-                        {category.taxCategory}
+                        {taxCategory?.title}
                       </td>
                       <td className="p-2 border-b border-gray-300 text-left">
-                        {getTotalSum(project.receipts).toFixed(2)}
+                        {getTotalSum(project?.receiptList).toFixed(2)}
                       </td>
                     </tr>
                   ))

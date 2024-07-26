@@ -1,10 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import projectData from "../assets/projectData";
-import projects from "../assets/projectDataSelect";
-import taxCategoryData from "../assets/taxCategory";
-import projectsData from "../assets/projectDataSelect";
 import TaxCard from "../components/TaxCard";
 
 export type requestType = {
@@ -34,16 +30,22 @@ export type receiptsType = receiptType[];
 function SelectTax() {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [projects, setProjects] = useState([]);
+  const [taxCategories, setTaxCategories] = useState([]);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     projectName: "",
     taxCategory: "",
   });
-  const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
-  // const baseUrl2 = "http://localhost:8080/api/receipts";
+  const baseUrl =
+    "https://pop-app-backend.azurewebsites.net/api/projects/withoutTax";
+  // const baseUrl2 = "http://localhost:8080/api/projects/withoutTax";
 
-  const { data, isError: fetchError } = useQuery({
-    queryKey: ["fetch1"],
+  const {
+    data: projectsData,
+    isError: fetchError,
+    isPending,
+  } = useQuery({
+    queryKey: ["fetch4"],
     queryFn: () =>
       fetch(`${baseUrl}?email=jane.smith@example.com`)
         .then((response) => response.json())
@@ -53,10 +55,22 @@ function SelectTax() {
         }),
   });
 
+  const { data: taxCategoriesData, isError: fetchError2 } = useQuery({
+    queryKey: ["fetch5"],
+    queryFn: () =>
+      fetch(`https://pop-app-backend.azurewebsites.net/api/taxes`)
+        .then((response) => response.json())
+        .then((data) => data)
+        .catch((e) => {
+          setfetchErrorLog(e.message);
+        }),
+  });
+
   useEffect(() => {
     console.log("use effect 1");
-    setProjects(data);
-  }, [data]);
+    setProjects(projectsData);
+    setTaxCategories(taxCategoriesData);
+  }, [projectsData, taxCategoriesData]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -102,9 +116,9 @@ function SelectTax() {
                 name="projectName"
               >
                 <option value="">--Choose--</option>
-                {projectsData.projects.map((project) => (
-                  <option key={project.projectName} value={project.projectName}>
-                    {project.projectName}
+                {projects?.map((project) => (
+                  <option key={project.title} value={project.title}>
+                    {project.title}
                   </option>
                 ))}
               </select>
@@ -124,34 +138,28 @@ function SelectTax() {
                 name="taxCategory"
               >
                 <option value="">--Choose--</option>
-                {taxCategoryData.map((taxCategory) => (
-                  <option
-                    key={taxCategory.taxCategoryName}
-                    value={taxCategory.taxCategoryName}
-                  >
-                    {taxCategory.taxCategoryName}
+                {taxCategories?.map((taxCategory) => (
+                  <option key={taxCategory.title} value={taxCategory.title}>
+                    {taxCategory.title}
                   </option>
                 ))}
               </select>
             </div>
-            {/* {invalidInputError && (
-              <p className="text-red-500 break-words whitespace-normal text-center">
-                {invalidInputError}
-              </p>
-            )}
-            {postErrorDisplay && (
-              <p className="text-red-500 break-words whitespace-normal">{`Sorry, Please try again later. ${postError}`}</p>
-            )}
+
+            {fetchError ||
+              (fetchError2 && (
+                <p className="text-red-500 break-words whitespace-normal">{`Sorry, Please try again later. ${fetchErrorLog}`}</p>
+              ))}
             {isPending && (
               <p className="text-red-500 break-words whitespace-normal">{`Loading...`}</p>
-            )} */}
+            )}
             <button type="submit" className="w-full btn btn-primary">
               Add Tax Category
             </button>
           </form>
         </div>
         <div className="flex flex-col justify-center gap-4 p-6 overflow-y-scroll">
-          {taxCategoryData.map((taxCategory) => (
+          {taxCategoriesData?.map((taxCategory) => (
             <TaxCard key={taxCategory.id} taxCategory={taxCategory} />
           ))}
         </div>
