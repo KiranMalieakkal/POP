@@ -66,12 +66,9 @@ function ListReceipts() {
         body: JSON.stringify(filters),
       })
         .then((response) => {
-          // console.log("iam in the first line");
           return response.json();
         })
         .then((data) => {
-          // console.log("my name is kiran");
-          // console.log(data);
           return data;
         })
         .then((data) => data)
@@ -80,34 +77,6 @@ function ListReceipts() {
           setfetchErrorLog(e.message);
         }),
   });
-
-  // const { data: postdata, mutate: postReceipt } = useMutation<
-  //   receiptsType,
-  //   Error,
-  //   requestType
-  // >({
-  //   mutationFn: (newPost) =>
-  //     fetch(
-  //       `http://localhost:8080/api/receipts/filters?email=jane.smith@example.com`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(newPost),
-  //       }
-  //     )
-  //       .then((res) => {
-  //         // if (!res.ok) {
-  //         //   throw new Error(`Error Status: ${res.status}`);
-  //         // }
-  //         return res.json();
-  //       })
-  //       .then((data) => data),
-  //   onSuccess: () => {
-  //     console.log("success");
-  //   },
-  // });
 
   useEffect(() => {
     console.log("use effect 1");
@@ -139,13 +108,11 @@ function ListReceipts() {
     await refetch();
     setShowFilter(false);
     console.log("Applying filters:", filters);
-    // console.log(data2);
-    // console.log(data);
   };
 
   function addReceipt() {
     console.log(data);
-    navigate("/receipts/addReceipt")
+    navigate("/receipts/addReceipt");
   }
 
   function handleViewReceipt(receipt: receiptType) {
@@ -355,7 +322,7 @@ function ListReceipts() {
         </div>
         <div className="flex justify-center items-center">
           <button
-            className="btn bg-blue-700  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-14"
+            className="btn bg-blue-700  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
             onClick={addReceipt}
           >
             Add Receipts

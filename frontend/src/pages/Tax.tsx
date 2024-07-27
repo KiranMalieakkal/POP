@@ -28,16 +28,16 @@ export type receiptType = {
 type Project = {
   id: number;
   title: string;
-}
+  receiptList: receiptsType;
+};
 
 export type receiptsType = receiptType[];
 
-export type TaxCategory  ={
+export type TaxCategory = {
   id: number;
-  tile: string;
+  title: string;
   projectDtoList: Project[];
-}
-
+};
 
 function Tax() {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
@@ -59,19 +59,18 @@ function Tax() {
   });
 
   useEffect(() => {
-    console.log("use effect 1");
     setTaxCategories(data);
-    console.log(data)
+    console.log(data);
   }, [data]);
 
-  const getTotalSum = (receipts): number => {
+  const getTotalSum = (receipts: receiptsType): number => {
     return receipts.reduce((total, receipt) => total + receipt.amount, 0);
   };
 
   function addTaxProject() {
     console.log("You clicked on add Tax Project button");
     navigate("/receipts/selectTax");
-    return taxCategories
+    return taxCategories;
   }
 
   function handleClick(project: Project) {
@@ -108,7 +107,7 @@ function Tax() {
                   taxCategory?.projectDtoList?.map((project) => (
                     <tr
                       onClick={() => {
-                        handleClick(project, taxCategory);
+                        handleClick(project);
                       }}
                       key={project.id}
                       className="hover:bg-gray-100"
