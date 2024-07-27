@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TaxCard from "../components/TaxCard";
@@ -27,10 +27,35 @@ export type receiptType = {
 
 export type receiptsType = receiptType[];
 
+export type NewPost = {
+  projectId: string;
+  taxId: string;
+};
+
+export type project = {
+  title: string;
+  id: string;
+};
+
+export type projects = {
+  project: project[];
+};
+
+export type taxCategory = {
+  title: string;
+  id: string;
+};
+
 function SelectTax() {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
-  const [projects, setProjects] = useState([]);
-  const [taxCategories, setTaxCategories] = useState([]);
+  const [projects, setProjects] = useState<project[]>([]);
+  const [taxCategories, setTaxCategories] = useState<taxCategory[]>([]);
+  const queryClient = useQueryClient();
+  const [taxId, setTaxId] = useState<string>();
+  const [projectId, setProjectId] = useState<string>();
+  const [invalidInputError, setError] = useState("");
+  const [postErrorDisplay, setPostErrorDisplay] = useState(false);
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     projectName: "",
@@ -66,15 +91,80 @@ function SelectTax() {
         }),
   });
 
+  const { mutate: postTaxCategory, error: postError } = useMutation<
+    unknown,
+    Error,
+    NewPost
+  >({
+    mutationFn: (newPost) =>
+      fetch(
+        `http://localhost:8080/api/taxes/${taxId}?email=jane.smith@example.com&projectId=${projectId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newPost),
+        }
+      ).then((res) => {
+        if (!res.ok) {
+          throw new Error(`Error Status: ${res.status}`);
+        }
+        return res.json();
+      }),
+    onSuccess: () => {
+      console.log("success");
+      queryClient.invalidateQueries({ queryKey: ["fetch3"] });
+      setFormData({
+        projectName: "",
+        taxCategory: "",
+      });
+      navigate(-1);
+    },
+  });
+
   useEffect(() => {
-    console.log("use effect 1");
     setProjects(projectsData);
     setTaxCategories(taxCategoriesData);
   }, [projectsData, taxCategoriesData]);
 
-  function handleSubmit(event) {
+  useEffect(() => {
+    if (postError) {
+      setPostErrorDisplay(true);
+      setTimeout(() => {
+        setPostErrorDisplay(false);
+      }, 2000);
+    }
+  }, [postError]);
+
+  useEffect(() => {
+    const taxId2 = taxCategories?.find(
+      (entry: taxCategory) => entry.title === formData.taxCategory
+    )?.id;
+    const projectId2 = projects?.find(
+      (entry: project) => entry.title === formData.projectName
+    )?.id;
+    setTaxId(taxId2);
+    setProjectId(projectId2);
+  }, [formData, taxCategories, projects]);
+
+  function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    console.log(formData);
+    if (formData.projectName == "") {
+      setError("Please select a project");
+    } else if (formData.taxCategory == "") {
+      setError("Please select a tax category ");
+    } else {
+      setError("");
+      console.log(formData);
+      console.log(taxId);
+      console.log(projectId);
+
+      postTaxCategory({
+        projectId: projectId!,
+        taxId: taxId!,
+      });
+    }
   }
 
   function handleChange(
@@ -116,7 +206,7 @@ function SelectTax() {
                 name="projectName"
               >
                 <option value="">--Choose--</option>
-                {projects?.map((project) => (
+                {projects?.map((project: project) => (
                   <option key={project.title} value={project.title}>
                     {project.title}
                   </option>
@@ -138,7 +228,7 @@ function SelectTax() {
                 name="taxCategory"
               >
                 <option value="">--Choose--</option>
-                {taxCategories?.map((taxCategory) => (
+                {taxCategories?.map((taxCategory: taxCategory) => (
                   <option key={taxCategory.title} value={taxCategory.title}>
                     {taxCategory.title}
                   </option>
@@ -153,13 +243,21 @@ function SelectTax() {
             {isPending && (
               <p className="text-red-500 break-words whitespace-normal">{`Loading...`}</p>
             )}
+            {invalidInputError && (
+              <p className="text-red-500 break-words whitespace-normal text-center">
+                {invalidInputError}
+              </p>
+            )}
+            {postErrorDisplay && (
+              <p className="text-red-500 break-words whitespace-normal">{`Sorry, Changes could not be saved. Please try again later. ${postError}`}</p>
+            )}
             <button type="submit" className="w-full btn btn-primary">
               Add Tax Category
             </button>
           </form>
         </div>
         <div className="flex flex-col justify-center gap-4 p-6 overflow-y-scroll">
-          {taxCategoriesData?.map((taxCategory) => (
+          {taxCategoriesData?.map((taxCategory: taxCategory) => (
             <TaxCard key={taxCategory.id} taxCategory={taxCategory} />
           ))}
         </div>
