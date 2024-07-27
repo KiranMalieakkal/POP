@@ -1,22 +1,52 @@
-type TaxCategory = {
-  countryId: number;
-  userName: string;
-  tripId: number;
-  places: string;
-  countryName: string;
-  startDate: string;
-  duration: number;
-  budget: number;
-  journalEntry: string;
-  travelTips: string;
-  image: string;
+export type requestType = {
+  company: string | null;
+  amountFrom: number | null;
+  amountTo: number | null;
+  currency: string | null;
+  dateFrom: string | null;
+  dateTo: string | null;
+  project: string | null;
+  category: string | null;
 };
 
-interface TaxCardProps {
-  taxCategory: TaxCategory;
-}
+export type receiptType = {
+  id: number;
+  company: string;
+  amount: number;
+  currency: string;
+  startDate: string;
+  purchaseDate: string;
+  project: string;
+  category: string;
+};
 
-function TaxCard({ taxCategory }) {
+export type receiptsType = receiptType[];
+
+export type NewPost = {
+  projectId: string;
+  taxId: string;
+};
+
+export type project = {
+  title: string;
+  id: string;
+};
+
+export type projects = {
+  project: project[];
+};
+
+export type taxCategory = {
+  title: string;
+  id: string;
+  description: string;
+};
+
+type TaxCardProps = {
+  taxCategory: taxCategory;
+};
+
+function TaxCard({ taxCategory }: TaxCardProps) {
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-md">
       <div className="p-6">

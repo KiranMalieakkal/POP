@@ -44,6 +44,7 @@ export type projects = {
 export type taxCategory = {
   title: string;
   id: string;
+  description: string;
 };
 
 function SelectTax() {
