@@ -25,4 +25,8 @@ public class TaxCategoryRepository {
     public void save(TaxCategory taxCategory) {
         taxDbRepo.save(taxCategory);
     }
+
+    public TaxCategory findById(Long id) {
+        return taxDbRepo.getById(id);
+    }
 }

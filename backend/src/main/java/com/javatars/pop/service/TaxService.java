@@ -64,4 +64,17 @@ public class TaxService {
                 .toList();
         return projects;
     }
+
+    
+        public TaxCategory getTaxCategoryById(Long id) {
+            return taxRepo.getTaxById(id);
+        }
+    
+//-------------------------------
+//    public Project getTaxCategoryProject(Long taxCategoryId, String email) {
+//        User user = userRepo.getUser(email);
+//        TaxCategory taxCategory = taxRepo.getTaxById(taxCategoryId);
+//        Project project = taxCategory.getProject
+//        return project;
+//    }
 }
