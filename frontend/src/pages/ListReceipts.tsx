@@ -41,8 +41,8 @@ function ListReceipts() {
     project: null,
     category: null,
   });
-  const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
-  // const baseUrl2 = "http://localhost:8080/api/receipts";
+  // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
+  const baseUrl = "http://localhost:8080/api/receipts";
 
   const { data, isError: fetchError } = useQuery({
     queryKey: ["fetch1"],

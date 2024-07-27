@@ -30,7 +30,17 @@ public class TaxController {
                 .stream().map(TaxCategory::toTaxCategoryDto).toList();
         return ResponseEntity.ok(taxCategoriesDtos);
     }
+    //-------------------
+    @GetMapping("/{id}/category")
+    public ResponseEntity<TaxCategoryDto> getTaxCategoryById(@PathVariable Long id) {
+        TaxCategory taxCategory = taxService.getTaxCategoryById(id);
+        if (taxCategory == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(taxCategory.toTaxCategoryDto());
+    }
 
+    //-------------------------
     @PostMapping("/{id}")
     public ResponseEntity<TaxCategoryDto> addProjectToTaxCategory (
             @RequestParam String email,  @PathVariable Long id, @RequestParam Long projectId) {
