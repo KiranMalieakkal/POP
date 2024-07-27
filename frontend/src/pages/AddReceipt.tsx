@@ -2,6 +2,7 @@ import { useState } from "react";
 import ReturnArrow from "/return-arrow.svg";
 import UploadingFile from "../components/UploadingFile";
 import { useNavigate } from "react-router-dom";
+import FormChoices from "../components/FormChoices";
 
 type Receipt = {
   company: string;
@@ -22,6 +23,10 @@ function AddReceipt() {
   ];
 
   const existingCurrency = ["EUR", "SEK", "USD"]; // todo: get these as a prop from ListReceipts.tsx
+
+  // this useState is used to track which field is selected (aka focused).
+  // When a certain field is focused we can display FormChoices.tsx (for example)
+  const [focusedField, setFocusedField] = useState("");
 
   const navigate = useNavigate();
 
@@ -54,6 +59,17 @@ function AddReceipt() {
       ...formData,
       [name]: value,
     });
+  };
+
+  // -------------------------------------------------------------------------------------
+  // This function also sets the formData useState. But this function not used on the form
+  // fields change, but rather via an external component
+  const handleFormChoicesSelection = (name: string, value: string) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    //setFocusedField(""); // Reset focus after selection. Uncomment if behaviour is off...
   };
 
   // -------------------------------------------------------------------------------------
@@ -200,7 +216,7 @@ function AddReceipt() {
                 onChange={handleChange}
               />
             </div>
-            <div>
+            <div className="relative">
               <label htmlFor="currency">Currency</label>
               <br></br>
               <input
@@ -208,13 +224,22 @@ function AddReceipt() {
                 id="currency"
                 name="currency"
                 className="input w-full bg-slate-100"
+                value={formData.currency}
                 onChange={handleChange}
+                onFocus={() => setFocusedField("currency")}
+                onBlur={() =>
+                  setFocusedField(
+                    focusedField === "currency" ? "" : focusedField
+                  )
+                }
               />
-              <datalist id="existingCurrency" className="bg-slate-500">
-                {existingCurrency.map((option, index) => (
-                  <option key={index} value={option} />
-                ))}
-              </datalist>
+              {focusedField == "currency" && (
+                <FormChoices
+                  items={existingCurrency}
+                  name="currency"
+                  pickItemFunction={handleFormChoicesSelection}
+                />
+              )}
             </div>
           </div>
 
@@ -244,20 +269,29 @@ function AddReceipt() {
           <br />
           <br />
 
-          <label htmlFor="project">Project (optional)</label>
-          <br></br>
-          <input
-            list="existingProjects"
-            id="project"
-            name="project"
-            className="input w-full bg-slate-100"
-            onChange={handleChange}
-          />
-          <datalist id="existingProjects" className="bg-slate-500">
-            {existingProjects.map((option, index) => (
-              <option key={index} value={option} />
-            ))}
-          </datalist>
+          <div className="relative">
+            <label htmlFor="project">Project (optional)</label>
+            <br></br>
+            <input
+              list="existingProjects"
+              id="project"
+              name="project"
+              className="input w-full bg-slate-100"
+              value={formData.project}
+              onChange={handleChange}
+              onFocus={() => setFocusedField("project")}
+              onBlur={() =>
+                setFocusedField(focusedField === "project" ? "" : focusedField)
+              }
+            />
+            {focusedField === "project" && (
+              <FormChoices
+                items={existingProjects}
+                name="project"
+                pickItemFunction={handleFormChoicesSelection}
+              />
+            )}
+          </div>
 
           <br></br>
           <br></br>
