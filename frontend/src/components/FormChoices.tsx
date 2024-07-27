@@ -1,7 +1,6 @@
-// this component is used to display available choices in forms.
-// it take a string list and displays the items.
-
-// dess position ska fixeras till parent component
+// Description: This component is used to display available choices in forms.
+// It takes in a list of options that will be displayed (for example: EUR, SEK, USD).
+// It also takes in a name variable which is used to set a useState variable by identifying it by name
 
 type Props = {
   items: string[];
@@ -27,7 +26,7 @@ function FormChoices(props: Props) {
 
   return (
     <>
-      <div className="absolute rounded bg-gray-100 p-1">
+      <div className="absolute w-full rounded bg-gray-100 pr-2">
         {props.items.map((item, index) => (
           <button
             key={index}
