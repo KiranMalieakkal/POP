@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 type Receipt = {
   company: string;
   amount: number;
+  currency: string;
   purchaseDate: string;
   textContent: string;
   project?: string;
@@ -19,6 +20,9 @@ function AddReceipt() {
     "Tax evasion project 2025",
     "Option 3",
   ];
+
+  const existingCurrency = ["EUR", "SEK", "USD"]; // todo: get these as a prop from ListReceipts.tsx
+
   const navigate = useNavigate();
 
   // -------------------------------------------------------------------------------------
@@ -31,6 +35,7 @@ function AddReceipt() {
   const [formData, setFormData] = useState<Receipt>({
     company: "",
     amount: 0,
+    currency: "SEK",
     purchaseDate: "",
     textContent: "",
     project: "",
@@ -99,6 +104,7 @@ function AddReceipt() {
     setFormData((prevFormData) => ({
       company: prevFormData.company || data.company || "",
       amount: prevFormData.amount || data.amount,
+      currency: prevFormData.currency || data.currency || "SEK",
       purchaseDate: prevFormData.purchaseDate || data.purchaseDate,
       textContent: prevFormData.textContent || data.textContent || "",
     }));
@@ -122,11 +128,11 @@ function AddReceipt() {
     formDataToSend.append("file", file);
     formDataToSend.append("company", formData.company);
     formDataToSend.append("amount", formData.amount.toString()); // Convert amount to string
+    formDataToSend.append("currency", formData.currency);
     formDataToSend.append("purchaseDate", formData.purchaseDate);
     formDataToSend.append("textContent", formData.textContent);
     formDataToSend.append("project", formData.project || "");
     formDataToSend.append("email", "jane.smith@example.com"); // todo: do not hardcode email. should come from Auth0s JWT
-    formDataToSend.append("currency", "SEK"); // todo: currency is hardcoded here. should be set in form
 
     try {
       const response = await fetch("http://localhost:8080/api/receipts", {
@@ -180,17 +186,38 @@ function AddReceipt() {
           />
           <br />
           <br />
-          <label htmlFor="amount">Amount</label>
-          <br />
-          <input
-            type="number"
-            step="0.01"
-            id="amount"
-            name="amount"
-            className="input w-full bg-slate-100"
-            value={formData.amount}
-            onChange={handleChange}
-          />
+          <div className="grid grid-cols-[3fr_1fr]">
+            <div className="pr-5">
+              <label htmlFor="amount">Amount</label>
+              <br />
+              <input
+                type="number"
+                step="0.01"
+                id="amount"
+                name="amount"
+                className="input w-full bg-slate-100"
+                value={formData.amount}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="currency">Currency</label>
+              <br></br>
+              <input
+                list="existingCurrency"
+                id="currency"
+                name="currency"
+                className="input w-full bg-slate-100"
+                onChange={handleChange}
+              />
+              <datalist id="existingCurrency" className="bg-slate-500">
+                {existingCurrency.map((option, index) => (
+                  <option key={index} value={option} />
+                ))}
+              </datalist>
+            </div>
+          </div>
+
           <br />
           <br />
           <label htmlFor="date">Date</label>
@@ -198,8 +225,7 @@ function AddReceipt() {
           <input
             type="date"
             id="date"
-            name="date"
-            placeholder="date of purchase"
+            name="purchaseDate"
             className="input w-full bg-slate-100"
             value={formData.purchaseDate}
             onChange={handleChange}
@@ -222,8 +248,8 @@ function AddReceipt() {
           <br></br>
           <input
             list="existingProjects"
-            id="myInput"
-            name="myInput"
+            id="project"
+            name="project"
             className="input w-full bg-slate-100"
             onChange={handleChange}
           />
