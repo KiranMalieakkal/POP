@@ -184,80 +184,94 @@ function SelectTax() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="text-center mt-4">Link Project to a TaxCategory</h1>
-        <div>
-          <form
-            id="taxCategoryForm"
-            onSubmit={handleSubmit}
-            className="w-full max-w-lg space-y-6"
-          >
-            <div>
-              <label
-                htmlFor="project"
-                className="block text-gray-700 font-medium mb-1"
-              >
-                ProjectName
-              </label>
-              <select
-                id="project"
-                className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.projectName}
-                onChange={handleChange}
-                name="projectName"
-              >
-                <option value="">--Choose--</option>
-                {projects?.map((project: project) => (
-                  <option key={project.title} value={project.title}>
-                    {project.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label
-                htmlFor="taxCategory"
-                className="block text-gray-700 font-medium mb-1"
-              >
-                TaxCategory
-              </label>
-              <select
-                id="taxCategory"
-                className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.taxCategory}
-                onChange={handleChange}
-                name="taxCategory"
-              >
-                <option value="">--Choose--</option>
-                {taxCategories?.map((taxCategory: taxCategory) => (
-                  <option key={taxCategory.title} value={taxCategory.title}>
-                    {taxCategory.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {fetchError ||
-              (fetchError2 && (
-                <p className="text-red-500 break-words whitespace-normal">{`Sorry, Please try again later. ${fetchErrorLog}`}</p>
+      <div className="flex flex-col justify-center items-center p-4">
+        <h1 className="text-2xl font-semibold text-gray-800 mt-4 mb-6 text-center">
+          Link Project to a TaxCategory
+        </h1>
+        <form
+          id="taxCategoryForm"
+          onSubmit={handleSubmit}
+          className="w-full max-w-md space-y-6 bg-white p-6 rounded-lg shadow-md"
+        >
+          <div>
+            <label
+              htmlFor="project"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Project Name
+            </label>
+            <select
+              id="project"
+              className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={formData.projectName}
+              onChange={handleChange}
+              name="projectName"
+            >
+              <option value="">--Choose--</option>
+              {projects?.map((project: project) => (
+                <option key={project.title} value={project.title}>
+                  {project.title}
+                </option>
               ))}
-            {isPending && (
-              <p className="text-red-500 break-words whitespace-normal">{`Loading...`}</p>
-            )}
-            {invalidInputError && (
-              <p className="text-red-500 break-words whitespace-normal text-center">
-                {invalidInputError}
-              </p>
-            )}
-            {postErrorDisplay && (
-              <p className="text-red-500 break-words whitespace-normal">{`Sorry, Changes could not be saved. Please try again later. ${postError}`}</p>
-            )}
-            <button type="submit" className="w-full btn btn-primary">
-              Add Tax Category
-            </button>
-          </form>
-        </div>
-        <div className="flex flex-col justify-center gap-4 p-6 overflow-y-scroll">
+            </select>
+          </div>
+          <div>
+            <label
+              htmlFor="taxCategory"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Tax Category
+            </label>
+            <select
+              id="taxCategory"
+              className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={formData.taxCategory}
+              onChange={handleChange}
+              name="taxCategory"
+            >
+              <option value="">--Choose--</option>
+              {taxCategories?.map((taxCategory: taxCategory) => (
+                <option key={taxCategory.title} value={taxCategory.title}>
+                  {taxCategory.title}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {fetchError && (
+            <p className="text-red-500 break-words whitespace-normal text-center mt-4">
+              Sorry, Please try again later. {fetchErrorLog}
+            </p>
+          )}
+          {fetchError2 && (
+            <p className="text-red-500 break-words whitespace-normal text-center mt-4">
+              Sorry, Please try again later. {fetchErrorLog}
+            </p>
+          )}
+          {isPending && (
+            <p className="text-blue-500 break-words whitespace-normal text-center mt-4">
+              Loading...
+            </p>
+          )}
+          {invalidInputError && (
+            <p className="text-red-500 break-words whitespace-normal text-center mt-4">
+              {invalidInputError}
+            </p>
+          )}
+          {postErrorDisplay && (
+            <p className="text-red-500 break-words whitespace-normal text-center mt-4">
+              {`Sorry, Changes could not be saved. Please try again later. ${postError}`}
+            </p>
+          )}
+          <button
+            type="submit"
+            className="w-full btn btn-primary  text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Add Tax Category
+          </button>
+        </form>
+
+        <div className="p-6 mt-8 w-full max-w-4xl mx-auto max-h-[500px] overflow-y-auto mb-12">
           {taxCategoriesData?.map((taxCategory: taxCategory) => (
             <TaxCard key={taxCategory.id} taxCategory={taxCategory} />
           ))}

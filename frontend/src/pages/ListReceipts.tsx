@@ -144,7 +144,7 @@ function ListReceipts() {
               />
             </svg>
           </label>
-          <div className=" border-2 border-inherit rounded ">
+          <div className="border-black border-inherit rounded ">
             <svg
               onClick={() => setShowFilter(!showFilter)}
               xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +152,7 @@ function ListReceipts() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-12 hover:bg-gray-300 hover:cursor-pointer"
+              className="size-10 hover:bg-gray-300 hover:cursor-pointer"
             >
               <path
                 strokeLinecap="round"
@@ -166,70 +166,125 @@ function ListReceipts() {
         {showFilter && (
           <div className="p-4 border border-gray-300 rounded m-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input
-                type="text"
-                name="company"
-                value={filters.company !== null ? filters.company : ""}
-                onChange={handleFilterChange}
-                placeholder="Company"
-                className="input input-bordered w-full"
-              />
-              <input
-                type="number"
-                name="amountFrom"
-                value={filters.amountFrom !== null ? filters.amountFrom : ""}
-                onChange={handleFilterChange}
-                placeholder="Amount From"
-                className="input input-bordered w-full"
-              />
-              <input
-                type="number"
-                name="amountTo"
-                value={filters.amountTo !== null ? filters.amountTo : ""}
-                onChange={handleFilterChange}
-                placeholder="Amount To"
-                className="input input-bordered w-full"
-              />
-              <input
-                type="text"
-                name="currency"
-                value={filters.currency !== null ? filters.currency : ""}
-                onChange={handleFilterChange}
-                placeholder="Currency"
-                className="input input-bordered w-full"
-              />
-              <input
-                type="date"
-                name="dateFrom"
-                value={filters.dateFrom !== null ? filters.dateFrom : ""}
-                onChange={handleFilterChange}
-                placeholder="Date From"
-                className="input input-bordered w-full"
-              />
-              <input
-                type="date"
-                name="dateTo"
-                value={filters.dateTo !== null ? filters.dateTo : ""}
-                onChange={handleFilterChange}
-                placeholder="Date To"
-                className="input input-bordered w-full"
-              />
-              <input
-                type="text"
-                name="project"
-                value={filters.project !== null ? filters.project : ""}
-                onChange={handleFilterChange}
-                placeholder="Project"
-                className="input input-bordered w-full"
-              />
-              <input
-                type="text"
-                name="category"
-                value={filters.category !== null ? filters.category : ""}
-                onChange={handleFilterChange}
-                placeholder="Category"
-                className="input input-bordered w-full"
-              />
+              <div className="flex items-center mb-4">
+                <label htmlFor="company" className="mr-2">
+                  Company:
+                </label>
+                <input
+                  id="company"
+                  type="text"
+                  name="company"
+                  value={filters.company !== null ? filters.company : ""}
+                  onChange={handleFilterChange}
+                  placeholder="Company"
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              <div className="flex items-center mb-4">
+                <label htmlFor="amountFrom" className="mr-2">
+                  Amount From:
+                </label>
+                <input
+                  id="amountFrom"
+                  type="number"
+                  name="amountFrom"
+                  value={filters.amountFrom !== null ? filters.amountFrom : ""}
+                  onChange={handleFilterChange}
+                  placeholder="Amount From"
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              <div className="flex items-center mb-4">
+                <label htmlFor="amountTo" className="mr-2">
+                  Amount To:
+                </label>
+                <input
+                  id="amountTo"
+                  type="number"
+                  name="amountTo"
+                  value={filters.amountTo !== null ? filters.amountTo : ""}
+                  onChange={handleFilterChange}
+                  placeholder="Amount To"
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              <div className="flex items-center mb-4">
+                <label htmlFor="currency" className="mr-2">
+                  Currency:
+                </label>
+                <input
+                  id="currency"
+                  type="text"
+                  name="currency"
+                  value={filters.currency !== null ? filters.currency : ""}
+                  onChange={handleFilterChange}
+                  placeholder="Currency"
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              <div className="flex items-center mb-4">
+                <label htmlFor="dateFrom" className="mr-2">
+                  Date From:
+                </label>
+                <input
+                  id="dateFrom"
+                  type="date"
+                  name="dateFrom"
+                  value={filters.dateFrom !== null ? filters.dateFrom : ""}
+                  onChange={handleFilterChange}
+                  placeholder="Date From"
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              <div className="flex items-center mb-4">
+                <label htmlFor="dateTo" className="mr-2">
+                  Date To:
+                </label>
+                <input
+                  id="dateTo"
+                  type="date"
+                  name="dateTo"
+                  value={filters.dateTo !== null ? filters.dateTo : ""}
+                  onChange={handleFilterChange}
+                  placeholder="Date To"
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              <div className="flex items-center mb-4">
+                <label htmlFor="project" className="mr-2">
+                  Project:
+                </label>
+                <input
+                  id="project"
+                  type="text"
+                  name="project"
+                  value={filters.project !== null ? filters.project : ""}
+                  onChange={handleFilterChange}
+                  placeholder="Project"
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              <div className="flex items-center mb-4">
+                <label htmlFor="category" className="mr-2">
+                  Category:
+                </label>
+                <input
+                  id="category"
+                  type="text"
+                  name="category"
+                  value={filters.category !== null ? filters.category : ""}
+                  onChange={handleFilterChange}
+                  placeholder="Category"
+                  className="input input-bordered w-full"
+                />
+              </div>
             </div>
             <div className="flex justify-center items-center mt-4">
               <button onClick={applyFilters} className="btn btn-primary">
@@ -241,27 +296,27 @@ function ListReceipts() {
 
         <div className="w-full p-4">
           <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto">
-            <table className="receipt-table w-full border-collapse">
+            <table className="receipt-table w-full border-collapse ml-8 mr-8">
               <thead>
-                <tr className="bg-gray-500 text-white">
-                  <th>
+                <tr className=" text-black">
+                  {/* <th className="p-2 border-b-2 border-black text-left">
                     <label>
                       <input
                         type="checkbox"
                         className="checkbox text-white bg-white"
                       />
                     </label>
-                  </th>
-                  <th className="p-2 border-b border-gray-300 text-left">
+                  </th> */}
+                  <th className="p-2 border-b-2 border-black text-left text-lg">
                     Company
                   </th>
-                  <th className="p-2 border-b border-gray-300 text-left">
+                  <th className="p-2 border-b-2 border-black text-left text-lg">
                     Date
                   </th>
-                  <th className="p-2 border-b border-gray-300 text-left">
+                  <th className="p-2 border-b-2 border-black text-left text-lg">
                     Amount
                   </th>
-                  <th className="p-2 border-b border-gray-300 text-center"></th>
+                  <th className="p-2 border-b-2 border-black text-center text-lg"></th>
                 </tr>
               </thead>
               <tbody>
@@ -271,9 +326,9 @@ function ListReceipts() {
                       handleViewReceipt(receipt);
                     }}
                     key={receipt.id}
-                    className="hover:bg-gray-100"
+                    className="hover:bg-gray-100 hover:cursor-pointer transition-transform transform hover:scale-105"
                   >
-                    <th>
+                    {/* <th>
                       <label>
                         <input
                           type="checkbox"
@@ -286,7 +341,7 @@ function ListReceipts() {
                           }}
                         />
                       </label>
-                    </th>
+                    </th> */}
                     <td className="p-2 border-b border-gray-300 text-left">
                       {receipt.company}
                     </td>

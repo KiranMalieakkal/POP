@@ -88,16 +88,16 @@ function Tax() {
 
         <div className="w-full p-4">
           <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto">
-            <table className="receipt-table w-full border-collapse">
+            <table className="receipt-table w-full border-collapse ml-5 mr-8 ">
               <thead>
-                <tr className="bg-gray-500 text-white">
-                  <th className="p-2 border-b border-gray-300 text-left">
+                <tr className="text-black">
+                  <th className="p-2 border-b-2 border-black text-left text-lg">
                     Project
                   </th>
-                  <th className="p-2 border-b border-gray-300 text-left">
+                  <th className="p-2 border-b-2 border-black text-left text-lg">
                     Tax Category
                   </th>
-                  <th className="p-2 border-b border-gray-300 text-left">
+                  <th className="p-2 border-b-2 border-black text-left text-lg">
                     Deductible
                   </th>
                 </tr>
@@ -110,7 +110,7 @@ function Tax() {
                         handleClick(project);
                       }}
                       key={project.id}
-                      className="hover:bg-gray-100"
+                      className="hover:bg-gray-100 transition-transform transform hover:scale-105"
                     >
                       <td className="p-2 border-b border-gray-300 text-left">
                         {project?.title}
