@@ -41,8 +41,8 @@ function ListReceipts() {
     project: null,
     category: null,
   });
-  const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
-  // const baseUrl2 = "http://localhost:8080/api/receipts";
+  // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
+  const baseUrl = "http://localhost:8080/api/receipts";
 
   const { data, isError: fetchError } = useQuery({
     queryKey: ["fetch1"],
@@ -145,6 +145,7 @@ function ListReceipts() {
 
   function addReceipt() {
     console.log(data);
+    navigate("/receipts/addReceipt")
   }
 
   function handleViewReceipt(receipt: receiptType) {
@@ -159,7 +160,7 @@ function ListReceipts() {
   return (
     <>
       <div className="mb-20">
-        <h1 className="text-center mt-4">Receipts</h1>
+        <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1>
         <div className="flex justify-center items-center">
           <label className="input input-bordered flex items-center gap-2 md:w-1/3 lg:w-1/3 w-1/2 m-4">
             <input type="text" className="grow" placeholder="Search" />
@@ -354,7 +355,7 @@ function ListReceipts() {
         </div>
         <div className="flex justify-center items-center">
           <button
-            className="btn btn-primary md:w-1/3 lg:w-1/3 w-1/2 mb-6"
+            className="btn bg-blue-700  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-14"
             onClick={addReceipt}
           >
             Add Receipts

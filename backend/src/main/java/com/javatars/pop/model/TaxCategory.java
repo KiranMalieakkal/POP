@@ -17,11 +17,17 @@ public class TaxCategory {
     @Column(columnDefinition = "TEXT")
     String description;
 
+    String form;
+
+    String section;
+
+    String paragraph;
+
     @OneToMany(mappedBy = "taxCategory", cascade = {CascadeType.ALL})
     private final List<Project> projectList = new ArrayList<>();
 
     public TaxCategoryDto toTaxCategoryDto() {
-        return new TaxCategoryDto(id, title, description,
+        return new TaxCategoryDto(id, title, description, form, section, paragraph,
                 projectList.stream().map(Project::toProjectDto).toList());
     }
 

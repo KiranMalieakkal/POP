@@ -48,7 +48,7 @@ const ReceiptDetail = () => {
     };
     fetchReceiptData();
     const fetchImg = async () => {
-      const response = await fetch(`${baseUrl2}/img/${id}`);
+      const response = await fetch(`${baseUrl2}/${id}/img`);
       const imgData = await response.blob();
       const url = URL.createObjectURL(imgData);
       setImgFile(url);
@@ -71,7 +71,7 @@ const ReceiptDetail = () => {
 
   const handleSave = async () => {
     const response = await fetch(
-      `${baseUrl2}/edit/${id}`,
+      `${baseUrl2}/${id}`,
       {
         method: "PUT",
         headers: {
@@ -102,7 +102,7 @@ const ReceiptDetail = () => {
     );
     if (confirmDelete) {
       const response = await fetch(
-        `${baseUrl2}/delete/${id}`,
+        `${baseUrl2}/${id}`,
         {
           method: "DELETE",
         }
@@ -129,7 +129,7 @@ const ReceiptDetail = () => {
         <a href="/receipts">← Go back</a>
       </h1>
       <div className="p-2 max-w-4xl mx-auto mb-12">
-        <div className="bg-white shadow-xl rounded-lg p-6 flex flex-col md:flex-row">
+        <div className="bg-white shadow-xl  top-shadow rounded-lg p-6 flex flex-col md:flex-row">
           {/* img section .......*/}
           <div className=" h-full w-full md:w-1/2 md:pr-4 ms:w-full  ms:pr-0 h-112">
             <img
@@ -256,7 +256,7 @@ const ReceiptDetail = () => {
                   </>
                 ) : (
                   <button
-                    className="badge badge-outline  border-blue-800 p-4"
+                    className="badge badge-outline  border-blue-800 p-4 bg-blue-100"
                     onClick={handleEdit}
                   >
                     Edit 🖌️
@@ -265,7 +265,7 @@ const ReceiptDetail = () => {
               </div>
               <div className="flex justify-end mt-6">
                 <button
-                  className="badge badge-outline p-4  border-blue-800"
+                  className="badge badge-outline p-4  border-blue-800 bg-blue-100"
                   onClick={handleDelete}
                 >
                   Delete{"  "}
