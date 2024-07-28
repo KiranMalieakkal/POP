@@ -9,6 +9,12 @@ INSERT INTO Project (title) VALUES ('Project Alpha');
 INSERT INTO Project (title) VALUES ('Project Beta');
 INSERT INTO Project (title) VALUES ('Project Gamma');
 
+INSERT INTO tax_category (title, description) VALUES
+    ('Home sale expenses', 'When you sell your property, you can deduct related expenses such as realtor fees, inspection costs, home staging, and advertising fees.'),
+    ('New additions & upgrades', 'This includes expenses for new construction, expansions, and alterations to your home. Also basic improvements that add new features or upgrade existing ones to a higher standard. You cannot include costs covered by ROT deductions.'),
+    ('Title: Repair & maintentance', 'When you sell your property and make a profit, a 30% capital gains tax applies. You can deduct expenses for repair & maintenance for actions that have improved the condition of the property at the time of sale compared to when it was purchased. You cannot include costs covered by ROT deductions.');
+
+
 -- Create Users
 INSERT INTO pop_user (first_name, last_name, email) VALUES ('John', 'Doe', 'john.doe@example.com');
 INSERT INTO pop_user (first_name, last_name, email) VALUES ('Jane', 'Smith', 'jane.smith@example.com');

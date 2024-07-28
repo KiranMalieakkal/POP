@@ -9,11 +9,11 @@ function BottomNav() {
   }
 
   return (
-    <div className="btm-nav btm-nav-lg">
+    <div className="btm-nav btm-nav-lg bg-blue-100 shadow">
         <Link 
           to="/"
-          className={activeButton === "home" ? "active" : ""}
-          onClick={() => handleClick("home")}
+          className={activeButton === "home" ? "active bg-blue-100" : ""}
+          onClick={() => handleClick("home")} 
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@ function BottomNav() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-6"
+            className="size-7"
           >
             <path
               strokeLinecap="round"
@@ -31,7 +31,7 @@ function BottomNav() {
           </svg>
         </Link>
         <Link to=""
-          className={activeButton === "receipts" ? "active" : ""}
+          className={activeButton === "receipts" ? "active bg-blue-100" : ""}
           onClick={() => handleClick("receipts")}
         >
           <svg
@@ -40,7 +40,7 @@ function BottomNav() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-6"
+            className="size-7"
           >
             <path
               strokeLinecap="round"
@@ -59,7 +59,7 @@ function BottomNav() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-6"
+            className="size-7"
           >
             <path
               strokeLinecap="round"
@@ -78,7 +78,7 @@ function BottomNav() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-6"
+            className="size-7"
           >
             <path
               strokeLinecap="round"
