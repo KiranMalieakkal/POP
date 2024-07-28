@@ -182,13 +182,10 @@ function AddReceipt() {
           <img src={ReturnArrow} />
         </button>
         <form onSubmit={submitForm} className="p-10">
-          <input
-            className="file-input file-input-primary w-full"
-            type="file"
-            onChange={handleFileChange}
-          />
-          {isLoading && <UploadingFile />}
-
+          <div className="border border-dashed border-slate-500 rounded-lg p-3">
+            <input className="w-full" type="file" onChange={handleFileChange} />
+            {isLoading && <UploadingFile />}
+          </div>
           <br />
           <br />
           <label htmlFor="company">Purchased from</label>
