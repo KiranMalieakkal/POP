@@ -45,6 +45,10 @@ const ReceiptDetail = () => {
     "Option 3",
   ];
 
+  // todo: get these as a prop from ListReceipts.tsx
+  // todo: handle the case when the list is empty
+  const existingCurrency = ["EUR", "SEK", "USD"];
+
   // this useState is used to track which field is selected (aka focused).
   // When a certain field is focused we can display FormChoices.tsx (for example)
   const [focusedField, setFocusedField] = useState("");
@@ -182,23 +186,55 @@ const ReceiptDetail = () => {
                   </div>
                 )}
               </div>
-              <div>
-                <label className="label text-gray-300">Amount</label>
-                {editMode ? (
-                  <input
-                    type="text"
-                    name="amount"
-                    value={receiptData.amount}
-                    onChange={handleChange}
-                    className="input bg-slate-100 w-full"
-                  />
-                ) : (
-                  <div className="input input-bordered w-full flex items-center">
-                    <p className="text-gray-700 ">
-                      {receiptData.currency} {receiptData.amount}
-                    </p>
-                  </div>
-                )}
+              <div className="grid grid-cols-[3fr_1fr]">
+                <div className="pr-5">
+                  <label className="label text-gray-300">Amount</label>
+                  {editMode ? (
+                    <input
+                      type="text"
+                      name="amount"
+                      value={receiptData.amount}
+                      onChange={handleChange}
+                      className="input bg-slate-100 w-full"
+                    />
+                  ) : (
+                    <div className="input input-bordered w-full flex items-center">
+                      <p className="text-gray-700 ">{receiptData.amount}</p>
+                    </div>
+                  )}
+                </div>
+                <div className="relative">
+                  <label className="label text-gray-300">Currency</label>
+                  {editMode ? (
+                    <>
+                      <input
+                        list="existingCurrency"
+                        id="currency"
+                        name="currency"
+                        className="input w-full bg-slate-100"
+                        value={receiptData.currency}
+                        onChange={handleChange}
+                        onFocus={() => setFocusedField("currency")}
+                        onBlur={() =>
+                          setFocusedField(
+                            focusedField === "currency" ? "" : focusedField
+                          )
+                        }
+                      />
+                      {focusedField == "currency" && (
+                        <FormChoices
+                          items={existingCurrency}
+                          name="currency"
+                          pickItemFunction={handleFormChoicesSelection}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <div className="input input-bordered w-full flex items-center">
+                      <p className="text-gray-700 ">{receiptData.currency}</p>
+                    </div>
+                  )}
+                </div>
               </div>
               <div>
                 <label className="label text-gray-300">Date</label>
@@ -231,7 +267,7 @@ const ReceiptDetail = () => {
                   </div>
                 )}
               </div>
-              <div>
+              <div className="relative">
                 <label className="label text-gray-300">Project</label>
                 {editMode ? (
                   <>
@@ -328,10 +364,6 @@ const ReceiptDetail = () => {
                 )}
               </div>
             </div>
-            <p>
-              This p-element is only here during development of the
-              FormChoices.tsx component. Todo: remove this element.
-            </p>
           </div>
         </div>
         <Toaster position="top-center" reverseOrder={false} />
