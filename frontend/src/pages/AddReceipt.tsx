@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ReturnArrow from "/return-arrow.svg";
-import UploadingFile from "../components/UploadingFile";
 import { useNavigate } from "react-router-dom";
 import FormChoices from "../components/FormChoices";
 import toast, { Toaster } from "react-hot-toast";
@@ -32,10 +31,6 @@ function AddReceipt() {
   const [focusedField, setFocusedField] = useState("");
 
   const navigate = useNavigate();
-
-  // -------------------------------------------------------------------------------------
-  // useState to show component when extracting text from uploaded file
-  const [isLoading, setIsLoading] = useState(false);
 
   // -------------------------------------------------------------------------------------
   // formData is just a useState that stores an object.
@@ -84,7 +79,6 @@ function AddReceipt() {
   // Function to handle file selection
   // It gets the file from the event and then sets the useState to that file
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsLoading(true);
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setFile(file);
@@ -113,11 +107,9 @@ function AddReceipt() {
         );
 
         if (!response.ok) {
-          setIsLoading(false);
           toast.error("Error extracting text from file");
           throw new Error("Network response was not ok");
         } else {
-          setIsLoading(false);
           toast.dismiss(loadingToastId);
           toast.success("Text extracted successfully");
         }
@@ -215,7 +207,6 @@ function AddReceipt() {
                 "Click to upload file"
               )}
             </label>
-            {isLoading && <UploadingFile />}
           </div>
           <br />
           <br />
