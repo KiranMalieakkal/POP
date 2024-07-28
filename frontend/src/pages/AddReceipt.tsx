@@ -22,7 +22,9 @@ function AddReceipt() {
     "Option 3",
   ];
 
-  const existingCurrency = ["EUR", "SEK", "USD"]; // todo: get these as a prop from ListReceipts.tsx
+  // todo: get these as a prop from ListReceipts.tsx
+  // todo: handle the case when the list is empty
+  const existingCurrency = ["EUR", "SEK", "USD"];
 
   // this useState is used to track which field is selected (aka focused).
   // When a certain field is focused we can display FormChoices.tsx (for example)
@@ -175,7 +177,7 @@ function AddReceipt() {
 
   return (
     <>
-      <div className=" size-full">
+      <div className="size-full">
         <button onClick={handleClick}>
           <img src={ReturnArrow} />
         </button>
