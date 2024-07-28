@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import BottomNav from "../components/BottomNav";
+import bill from "../assets/bill_9564931.png";
 
 type Params = {
   id: string;
@@ -70,16 +71,13 @@ const ReceiptDetail = () => {
   };
 
   const handleSave = async () => {
-    const response = await fetch(
-      `${baseUrl2}/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(receiptData),
-      }
-    );
+    const response = await fetch(`${baseUrl2}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(receiptData),
+    });
     if (response.ok) {
       setEditMode(false);
       toast.success("Changes saved successfully 🎉");
@@ -101,12 +99,9 @@ const ReceiptDetail = () => {
       "Are you sure you want to delete this receipt?"
     );
     if (confirmDelete) {
-      const response = await fetch(
-        `${baseUrl2}/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${baseUrl2}/${id}`, {
+        method: "DELETE",
+      });
       if (response.ok) {
         toast.success(`Receipt has been deleted successfully ♳.`);
         setTimeout(() => {
@@ -125,24 +120,27 @@ const ReceiptDetail = () => {
 
   return (
     <>
-      <h1 className="pt-3 pr-6 pl-6 pb-2">
+      <h1 className="pt-2 pr-6 pl-6 pb-2">
         <a href="/receipts">← Go back</a>
       </h1>
-      <div className="p-2 max-w-4xl mx-auto mb-12">
-        <div className="bg-white shadow-xl  top-shadow rounded-lg p-6 flex flex-col md:flex-row">
+      <div className="p-2 max-w-4xl mx-auto pb-20 bg-gradient-to-b from-blue-50 rounded-xl">
+        <div className="bg-white shadow-xl  top-shadow rounded-lg p-5 flex flex-col md:flex-row">
           {/* img section .......*/}
           <div className=" h-full w-full md:w-1/2 md:pr-4 ms:w-full  ms:pr-0 h-112">
             <img
-              src={imgFile} /* {receiptData.img} */
+              src={imgFile}
               alt="Receipt"
               className="w-full h-92 max-h-92 object-contain max-h-full"
             />
           </div>
           {/* form section .......*/}
           <div className="w-full md:w-1/2 pl-4 sm:text-center md:text-left">
-            <h6 className="text-xl font-semibold mt-4 text-blue-900">
-              Receipt Details
-            </h6>
+            <div className="flex items-center">
+              <h6 className="text-xl font-semibold mt-4 lg:mt-0 md:mt-0 text-blue-900 font-serif">
+                Receipt Details
+              </h6>
+              <img src={bill} alt="" className="w-7 h-7 mt-3 ml-2" />
+            </div>
             {alertMessage && (
               <div className="alert alert-error mb-4">
                 <div>{alertMessage}</div>
@@ -151,20 +149,22 @@ const ReceiptDetail = () => {
             {message && <div className="text-green-500 mb-4">{message}</div>}
             <div className="space-y-4">
               <div>
-                <label className="label font-serif font-bold">Company</label>
+                <label className="label font-serif font-bold ">Company</label>
                 {editMode ? (
                   <input
                     type="text"
                     name="company"
                     value={receiptData.company}
                     onChange={handleChange}
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full bg-gray-100 text-blue-900"
                   />
                 ) : (
-                  <p className="text-gray-700 pl-1">{receiptData.company}</p>
+                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
+                    {receiptData.company}
+                  </p>
                 )}
               </div>
-              <div>
+              <div className="!mt-1">
                 <label className="label font-serif font-bold">Amount</label>
                 {editMode ? (
                   <input
@@ -172,15 +172,15 @@ const ReceiptDetail = () => {
                     name="amount"
                     value={receiptData.amount}
                     onChange={handleChange}
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full bg-gray-100 text-blue-900"
                   />
                 ) : (
-                  <p className="text-gray-700 ">
+                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
                     {receiptData.currency} {receiptData.amount}
                   </p>
                 )}
               </div>
-              <div>
+              <div className="!mt-1">
                 <label className="label font-serif font-bold">Date</label>
                 {editMode ? (
                   <input
@@ -188,13 +188,15 @@ const ReceiptDetail = () => {
                     name="date"
                     value={receiptData.purchaseDate}
                     onChange={handleChange}
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full bg-gray-100 text-blue-900"
                   />
                 ) : (
-                  <p className="text-gray-700">{receiptData.purchaseDate}</p>
+                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
+                    {receiptData.purchaseDate}
+                  </p>
                 )}
               </div>
-              <div>
+              <div className="!mt-1">
                 <label className="label font-serif font-bold">
                   Text Content
                 </label>
@@ -203,13 +205,15 @@ const ReceiptDetail = () => {
                     name="textContent"
                     value={receiptData.textContent}
                     onChange={handleChange}
-                    className="textarea textarea-bordered w-full"
+                    className="textarea textarea-bordered w-full bg-gray-100 text-blue-900"
                   />
                 ) : (
-                  <p className="text-gray-700">{receiptData.textContent}</p>
+                  <p className="max-h-[100px] lg:max-h-[100px] xl:max-h-[100px] mb-2 overflow-y-auto  border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
+                    {receiptData.textContent}
+                  </p>
                 )}
               </div>
-              <div>
+              <div className="!mt-1">
                 <label className="label font-serif font-bold">Project</label>
                 {editMode ? (
                   <input
@@ -217,19 +221,21 @@ const ReceiptDetail = () => {
                     name="project"
                     value={receiptData.project ?? ""}
                     onChange={handleChange}
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full bg-gray-100 text-blue-900"
                   />
                 ) : (
-                  <p className="text-gray-700">{receiptData.project}</p>
+                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
+                    {receiptData.project}
+                  </p>
                 )}
               </div>
             </div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between">
               <div className="flex justify-end mt-6">
                 {editMode ? (
                   <>
                     <button
-                      className="badge badge-outline p-4 m-1 mt-2"
+                      className="badge badge-outline p-4 mr-1 mt-3 hover:text-blue-500"
                       onClick={handleBack}
                     >
                       <svg
@@ -248,7 +254,7 @@ const ReceiptDetail = () => {
                       </svg>
                     </button>
                     <button
-                      className="badge badge-outline p-4 mt-2 bg-blue-800 text-white"
+                      className="badge badge-outline p-5 mt-2 bg-blue-800 text-white hover:text-blue-300"
                       onClick={handleSave}
                     >
                       Save Changes
@@ -256,16 +262,30 @@ const ReceiptDetail = () => {
                   </>
                 ) : (
                   <button
-                    className="badge badge-outline  border-blue-800 p-4 bg-blue-100"
+                    className="badge badge-outline mt-1 border-blue-800 p-5 bg-blue-800 text-white hover:text-blue-300"
                     onClick={handleEdit}
                   >
-                    Edit 🖌️
+                    Edit{"  "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-6 hover:text-blue-300"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                      />
+                    </svg>
                   </button>
                 )}
               </div>
-              <div className="flex justify-end mt-6">
+              <div className="flex justify-end mt-8">
                 <button
-                  className="badge badge-outline p-4  border-blue-800 bg-blue-100"
+                  className="badge badge-outline p-5  border-blue-100 bg-blue-800 text-white hover:text-blue-300"
                   onClick={handleDelete}
                 >
                   Delete{"  "}
@@ -275,7 +295,7 @@ const ReceiptDetail = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-6"
+                    className="size-6 hover:text-blue-300"
                   >
                     <path
                       strokeLinecap="round"
