@@ -4,7 +4,6 @@ import Dashboard from "./pages/DashBoard";
 import Home from "./pages/Home";
 import TaxInfo from "./pages/TaxInfo";
 import ViewProject from "./pages/ViewProject";
-import SelectTaxCategory1 from "./pages/SelectTaxCategory2.tsx";
 
 function App() {
   return (
@@ -16,7 +15,6 @@ function App() {
           <Route path="/receipts/*" element={<Dashboard />} />
           <Route path="/viewproject" element={<ViewProject />} />
           
-          <Route path="/viewtaxproject" element={<SelectTaxCategory1 />} />
         </Routes>
       </BrowserRouter>
 
