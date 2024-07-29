@@ -70,8 +70,8 @@ const ViewProject = () => {
 
   useEffect(() => {
     const fetchTaxCategories = async () => {
+     
       if (!projectData?.tax_category) return;
-
       try {
         console.log("taxCategoryID: " + projectData?.tax_category);
         const response = await fetch(
@@ -204,7 +204,7 @@ const ViewProject = () => {
         <div className="flex flex-wrap max-h-[550px] lg:max-h-none xl:max-h-none mb-2 overflow-y-auto">
           <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 h-64 w-full lg:w-[488.3%] md:w-[477.7%]">
             <img src={save} alt="" className="w-16 h-16 mb-4" />
-            <h2 className="text-4xl text-blue-900 font-bold mb-2">5 Years</h2>
+            <h2 className="text-4xl text-blue-300 font-bold mb-2">5 Years</h2>
             <p className="text-center">
               Must have been done within the last 5 years.
             </p>
@@ -223,7 +223,7 @@ const ViewProject = () => {
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full  lg:w-[48.3%] md:w-[47.7%]">
-            <h2 className="text-4xl text-blue-900 font-bold mb-2">5000+</h2>
+            <h2 className="text-4xl text-blue-300 font-bold mb-2">5000+</h2>
             <p className="text-center">
               To qualify for deductions, the total improvement expenses in the
               calendar year must be at least 5,000 SEK.
