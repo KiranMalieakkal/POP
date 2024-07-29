@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ReturnArrow from "/return-arrow.svg";
 import { useNavigate } from "react-router-dom";
 import FormChoices from "../components/FormChoices";
 import toast, { Toaster } from "react-hot-toast";
