@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
+/* import Footer from "../components/Footer";
 import Top_Nav from "../components/Top_Nav";
-import BottomNav from "../components/BottomNav";
+import BottomNav from "../components/BottomNav"; */
 import LoginButton from "../components/LoginButton";
 import LogoutButton from "../components/LogoutButton";
 
