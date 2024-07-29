@@ -7,6 +7,7 @@ import SelectTaxCategory3 from "./SelectTaxCategory3";
 
 function SelectTaxCategory() {
   const [taxCategory, setTaxCategory] = useState<number>();
+  const [projectName, setProjectName] = useState<string>();
   const [currentStep, setCurrentStep] = useState(1);
 
   // -------------------------------------------------------------------------------------
@@ -17,6 +18,7 @@ function SelectTaxCategory() {
 
   const prevStep = () => {
     setCurrentStep((prevStep) => Math.max(prevStep - 1, 1));
+    setProjectName("");
   };
 
   // -------------------------------------------------------------------------------------
@@ -30,13 +32,35 @@ function SelectTaxCategory() {
       case 2:
         return <SelectTaxCategory2 taxCategory={taxCategory!} />;
       case 3:
-        return <SelectTaxCategory3 />;
+        return (
+          <SelectTaxCategory3 selectProjectName={handleSelectProjectName} />
+        );
       default:
         return (
           <SelectTaxCategory1 openTaxCategory={handleButtonClickToNextPage} />
         );
     }
   };
+  // -------------------------------------------------------------------------------------
+  // This function triggers when the user selects a project (last step of the wizard)
+  // This will activate the "finish" button which will then do a POST to the server.
+  function handleSelectProjectName(selectedProjectName: string) {
+    setProjectName(selectedProjectName);
+  }
+
+  // -------------------------------------------------------------------------------------
+  // POST to the server (also check if projectName is truthy and navigate back to Tax.tsx)
+  // todo: do the function.
+  function postTaxCategory() {
+    if (!projectName) {
+      // todo: when projectName is not set we should show a toast with some error message
+      // maybe: "select a project from the list"
+      return;
+    }
+    // todo: do the post here and also navigate back to Tax.tsx
+    console.log("Tax category selected: " + taxCategory);
+    console.log("Tax category selected: " + projectName);
+  }
 
   // -------------------------------------------------------------------------------------
   // This function is sent as a prop to a component to enable it to render a new page
@@ -63,8 +87,15 @@ function SelectTaxCategory() {
           </button>
         )}
         {currentStep === 3 && (
-          <button className="badge p-4 bg-gray-300 text-gray-400">
-            Finito
+          <button
+            onClick={postTaxCategory}
+            className={`badge p-4 ${
+              projectName
+                ? "bg-blue-700 text-white"
+                : "bg-gray-300 text-gray-400"
+            }`}
+          >
+            Save
           </button>
         )}
       </div>

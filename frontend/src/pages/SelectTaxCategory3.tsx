@@ -48,7 +48,11 @@ export type taxCategory = {
   description: string;
 };
 
-function SelectTaxCategory3() {
+type Props = {
+  selectProjectName: (projectName: string) => void;
+};
+
+function SelectTaxCategory3({ selectProjectName }: Props) {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [projects, setProjects] = useState<project[]>([]);
   const [taxCategories, setTaxCategories] = useState<taxCategory[]>([]);
@@ -156,6 +160,7 @@ function SelectTaxCategory3() {
     console.log("you clicked " + projectName);
     setprojectName(projectName);
     setActiveProjectName(projectName);
+    selectProjectName(projectName);
   };
 
   function handleSubmit(event: React.FormEvent) {
@@ -197,13 +202,13 @@ function SelectTaxCategory3() {
           </svg>
           backa?
         </button> */}
-        <button
+        {/* <button
           className={`btn btn-primary min-h-8 h-8 ${
             projectName === "" ? "btn-disabled" : ""
           }`}
         >
           Finish
-        </button>
+        </button> */}
       </div>
       <div className="flex justify-center items-center">
         <img src={img} alt="Card Image" className="object-scale-down h-40 " />
