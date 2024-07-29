@@ -1,11 +1,13 @@
 import { useState } from "react";
 import ReturnArrow from "/return-arrow.svg";
-import UploadingFile from "../components/UploadingFile";
 import { useNavigate } from "react-router-dom";
+import FormChoices from "../components/FormChoices";
+import toast, { Toaster } from "react-hot-toast";
 
 type Receipt = {
   company: string;
   amount: number;
+  currency: string;
   purchaseDate: string;
   textContent: string;
   project?: string;
@@ -19,11 +21,16 @@ function AddReceipt() {
     "Tax evasion project 2025",
     "Option 3",
   ];
-  const navigate = useNavigate();
 
-  // -------------------------------------------------------------------------------------
-  // useState to show component when extracting text from uploaded file
-  const [isLoading, setIsLoading] = useState(false);
+  // todo: get these as a prop from ListReceipts.tsx
+  // todo: handle the case when the list is empty
+  const existingCurrency = ["EUR", "SEK", "USD"];
+
+  // this useState is used to track which field is selected (aka focused).
+  // When a certain field is focused we can display FormChoices.tsx (for example)
+  const [focusedField, setFocusedField] = useState("");
+
+  const navigate = useNavigate();
 
   // -------------------------------------------------------------------------------------
   // formData is just a useState that stores an object.
@@ -31,6 +38,7 @@ function AddReceipt() {
   const [formData, setFormData] = useState<Receipt>({
     company: "",
     amount: 0,
+    currency: "SEK",
     purchaseDate: "",
     textContent: "",
     project: "",
@@ -52,21 +60,42 @@ function AddReceipt() {
   };
 
   // -------------------------------------------------------------------------------------
+  // This function also sets the formData useState. But this function not used on the form
+  // fields change, but rather via an external component
+  const handleFormChoicesSelection = (name: string, value: string) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    //setFocusedField(""); // Reset focus after selection. Uncomment if behaviour is off...
+  };
+
+  // -------------------------------------------------------------------------------------
   // State to manage the selected file
   const [file, setFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   // -------------------------------------------------------------------------------------
   // Function to handle file selection
   // It gets the file from the event and then sets the useState to that file
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsLoading(true);
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setFile(file);
 
+      // Reader to display image preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+
       // Create FormData and append the file
       const formData = new FormData();
       formData.append("file", file);
+
+      // Show loading toast
+      const loadingToastId = toast.loading("Uploading and extracting text...");
 
       try {
         const response = await fetch(
@@ -78,16 +107,18 @@ function AddReceipt() {
         );
 
         if (!response.ok) {
-          setIsLoading(false);
+          toast.error("Error extracting text from file");
           throw new Error("Network response was not ok");
         } else {
-          setIsLoading(false);
+          toast.dismiss(loadingToastId);
+          toast.success("Text extracted successfully");
         }
 
         const result = await response.json();
         autofillEmptyFields(result);
       } catch (error) {
         console.error("Error uploading file:", error);
+        toast.dismiss(loadingToastId);
       }
     }
   };
@@ -99,6 +130,7 @@ function AddReceipt() {
     setFormData((prevFormData) => ({
       company: prevFormData.company || data.company || "",
       amount: prevFormData.amount || data.amount,
+      currency: prevFormData.currency || data.currency || "SEK",
       purchaseDate: prevFormData.purchaseDate || data.purchaseDate,
       textContent: prevFormData.textContent || data.textContent || "",
     }));
@@ -122,11 +154,11 @@ function AddReceipt() {
     formDataToSend.append("file", file);
     formDataToSend.append("company", formData.company);
     formDataToSend.append("amount", formData.amount.toString()); // Convert amount to string
+    formDataToSend.append("currency", formData.currency);
     formDataToSend.append("purchaseDate", formData.purchaseDate);
     formDataToSend.append("textContent", formData.textContent);
     formDataToSend.append("project", formData.project || "");
     formDataToSend.append("email", "jane.smith@example.com"); // todo: do not hardcode email. should come from Auth0s JWT
-    formDataToSend.append("currency", "SEK"); // todo: currency is hardcoded here. should be set in form
 
     try {
       const response = await fetch("http://localhost:8080/api/receipts", {
@@ -153,18 +185,29 @@ function AddReceipt() {
 
   return (
     <>
-      <div className=" size-full">
+      <div className="size-full">
         <button onClick={handleClick}>
           <img src={ReturnArrow} />
         </button>
         <form onSubmit={submitForm} className="p-10">
-          <input
-            className="file-input file-input-primary w-full"
-            type="file"
-            onChange={handleFileChange}
-          />
-          {isLoading && <UploadingFile />}
-
+          <div className="border border-dashed border-slate-500 rounded-lg p-3 relative">
+            <input
+              type="file"
+              id="fileInput"
+              className="w-full absolute inset-0 opacity-0 cursor-pointer"
+              onChange={handleFileChange}
+            />
+            <label
+              htmlFor="fileInput"
+              className="w-full h-full flex justify-center items-center cursor-pointer"
+            >
+              {imagePreview ? (
+                <img src={imagePreview} alt="Preview" />
+              ) : (
+                "Click to upload file"
+              )}
+            </label>
+          </div>
           <br />
           <br />
           <label htmlFor="company">Purchased from</label>
@@ -180,17 +223,47 @@ function AddReceipt() {
           />
           <br />
           <br />
-          <label htmlFor="amount">Amount</label>
-          <br />
-          <input
-            type="number"
-            step="0.01"
-            id="amount"
-            name="amount"
-            className="input w-full bg-slate-100"
-            value={formData.amount}
-            onChange={handleChange}
-          />
+          <div className="grid grid-cols-[3fr_1fr]">
+            <div className="pr-5">
+              <label htmlFor="amount">Amount</label>
+              <br />
+              <input
+                type="number"
+                step="0.01"
+                id="amount"
+                name="amount"
+                className="input w-full bg-slate-100"
+                value={formData.amount}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="currency">Currency</label>
+              <br></br>
+              <input
+                list="existingCurrency"
+                id="currency"
+                name="currency"
+                className="input w-full bg-slate-100"
+                value={formData.currency}
+                onChange={handleChange}
+                onFocus={() => setFocusedField("currency")}
+                onBlur={() =>
+                  setFocusedField(
+                    focusedField === "currency" ? "" : focusedField
+                  )
+                }
+              />
+              {focusedField == "currency" && (
+                <FormChoices
+                  items={existingCurrency}
+                  name="currency"
+                  pickItemFunction={handleFormChoicesSelection}
+                />
+              )}
+            </div>
+          </div>
+
           <br />
           <br />
           <label htmlFor="date">Date</label>
@@ -198,8 +271,7 @@ function AddReceipt() {
           <input
             type="date"
             id="date"
-            name="date"
-            placeholder="date of purchase"
+            name="purchaseDate"
             className="input w-full bg-slate-100"
             value={formData.purchaseDate}
             onChange={handleChange}
@@ -218,20 +290,29 @@ function AddReceipt() {
           <br />
           <br />
 
-          <label htmlFor="project">Project (optional)</label>
-          <br></br>
-          <input
-            list="existingProjects"
-            id="myInput"
-            name="myInput"
-            className="input w-full bg-slate-100"
-            onChange={handleChange}
-          />
-          <datalist id="existingProjects" className="bg-slate-500">
-            {existingProjects.map((option, index) => (
-              <option key={index} value={option} />
-            ))}
-          </datalist>
+          <div className="relative">
+            <label htmlFor="project">Project (optional)</label>
+            <br></br>
+            <input
+              list="existingProjects"
+              id="project"
+              name="project"
+              className="input w-full bg-slate-100"
+              value={formData.project}
+              onChange={handleChange}
+              onFocus={() => setFocusedField("project")}
+              onBlur={() =>
+                setFocusedField(focusedField === "project" ? "" : focusedField)
+              }
+            />
+            {focusedField === "project" && (
+              <FormChoices
+                items={existingProjects}
+                name="project"
+                pickItemFunction={handleFormChoicesSelection}
+              />
+            )}
+          </div>
 
           <br></br>
           <br></br>
@@ -247,6 +328,7 @@ function AddReceipt() {
         <br />
         <br />
       </div>
+      <Toaster position="top-center" reverseOrder={false} />
     </>
   );
 }
