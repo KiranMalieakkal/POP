@@ -240,8 +240,8 @@ const ReceiptDetail = () => {
                 <label className="label text-gray-300">Date</label>
                 {editMode ? (
                   <input
-                    type="text"
-                    name="date"
+                    type="date"
+                    name="purchaseDate"
                     value={receiptData.purchaseDate}
                     onChange={handleChange}
                     className="input bg-slate-100 w-full"
