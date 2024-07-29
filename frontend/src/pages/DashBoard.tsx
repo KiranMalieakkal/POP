@@ -29,7 +29,7 @@ function Dashboard() {
           <Route path=":id" element={<ViewReceipt />} />
           <Route path="/addReceipt" element={<AddReceipt />} />
           <Route path="selectTax" element={<SelectTax />} />
-          <Route path="tax/:id" element={<ViewProject />} />
+          <Route path="tax/:id" element={<ViewProject />} />  
         </Routes>
       </div>
       <div>
