@@ -70,7 +70,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="hero bg-base-200 min-h-[50vh] bg-blue-50">
+      <div className="hero bg-base-200 min-h-[50vh]">
         <div className="hero-content flex-col gap-20 lg:flex-row">
           <div className="card glass w-96">
             <figure>

@@ -108,6 +108,7 @@ function Tax() {
                     <tr
                       onClick={() => {
                         handleClick(project);
+                        handleClick(project);
                       }}
                       key={project.id}
                       className="hover:bg-gray-100 transition-transform transform hover:scale-105"

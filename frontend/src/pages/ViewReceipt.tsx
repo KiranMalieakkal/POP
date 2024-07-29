@@ -148,15 +148,15 @@ const ReceiptDetail = () => {
 
   return (
     <>
-      <h1 className="pt-3 pr-6 pl-6 pb-2">
+      <h1 className="pt-2 pr-6 pl-6 pb-2">
         <a href="/receipts">← Go back</a>
       </h1>
-      <div className="p-2 max-w-4xl mx-auto mb-12">
-        <div className="bg-white shadow-xl  top-shadow rounded-lg p-6 flex flex-col md:flex-row">
+      <div className="p-2 max-w-4xl mx-auto pb-20 bg-gradient-to-b from-blue-50 rounded-xl">
+        <div className="bg-white shadow-xl  top-shadow rounded-lg p-5 flex flex-col md:flex-row">
           {/* img section .......*/}
           <div className="border border-gray-300 rounded-lg p-5 h-full w-full md:w-1/2 md:pr-4 ms:w-full  ms:pr-0 h-112">
             <img
-              src={imgFile} /* {receiptData.img} */
+              src={imgFile}
               alt="Receipt"
               className="w-full h-92 max-h-92 object-contain max-h-full"
             />
@@ -299,18 +299,18 @@ const ReceiptDetail = () => {
                 )}
               </div>
             </div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between">
               <div className="flex justify-end mt-6">
                 {editMode ? (
                   <>
                     <button
-                      className="badge badge-outline p-4 m-1 mt-2"
+                      className="badge badge-outline p-4 mr-1 mt-3 hover:text-blue-500"
                       onClick={handleBack}
                     >
                       Cancel
                     </button>
                     <button
-                      className="badge badge-outline p-4 mt-2 bg-blue-800 text-white"
+                      className="badge badge-outline p-5 mt-2 bg-blue-800 text-white hover:text-blue-300"
                       onClick={handleSave}
                     >
                       Save Changes
