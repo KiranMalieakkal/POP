@@ -8,7 +8,11 @@ import tax1 from "../assets/tax_1.svg";
 import tax2 from "../assets/tax_2.svg";
 import tax3 from "../assets/tax_3.svg";
 
-function SelectTaxCategory1() {
+type Props = {
+  openTaxCategory: (taxCategory: number) => void;
+};
+
+function SelectTaxCategory1({ openTaxCategory }: Props) {
   return (
     <>
       <div className="flex flex-col text-center max-w-screen-sm mx-auto">
@@ -24,7 +28,10 @@ function SelectTaxCategory1() {
             When you sell your property, you can deduct related expenses such as
             realtor fees, inspection costs, home staging, and advertising fees.
           </p>
-          <button className="border p-2 w-full text-blue-700 bg-white rounded-lg">
+          <button
+            onClick={() => openTaxCategory(1)}
+            className="border p-2 w-full text-blue-700 bg-white rounded-lg"
+          >
             Explore
           </button>
         </div>
@@ -38,7 +45,10 @@ function SelectTaxCategory1() {
             expansions, and alterations to your home. Also basic improvements
             that add new features or upgrade existing ones to a higher standard.
           </p>
-          <button className="border p-2 w-full text-blue-700 bg-white rounded-lg">
+          <button
+            onClick={() => openTaxCategory(2)}
+            className="border p-2 w-full text-blue-700 bg-white rounded-lg"
+          >
             Explore
           </button>
         </div>
@@ -54,7 +64,10 @@ function SelectTaxCategory1() {
             actions that have improved the condition of the property at the time
             of sale compared to when it was purchased.
           </p>
-          <button className="border p-2 w-full text-blue-700 bg-white rounded-lg">
+          <button
+            onClick={() => openTaxCategory(3)}
+            className="border p-2 w-full text-blue-700 bg-white rounded-lg"
+          >
             Explore
           </button>
         </div>
