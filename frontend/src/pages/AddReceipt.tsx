@@ -1,8 +1,8 @@
 import { useState } from "react";
 import ReturnArrow from "/return-arrow.svg";
-import UploadingFile from "../components/UploadingFile";
 import { useNavigate } from "react-router-dom";
 import FormChoices from "../components/FormChoices";
+import toast, { Toaster } from "react-hot-toast";
 
 type Receipt = {
   company: string;
@@ -31,10 +31,6 @@ function AddReceipt() {
   const [focusedField, setFocusedField] = useState("");
 
   const navigate = useNavigate();
-
-  // -------------------------------------------------------------------------------------
-  // useState to show component when extracting text from uploaded file
-  const [isLoading, setIsLoading] = useState(false);
 
   // -------------------------------------------------------------------------------------
   // formData is just a useState that stores an object.
@@ -77,19 +73,29 @@ function AddReceipt() {
   // -------------------------------------------------------------------------------------
   // State to manage the selected file
   const [file, setFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   // -------------------------------------------------------------------------------------
   // Function to handle file selection
   // It gets the file from the event and then sets the useState to that file
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsLoading(true);
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setFile(file);
 
+      // Reader to display image preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+
       // Create FormData and append the file
       const formData = new FormData();
       formData.append("file", file);
+
+      // Show loading toast
+      const loadingToastId = toast.loading("Uploading and extracting text...");
 
       try {
         const response = await fetch(
@@ -101,16 +107,18 @@ function AddReceipt() {
         );
 
         if (!response.ok) {
-          setIsLoading(false);
+          toast.error("Error extracting text from file");
           throw new Error("Network response was not ok");
         } else {
-          setIsLoading(false);
+          toast.dismiss(loadingToastId);
+          toast.success("Text extracted successfully");
         }
 
         const result = await response.json();
         autofillEmptyFields(result);
       } catch (error) {
         console.error("Error uploading file:", error);
+        toast.dismiss(loadingToastId);
       }
     }
   };
@@ -182,13 +190,24 @@ function AddReceipt() {
           <img src={ReturnArrow} />
         </button>
         <form onSubmit={submitForm} className="p-10">
-          <input
-            className="file-input file-input-primary w-full"
-            type="file"
-            onChange={handleFileChange}
-          />
-          {isLoading && <UploadingFile />}
-
+          <div className="border border-dashed border-slate-500 rounded-lg p-3 relative">
+            <input
+              type="file"
+              id="fileInput"
+              className="w-full absolute inset-0 opacity-0 cursor-pointer"
+              onChange={handleFileChange}
+            />
+            <label
+              htmlFor="fileInput"
+              className="w-full h-full flex justify-center items-center cursor-pointer"
+            >
+              {imagePreview ? (
+                <img src={imagePreview} alt="Preview" />
+              ) : (
+                "Click to upload file"
+              )}
+            </label>
+          </div>
           <br />
           <br />
           <label htmlFor="company">Purchased from</label>
@@ -309,6 +328,7 @@ function AddReceipt() {
         <br />
         <br />
       </div>
+      <Toaster position="top-center" reverseOrder={false} />
     </>
   );
 }

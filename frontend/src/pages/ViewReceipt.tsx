@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import BottomNav from "../components/BottomNav";
-import bill from "../assets/bill_9564931.png";
+import FormChoices from "../components/FormChoices";
 
 type Params = {
   id: string;
@@ -37,6 +37,22 @@ const ReceiptDetail = () => {
   const [message, setMessage] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
 
+  // todo: this is the list of existing project the user can choose from.
+  // it should be sent to the component as a prop
+  const existingProjects = [
+    "Kirans work commute 2024",
+    "Tax evasion project 2025",
+    "Option 3",
+  ];
+
+  // todo: get these as a prop from ListReceipts.tsx
+  // todo: handle the case when the list is empty
+  const existingCurrency = ["EUR", "SEK", "USD"];
+
+  // this useState is used to track which field is selected (aka focused).
+  // When a certain field is focused we can display FormChoices.tsx (for example)
+  const [focusedField, setFocusedField] = useState("");
+
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
   const baseUrl2 = "http://localhost:8080/api/receipts";
 
@@ -44,7 +60,7 @@ const ReceiptDetail = () => {
     const fetchReceiptData = async () => {
       const response = await fetch(`${baseUrl2}/${id}`);
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
       setReceiptData(data);
     };
     fetchReceiptData();
@@ -69,6 +85,18 @@ const ReceiptDetail = () => {
     const { name, value } = e.target;
     setReceiptData({ ...receiptData, [name]: value });
   };
+
+  // -------------------------------------------------------------------------------------
+  // This function also sets the formData useState. But this function not used on the form
+  // fields change, but rather via an external component
+  const handleFormChoicesSelection = (name: string, value: string) => {
+    setReceiptData({
+      ...receiptData,
+      [name]: value,
+    });
+    //setFocusedField(""); // Reset focus after selection. Uncomment if behaviour is off...
+  };
+  // -------------------------------------------------------------------------------------
 
   const handleSave = async () => {
     const response = await fetch(`${baseUrl2}/${id}`, {
@@ -126,7 +154,7 @@ const ReceiptDetail = () => {
       <div className="p-2 max-w-4xl mx-auto pb-20 bg-gradient-to-b from-blue-50 rounded-xl">
         <div className="bg-white shadow-xl  top-shadow rounded-lg p-5 flex flex-col md:flex-row">
           {/* img section .......*/}
-          <div className=" h-full w-full md:w-1/2 md:pr-4 ms:w-full  ms:pr-0 h-112">
+          <div className="border border-gray-300 rounded-lg p-5 h-full w-full md:w-1/2 md:pr-4 ms:w-full  ms:pr-0 h-112">
             <img
               src={imgFile}
               alt="Receipt"
@@ -135,98 +163,139 @@ const ReceiptDetail = () => {
           </div>
           {/* form section .......*/}
           <div className="w-full md:w-1/2 pl-4 sm:text-center md:text-left">
-            <div className="flex items-center">
-              <h6 className="text-xl font-semibold mt-4 lg:mt-0 md:mt-0 text-blue-900 font-serif">
-                Receipt Details
-              </h6>
-              <img src={bill} alt="" className="w-7 h-7 mt-3 ml-2" />
-            </div>
             {alertMessage && (
               <div className="alert alert-error mb-4">
                 <div>{alertMessage}</div>
               </div>
             )}
             {message && <div className="text-green-500 mb-4">{message}</div>}
-            <div className="space-y-4">
+            <div className="space-y-4 text-left">
               <div>
-                <label className="label font-serif font-bold ">Company</label>
+                <label className="label text-gray-300">Company</label>
                 {editMode ? (
                   <input
                     type="text"
                     name="company"
                     value={receiptData.company}
                     onChange={handleChange}
-                    className="input input-bordered w-full bg-gray-100 text-blue-900"
+                    className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
-                    {receiptData.company}
-                  </p>
+                  <div className="input input-bordered w-full flex items-center">
+                    <p className="w-full">{receiptData.company}</p>
+                  </div>
                 )}
               </div>
-              <div className="!mt-1">
-                <label className="label font-serif font-bold">Amount</label>
-                {editMode ? (
-                  <input
-                    type="text"
-                    name="amount"
-                    value={receiptData.amount}
-                    onChange={handleChange}
-                    className="input input-bordered w-full bg-gray-100 text-blue-900"
-                  />
-                ) : (
-                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
-                    {receiptData.currency} {receiptData.amount}
-                  </p>
-                )}
+              <div className="grid grid-cols-[3fr_1fr]">
+                <div className="pr-5">
+                  <label className="label text-gray-300">Amount</label>
+                  {editMode ? (
+                    <input
+                      type="text"
+                      name="amount"
+                      value={receiptData.amount}
+                      onChange={handleChange}
+                      className="input bg-slate-100 w-full"
+                    />
+                  ) : (
+                    <div className="input input-bordered w-full flex items-center">
+                      <p className="text-gray-700 ">{receiptData.amount}</p>
+                    </div>
+                  )}
+                </div>
+                <div className="relative">
+                  <label className="label text-gray-300">Currency</label>
+                  {editMode ? (
+                    <>
+                      <input
+                        list="existingCurrency"
+                        id="currency"
+                        name="currency"
+                        className="input w-full bg-slate-100"
+                        value={receiptData.currency}
+                        onChange={handleChange}
+                        onFocus={() => setFocusedField("currency")}
+                        onBlur={() =>
+                          setFocusedField(
+                            focusedField === "currency" ? "" : focusedField
+                          )
+                        }
+                      />
+                      {focusedField == "currency" && (
+                        <FormChoices
+                          items={existingCurrency}
+                          name="currency"
+                          pickItemFunction={handleFormChoicesSelection}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <div className="input input-bordered w-full flex items-center">
+                      <p className="text-gray-700 ">{receiptData.currency}</p>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="!mt-1">
-                <label className="label font-serif font-bold">Date</label>
+              <div>
+                <label className="label text-gray-300">Date</label>
                 {editMode ? (
                   <input
-                    type="text"
-                    name="date"
+                    type="date"
+                    name="purchaseDate"
                     value={receiptData.purchaseDate}
                     onChange={handleChange}
-                    className="input input-bordered w-full bg-gray-100 text-blue-900"
+                    className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
-                    {receiptData.purchaseDate}
-                  </p>
+                  <div className="input input-bordered w-full flex items-center">
+                    <p className="text-gray-700">{receiptData.purchaseDate}</p>
+                  </div>
                 )}
               </div>
-              <div className="!mt-1">
-                <label className="label font-serif font-bold">
-                  Text Content
-                </label>
+              <div>
+                <label className="label text-gray-300">Text Content</label>
                 {editMode ? (
                   <textarea
                     name="textContent"
                     value={receiptData.textContent}
                     onChange={handleChange}
-                    className="textarea textarea-bordered w-full bg-gray-100 text-blue-900"
+                    className="textarea bg-slate-100 w-full h-40"
                   />
                 ) : (
-                  <p className="max-h-[100px] lg:max-h-[100px] xl:max-h-[100px] mb-2 overflow-y-auto  border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
-                    {receiptData.textContent}
-                  </p>
+                  <div className="w-full items-center rounded-lg border border-slate-300 p-3">
+                    <p className="text-gray-700">{receiptData.textContent}</p>
+                  </div>
                 )}
               </div>
-              <div className="!mt-1">
-                <label className="label font-serif font-bold">Project</label>
+              <div className="relative">
+                <label className="label text-gray-300">Project</label>
                 {editMode ? (
-                  <input
-                    type="text"
-                    name="project"
-                    value={receiptData.project ?? ""}
-                    onChange={handleChange}
-                    className="input input-bordered w-full bg-gray-100 text-blue-900"
-                  />
+                  <>
+                    <input
+                      type="text"
+                      name="project"
+                      value={receiptData.project ?? ""}
+                      onChange={handleChange}
+                      className="input bg-slate-100 w-full"
+                      onFocus={() => setFocusedField("project")}
+                      onBlur={() =>
+                        setFocusedField(
+                          focusedField === "project" ? "" : focusedField
+                        )
+                      }
+                    />
+                    {focusedField === "project" && (
+                      <FormChoices
+                        items={existingProjects}
+                        name="project"
+                        pickItemFunction={handleFormChoicesSelection}
+                      />
+                    )}
+                  </>
                 ) : (
-                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
-                    {receiptData.project}
-                  </p>
+                  <div className="input input-bordered w-full flex items-center">
+                    <p className="text-gray-700">{receiptData.project}</p>
+                  </div>
                 )}
               </div>
             </div>
@@ -238,20 +307,7 @@ const ReceiptDetail = () => {
                       className="badge badge-outline p-4 mr-1 mt-3 hover:text-blue-500"
                       onClick={handleBack}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="size-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15.75 19.5 8.25 12l7.5-7.5"
-                        />
-                      </svg>
+                      Cancel
                     </button>
                     <button
                       className="badge badge-outline p-5 mt-2 bg-blue-800 text-white hover:text-blue-300"
@@ -262,48 +318,50 @@ const ReceiptDetail = () => {
                   </>
                 ) : (
                   <button
-                    className="badge badge-outline mt-1 border-blue-800 p-5 bg-blue-800 text-white hover:text-blue-300"
+                    className="badge p-4 bg-blue-100"
                     onClick={handleEdit}
                   >
-                    Edit{"  "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="size-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                      />
+                    </svg>
+                    Edit
+                  </button>
+                )}
+              </div>
+              <div className="flex justify-end mt-6">
+                {!editMode && (
+                  <button
+                    className="badge p-4   bg-blue-100"
+                    onClick={handleDelete}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="size-6 hover:text-blue-300"
+                      className="size-5"
                     >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
                       />
                     </svg>
+                    Delete
                   </button>
                 )}
-              </div>
-              <div className="flex justify-end mt-8">
-                <button
-                  className="badge badge-outline p-5  border-blue-100 bg-blue-800 text-white hover:text-blue-300"
-                  onClick={handleDelete}
-                >
-                  Delete{"  "}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-6 hover:text-blue-300"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                    />
-                  </svg>
-                </button>
               </div>
             </div>
           </div>
