@@ -186,8 +186,11 @@ function AddReceipt() {
   return (
     <>
       <div className="size-full">
-        <button onClick={handleClick}>
-          <img src={ReturnArrow} />
+        <button
+          onClick={handleClick}
+          className="badge p-4 bg-blue-100 mt-5 ml-10"
+        >
+          Back
         </button>
         <form onSubmit={submitForm} className="p-10">
           <div className="border border-dashed border-slate-500 rounded-lg p-3 relative">
