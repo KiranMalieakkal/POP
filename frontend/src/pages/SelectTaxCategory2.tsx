@@ -1,11 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
 import tax_3 from "../assets/tax_3.svg";
 import BottomNav from "../components/BottomNav";
 /* import { useEffect, useState } from "react"; */
-
-type Params = {
-  id: string;
-};
 
 const mockData = [
   {
@@ -72,10 +67,11 @@ const mockData = [
   },
 ];
 
-const SelectTaxCategory1 = () => {
-  const { id } = useParams<Params>();
-  const navigate = useNavigate();
+type Props = {
+  taxCategory: number;
+};
 
+const SelectTaxCategory2 = ({ taxCategory }: Props) => {
   /*  const [receiptData, setReceiptData] = useState<Receipt>();
 // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
   const baseUrl2 = "http://localhost:8080/api/receipts";
@@ -94,14 +90,9 @@ const SelectTaxCategory1 = () => {
     return <div>Loading...</div>;
   } */
 
-
-
   return (
     <>
-      <h1 className="pt-3 pr-6 pl-3 pb-2 text-black flex justify-between">
-        <a href="tax/SelectTaxCategory1">← Back</a>
-        <a href="/tax/SelectTaxCategory3">Next →</a>
-      </h1>
+      <h1>Hi Emi 👋 here is the taxcategory: {taxCategory}</h1>
       <div className="flex flex-col items-center justify-center p-6  ">
         <img className="w-76 h-76 mb-0" src={tax_3} alt="" />
         <h1 className="text-4xl text-center font-bold m-2">
@@ -180,4 +171,4 @@ const SelectTaxCategory1 = () => {
   );
 };
 
-export default SelectTaxCategory1;
+export default SelectTaxCategory2;

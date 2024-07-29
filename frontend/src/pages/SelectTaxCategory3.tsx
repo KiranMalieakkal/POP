@@ -48,7 +48,11 @@ export type taxCategory = {
   description: string;
 };
 
-function SelectTaxCategory3() {
+type Props = {
+  selectProjectName: (projectName: string) => void;
+};
+
+function SelectTaxCategory3({ selectProjectName }: Props) {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [projects, setProjects] = useState<project[]>([]);
   const [taxCategories, setTaxCategories] = useState<taxCategory[]>([]);
@@ -156,6 +160,7 @@ function SelectTaxCategory3() {
     console.log("you clicked " + projectName);
     setprojectName(projectName);
     setActiveProjectName(projectName);
+    selectProjectName(projectName);
   };
 
   function handleSubmit(event: React.FormEvent) {
@@ -180,7 +185,7 @@ function SelectTaxCategory3() {
   return (
     <>
       <div className="flex flex-row justify-between p-4">
-        <button onClick={handleSubmit}>
+        {/* <button onClick={handleSubmit}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -195,14 +200,15 @@ function SelectTaxCategory3() {
               d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
             />
           </svg>
-        </button>
-        <button
+          backa?
+        </button> */}
+        {/* <button
           className={`btn btn-primary min-h-8 h-8 ${
             projectName === "" ? "btn-disabled" : ""
           }`}
         >
           Finish
-        </button>
+        </button> */}
       </div>
       <div className="flex justify-center items-center">
         <img src={img} alt="Card Image" className="object-scale-down h-40 " />
