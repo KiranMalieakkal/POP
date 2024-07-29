@@ -14,39 +14,9 @@ const Top_Nav = () => {
     <>
       <div className="navbar bg-base-100">
         <div className="navbar-start w-20">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className=" lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <Link to="/" className="text-lg">
-                  Home{" "}
-                </Link>
-              </li>
-              <li>
-                <Link to="/taxinfo">Tax</Link>
-              </li>
-            </ul>
-          </div>
+        
 
-          <a className="text-xl flex">
+          <a className="text-xl flex ml-3">
             {" "}
             <span role="img" aria-label="book">
               📘
@@ -85,10 +55,47 @@ const Top_Nav = () => {
           </ul>
         </div>
         <div className="navbar-end w-full">
-          <a className="btn mr-3 text-xs  h-0 min-h-9">
-            <LoginButton /> <LogoutButton />
+          <a className="btn mr-3 text-xs  h-0 min-h-9 lg:hidden">
+            <LoginButton /> 
           </a>
         </div>
+        <div className="dropdown  dropdown-end">
+            <div tabIndex={0} role="button" className=" lg: btn btn-ghost btn-circle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block h-5 w-5 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <Link to="/" className={activeButton=== "taxinfo"? "active text-lg bg-gray-100": ""}>
+                  Home{" "}
+                </Link>
+              </li>
+              <li>
+                <Link to="/taxinfo"  className={activeButton=== "taxinfo"? "active text-lg bg-gray-100": ""}>
+                  Tax
+                </Link>
+              </li>
+              <li>
+               
+                <LogoutButton />
+                
+              </li>
+            </ul>
+          </div>
       </div>
     </>
   );

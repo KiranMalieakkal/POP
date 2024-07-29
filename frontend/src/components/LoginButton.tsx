@@ -6,7 +6,7 @@ const LoginButton = () => {
   return (
     <>
       {!isAuthenticated && (
-        <button onClick={() => loginWithRedirect()}>Login</button>
+        <button  onClick={() => loginWithRedirect()}>Login</button>
       )}
     </>
   );
