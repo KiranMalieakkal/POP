@@ -34,6 +34,16 @@ function DesktopListReceipts() {
           setShowListReceipts(false);
         }
         break;
+      case "hideAddReceipt":
+        setShowAddReceipt(false);
+        setShowViewReceipt(false);
+        setShowListReceipts(true);
+        break;
+      case "hideViewReceipt":
+        setShowViewReceipt(false);
+        setShowAddReceipt(false);
+        setShowListReceipts(true);
+        break;
       default:
         setShowListReceipts(true);
     }
@@ -59,13 +69,15 @@ function DesktopListReceipts() {
       <div className={`main_container ${isMobile ? "" : "grid grid-cols-2"}`}>
         {showListReceipts && (
           <div className="left_side">
-            <ListReceipts />
+            <ListReceipts windowToDisplay={windowToDisplay} />
           </div>
         )}
         {(showAddReceipt || showViewReceipt) && (
           <div className="right_side px-20">
             <div className="border border-black rounded-2xl">
-              {showAddReceipt && <AddReceipt />}
+              {showAddReceipt && (
+                <AddReceipt windowToDisplay={windowToDisplay} />
+              )}
               {showViewReceipt && <ReceiptDetail />}
             </div>
           </div>

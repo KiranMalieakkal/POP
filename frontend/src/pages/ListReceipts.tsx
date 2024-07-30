@@ -26,7 +26,11 @@ export type receiptType = {
 
 export type receiptsType = receiptType[];
 
-function ListReceipts() {
+type Props = {
+  windowToDisplay: (window: string) => void;
+};
+
+function ListReceipts({ windowToDisplay }: Props) {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [receipts, setReceipts] = useState<receiptsType>([]);
   const [filteredReceipts, setFilteredReceipts] = useState<receiptsType>([]);
@@ -140,19 +144,19 @@ function ListReceipts() {
     console.log("Applying filters:", filters);
   };
 
-  function addReceipt() {
-    // console.log(data);
-    navigate("/receipts/addReceipt");
-  }
+  /*   function addReceipt(window: string) {
+    // Harald 240730: removing routing because desktop rebuild.
+    //navigate("/receipts/addReceipt");
+  } */
 
   function handleViewReceipt(receipt: receiptType) {
     console.log(`You are viewing receipt with id  ${receipt.id}`);
     navigate(`${receipt.id}`);
   }
 
-  function deleteReceipt(id: number) {
+  /*   function deleteReceipt(id: number) {
     console.log(`you have deleted receipt with this id ${id}`);
-  }
+  } */
 
   function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
     setSearch(e.target.value);
@@ -163,7 +167,7 @@ function ListReceipts() {
   return (
     <>
       <div className="mb-20">
-        <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1>
+        {/* <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1> */}
         <div className="flex justify-center items-center">
           <div className="input input-bordered flex items-center gap-2 md:w-1/3 lg:w-1/3 w-1/2 m-4">
             <input
@@ -432,7 +436,7 @@ function ListReceipts() {
         <div className="flex justify-center items-center  ">
           <button
             className="btn bg-blue-800  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
-            onClick={addReceipt}
+            onClick={() => windowToDisplay("AddReceipt")}
           >
             Add Receipts
           </button>
