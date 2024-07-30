@@ -431,7 +431,7 @@ function ListReceipts() {
         </div>
         <div className="flex justify-center items-center  ">
           <button
-            className="btn bg-blue-700  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
+            className="btn bg-blue-800  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
             onClick={addReceipt}
           >
             Add Receipts
