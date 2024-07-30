@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import SelectTaxCategory1 from "./SelectTaxCategory1";
 import SelectTaxCategory2 from "./SelectTaxCategory2";
 import SelectTaxCategory3 from "./SelectTaxCategory3";
@@ -24,6 +24,9 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
   const [projectId, setProjectId] = useState<string>();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  // This is used to scroll to the top of the parent div when moving between components.
+  const scrollableDivRef = useRef(null);
 
   const { mutate: postTaxCategory } = useMutation<unknown, Error, NewPost>({
     mutationFn: (newPost) =>
@@ -123,11 +126,18 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
     // sets the tax category useState
     setTaxCategory(selectedTaxCategory);
     // Scroll to the top of the page
-    window.scrollTo(0, 0);
+    //window.scrollTo(0, 0); // deprecated and replaced, see below
+    // Scroll the div to the top
+    if (scrollableDivRef.current) {
+      scrollableDivRef.current.scrollTo(0, 0);
+    }
   }
 
   return (
-    <div className="wizard">
+    <div
+      className="wizard max-h-[calc(100vh-150px)] overflow-y-auto"
+      ref={scrollableDivRef}
+    >
       <div className="navigation-buttons flex flex-row justify-between m-3">
         {currentStep == 1 && (
           <button

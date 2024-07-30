@@ -65,9 +65,7 @@ function DesktopTax() {
           <div className="right_side px-20 py-10">
             <div
               className={`  ${
-                isMobile
-                  ? ""
-                  : "border border-black rounded-2xl max-h-[calc(100vh-150px)]  overflow-y-auto"
+                isMobile ? "" : "border border-black rounded-2xl "
               }`}
             >
               {showSelectTaxCategory && (
