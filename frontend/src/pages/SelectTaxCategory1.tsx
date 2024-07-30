@@ -32,7 +32,7 @@ function SelectTaxCategory1({ openTaxCategory }: Props) {
             onClick={() => openTaxCategory(1)}
             className="border p-2 w-full text-blue-700 bg-white rounded-lg"
           >
-            Explore
+            Select
           </button>
         </div>
 
@@ -49,7 +49,7 @@ function SelectTaxCategory1({ openTaxCategory }: Props) {
             onClick={() => openTaxCategory(2)}
             className="border p-2 w-full text-blue-700 bg-white rounded-lg"
           >
-            Explore
+            Select
           </button>
         </div>
 
@@ -68,11 +68,9 @@ function SelectTaxCategory1({ openTaxCategory }: Props) {
             onClick={() => openTaxCategory(3)}
             className="border p-2 w-full text-blue-700 bg-white rounded-lg"
           >
-            Explore
+            Select
           </button>
         </div>
-
-        <div className="m-7">hello</div>
       </div>
     </>
   );

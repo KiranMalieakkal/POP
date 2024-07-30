@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import SelectTaxCategory1 from "./SelectTaxCategory1";
 import SelectTaxCategory2 from "./SelectTaxCategory2";
 import SelectTaxCategory3 from "./SelectTaxCategory3";
@@ -12,7 +12,11 @@ export type NewPost = {
 
 // Description: This component is the wizard for users to connect a tax category to a project.
 
-function SelectTaxCategory() {
+type Props = {
+  windowToDisplay: ({ window, id }: { window: string; id?: number }) => void;
+};
+
+function SelectTaxCategory({ windowToDisplay }: Props) {
   const [taxCategory, setTaxCategory] = useState<number>();
   const [projectName, setProjectName] = useState<string>();
   const [currentStep, setCurrentStep] = useState(1);
@@ -20,6 +24,9 @@ function SelectTaxCategory() {
   const [projectId, setProjectId] = useState<string>();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  // This is used to scroll to the top of the parent div when moving between components.
+  const scrollableDivRef = useRef(null);
 
   const { mutate: postTaxCategory } = useMutation<unknown, Error, NewPost>({
     mutationFn: (newPost) =>
@@ -119,12 +126,27 @@ function SelectTaxCategory() {
     // sets the tax category useState
     setTaxCategory(selectedTaxCategory);
     // Scroll to the top of the page
-    window.scrollTo(0, 0);
+    //window.scrollTo(0, 0); // deprecated and replaced, see below
+    // Scroll the div to the top
+    if (scrollableDivRef.current) {
+      scrollableDivRef.current.scrollTo(0, 0);
+    }
   }
 
   return (
-    <div className="wizard">
+    <div
+      className="wizard max-h-[calc(100vh-150px)] overflow-y-auto"
+      ref={scrollableDivRef}
+    >
       <div className="navigation-buttons flex flex-row justify-between m-3">
+        {currentStep == 1 && (
+          <button
+            onClick={() => windowToDisplay({ window: "hideSelectTaxCategory" })}
+            className="badge p-4 bg-blue-100"
+          >
+            Close
+          </button>
+        )}
         {currentStep > 1 && (
           <button onClick={prevStep} className="badge p-4 bg-blue-100">
             Back
