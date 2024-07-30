@@ -48,4 +48,8 @@ public class ProjectService {
         User user = userRepository.getUser(email);
         return projectRepository.getByUserIdAndTaxCategoryNull(user.getId());
     }
+
+    public void save(Project project) {
+
+    }
 }

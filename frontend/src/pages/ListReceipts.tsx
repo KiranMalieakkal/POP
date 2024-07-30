@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// Harald 240730: removing routing because desktop rebuild.
+/* import { useNavigate } from "react-router-dom"; */
 
 export type requestType = {
   company: string | null;
@@ -26,12 +27,17 @@ export type receiptType = {
 
 export type receiptsType = receiptType[];
 
-function ListReceipts() {
+type Props = {
+  windowToDisplay: ({ window, id }: { window: string; id?: number }) => void;
+};
+
+function ListReceipts({ windowToDisplay }: Props) {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [receipts, setReceipts] = useState<receiptsType>([]);
   const [filteredReceipts, setFilteredReceipts] = useState<receiptsType>([]);
   const [showFilter, setShowFilter] = useState(false);
-  const navigate = useNavigate();
+  // Harald 240730: removing routing because desktop rebuild.
+  /*   const navigate = useNavigate(); */
   const [filters, setFilters] = useState<requestType>({
     company: null,
     amountFrom: null,
@@ -140,15 +146,21 @@ function ListReceipts() {
     console.log("Applying filters:", filters);
   };
 
-  function addReceipt() {
-    // console.log(data);
-    navigate("/receipts/addReceipt");
-  }
+  /*   function addReceipt(window: string) {
+    // Harald 240730: removing routing because desktop rebuild.
+    //navigate("/receipts/addReceipt");
+  } */
 
   function handleViewReceipt(receipt: receiptType) {
     console.log(`You are viewing receipt with id  ${receipt.id}`);
-    navigate(`${receipt.id}`);
+    // Harald 240730: removing routing because desktop rebuild.
+    /*     navigate(`${receipt.id}`); */
+    windowToDisplay({ window: "ViewReceipt", id: receipt.id });
   }
+
+  /*   function deleteReceipt(id: number) {
+    console.log(`you have deleted receipt with this id ${id}`);
+  } */
 
   function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
     setSearch(e.target.value);
@@ -159,7 +171,7 @@ function ListReceipts() {
   return (
     <>
       <div className="mb-20">
-        <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1>
+        {/* <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1> */}
         <div className="flex justify-center items-center">
           <div className="input input-bordered flex items-center gap-2 md:w-1/3 lg:w-1/3 w-1/2 m-4">
             <input
@@ -412,8 +424,8 @@ function ListReceipts() {
         </div>
         <div className="flex justify-center items-center  ">
           <button
-            className="btn bg-blue-700  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
-            onClick={addReceipt}
+            className="btn bg-blue-800  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
+            onClick={() => windowToDisplay({ window: "AddReceipt" })}
           >
             Add Receipts
           </button>

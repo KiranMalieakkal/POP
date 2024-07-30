@@ -23,6 +23,18 @@ public class TaxCategory {
 
     String paragraph;
 
+    public TaxCategory() {
+    }
+
+    public TaxCategory(long id, String title, String description, String form, String section, String paragraph) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.form = form;
+        this.section = section;
+        this.paragraph = paragraph;
+    }
+
     @OneToMany(mappedBy = "taxCategory", cascade = {CascadeType.ALL})
     private final List<Project> projectList = new ArrayList<>();
 

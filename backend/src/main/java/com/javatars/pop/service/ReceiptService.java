@@ -44,7 +44,11 @@ public class ReceiptService {
 
     public List<ReceiptDtoOut> getReceipts(String email) {
         User user = userRepository.getReceipts(email);
-        if (user == null) return new ArrayList<>();
+        if (user == null) {
+            user = new User("userFirstName", "userLastName", email);
+            userRepository.saveUser(user);
+            return new ArrayList<>();
+        }
         return user.getReceipts().stream().map(Receipt::getDtoOut).toList();
     }
 

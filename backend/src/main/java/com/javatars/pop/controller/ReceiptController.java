@@ -2,7 +2,9 @@ package com.javatars.pop.controller;
 
 import com.javatars.pop.model.*;
 import com.javatars.pop.service.BlobService;
+import com.javatars.pop.service.ProjectService;
 import com.javatars.pop.service.ReceiptService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,31 +18,29 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/receipts")
+//@RequiredArgsConstructor
 public class ReceiptController {
 
-    ReceiptService service;
+    ReceiptService receiptService;
     BlobService blobService;
-    public ReceiptController(ReceiptService service, BlobService blobService) {
-        this.service = service;
+    ProjectService projectService;
+
+    public ReceiptController(ReceiptService receiptService, BlobService blobService, ProjectService projectService) {
+        this.receiptService = receiptService;
         this.blobService = blobService;
+        this.projectService = projectService;
     }
 
     @GetMapping
     public ResponseEntity<List<ReceiptDtoOut>> getReceipts(@RequestParam String email) {
-        List<ReceiptDtoOut> receipts = service.getReceipts(email);
-        if(receipts.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        List<ReceiptDtoOut> receipts = receiptService.getReceipts(email);
         return ResponseEntity.ok(receipts);
     }
 
     @PostMapping("/filters")
     public ResponseEntity<List<ReceiptDtoOut>> getReceiptsWithFilters(
             @RequestParam String email, @RequestBody FilterDto filters) {
-        List<ReceiptDtoOut> receipts = service.getReceipts(email, filters);
-        if(receipts == null) {
-            return ResponseEntity.notFound().build();
-        }
+        List<ReceiptDtoOut> receipts = receiptService.getReceipts(email, filters);
         return ResponseEntity.ok(receipts);
     }
 
@@ -48,7 +48,7 @@ public class ReceiptController {
 
     @PostMapping("/textextraction")
     public ResponseEntity<ReceiptDtoGpt> textExtraction(@RequestParam("file") MultipartFile file) {
-        ReceiptDtoGpt receipt = service.textExtraction(file);
+        ReceiptDtoGpt receipt = receiptService.textExtraction(file);
         // Comment: this method only extracts text from the image and maps it to an object
         // It does not save the file to the server nor to the database.
         // todo: returnera ett ResponseEntity med ReceiptH-objektet och status 200 OK.
@@ -65,7 +65,7 @@ public class ReceiptController {
                                                        @RequestParam LocalDate purchaseDate,
                                                        @RequestParam String textContent ) {
         ReceiptDtoGpt receiptDtoGpt = new ReceiptDtoGpt(company, amount, currency, purchaseDate, textContent);
-        Receipt receipt = service.createReceipt(receiptDtoGpt, email);
+        Receipt receipt = receiptService.createReceipt(receiptDtoGpt, email);
         String filename;
         try {
             filename = blobService.uploadImage(file, receipt.getId());
@@ -74,7 +74,34 @@ public class ReceiptController {
             return ResponseEntity.badRequest().build();
         }
         receipt.setFileName(filename);
-        service.save(receipt);
+        receiptService.save(receipt);
+        return ResponseEntity.ok(receipt.getDtoOut());
+    }
+
+    @PostMapping("/with-project")
+    public ResponseEntity<ReceiptDtoOut> createReceiptWithProject(@RequestParam("file") MultipartFile file,
+                                                       @RequestParam String email,
+                                                       @RequestParam String company,
+                                                       @RequestParam Double amount,
+                                                       @RequestParam String currency,
+                                                       @RequestParam LocalDate purchaseDate,
+                                                       @RequestParam String textContent,
+                                                       @RequestParam String projectTitle) {
+        ReceiptDtoGpt receiptDtoGpt = new ReceiptDtoGpt(company, amount, currency, purchaseDate, textContent);
+        Receipt receipt = receiptService.createReceipt(receiptDtoGpt, email);
+        String filename;
+        Project project = projectService.createProject(email, projectTitle);
+        try {
+            filename = blobService.uploadImage(file, receipt.getId());
+        } catch (IOException e) {
+            System.out.println("Error uploading image");
+            return ResponseEntity.badRequest().build();
+        }
+        receipt.setFileName(filename);
+        receipt.setProject(project);
+        receiptService.save(receipt);
+        project.addReceipt(receipt);
+        projectService.save(project);
         return ResponseEntity.ok(receipt.getDtoOut());
     }
 
@@ -91,7 +118,7 @@ public class ReceiptController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ReceiptDtoOut> getReceiptById(@PathVariable long id) {
-        Receipt receipt = service.findById(id);
+        Receipt receipt = receiptService.findById(id);
         if (receipt != null) {
             return ResponseEntity.ok(receipt.getDtoOut());
         } else {
@@ -113,7 +140,7 @@ public class ReceiptController {
     public ResponseEntity<ReceiptDtoOut> editReceipt(
             @PathVariable long id,
             @RequestBody ReceiptDtoOut updatedReceipt) {
-        Receipt receipt = service.findById(id);
+        Receipt receipt = receiptService.findById(id);
         if (receipt != null) {
 //            Receipt receipt = receiptFound;
             receipt.setCompany(updatedReceipt.company());
@@ -121,13 +148,13 @@ public class ReceiptController {
             receipt.setCurrency(updatedReceipt.currency());
             receipt.setPurchaseDate(updatedReceipt.purchaseDate());
 
-            Project project = service.findProjectByTitle(updatedReceipt.project());
-            Category category = service.findCategoryByTitle(updatedReceipt.category());
+            Project project = receiptService.findProjectByTitle(updatedReceipt.project());
+            Category category = receiptService.findCategoryByTitle(updatedReceipt.category());
 
             receipt.setProject(project);
             receipt.setCategory(category);
 
-            Receipt updated = service.save(receipt);
+            Receipt updated = receiptService.save(receipt);
             return ResponseEntity.ok(updated.getDtoOut());
         } else {
             return ResponseEntity.notFound().build();
@@ -136,9 +163,9 @@ public class ReceiptController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReceipt(@PathVariable long id) {
-        Receipt receipt = service.findById(id);
+        Receipt receipt = receiptService.findById(id);
         if (receipt != null) {
-            service.delete(receipt);
+            receiptService.delete(receipt);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();

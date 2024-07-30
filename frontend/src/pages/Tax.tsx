@@ -45,7 +45,11 @@ export type deleteType = {
   taxId: number;
 };
 
-function Tax() {
+type Props = {
+  windowToDisplay: ({ window, id }: { window: string; id?: number }) => void;
+};
+
+function Tax({ windowToDisplay }: Props) {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [taxCategories, setTaxCategories] = useState([]);
   const navigate = useNavigate();
@@ -100,11 +104,12 @@ function Tax() {
     return receipts.reduce((total, receipt) => total + receipt.amount, 0);
   };
 
-  function addTaxProject() {
+  // Harald 240730: removing routing because desktop rebuild.
+  /* function addTaxProject() {
     console.log("You clicked on add Tax Project button");
     navigate("/receipts/selectTax");
     return taxCategories;
-  }
+  } */
 
   function handleClick(project: Project) {
     console.log(`Clicked project with id ${project.id}`);
@@ -209,8 +214,8 @@ function Tax() {
         </div>
         <div className="flex justify-center items-center">
           <button
-            className="btn btn-primary md:w-1/3 lg:w-1/3 w-1/2 mb-6"
-            onClick={addTaxProject}
+            className="btn bg-blue-800 text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6"
+            onClick={() => windowToDisplay({ window: "SelectTaxCategory" })}
           >
             Add Tax Project
           </button>

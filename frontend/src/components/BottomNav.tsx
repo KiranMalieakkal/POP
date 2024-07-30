@@ -44,7 +44,7 @@ function BottomNav() {
         </div>
       </Link>
       <Link
-        to=""
+        to="/desktop"
         className={
           activeButton === "receipts"
             ? "active bg-blue-100 border  border-t-0 border-x-0 border-b-8 border-blue-900"
