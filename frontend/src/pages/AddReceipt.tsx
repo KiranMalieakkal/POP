@@ -334,10 +334,7 @@ function AddReceipt({ windowToDisplay }: Props) {
             className="btn bg-blue-800 w-full text-white"
           />
           <br></br>
-          <br></br>
         </form>
-        <br />
-        <br />
       </div>
       <Toaster position="top-center" reverseOrder={false} />
     </>
