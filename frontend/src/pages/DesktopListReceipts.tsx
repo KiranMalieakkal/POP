@@ -123,11 +123,9 @@ function DesktopListReceipts() {
     navigate(`${receipt.id}`);
   }
 
-  function deleteReceipt(id: number) {
-    console.log(`you have deleted receipt with this id ${id}`);
-  }
-
+  // todo: desktop
   // jag tänker att vi delar upp skärmen i två kolumner
+  //
 
   return (
     <>
