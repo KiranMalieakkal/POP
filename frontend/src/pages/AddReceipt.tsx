@@ -322,7 +322,7 @@ function AddReceipt() {
           <input
             type="submit"
             value="Save"
-            className="btn btn-primary w-full"
+            className="btn bg-blue-800 w-full text-white"
           />
           <br></br>
           <br></br>
