@@ -41,4 +41,8 @@ public class Project {
                 receiptList.stream().map(Receipt::getDtoOut).toList());
     }
 
+    public void addReceipt (Receipt receipt) {
+        receiptList.add(receipt);
+    }
+
 }

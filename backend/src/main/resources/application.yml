@@ -1,4 +1,17 @@
 spring:
+    config:
+        import: optional:file:.env[.properties]
+
+    security:
+        oauth2:
+            resource server:
+                jwt:
+                    # Trailing slash is required in this case!
+                    # In others it's prohibited!
+                    # Make sure you double check your case
+                    issuer-uri: ${ISSUER_URI}https://my-issuer.eu.auth0.com/
+                    audiences: ${AUDIENCE}my-audience-name
+
     application:
         name: pop
     servlet:
@@ -7,8 +20,7 @@ spring:
             max-file-size: 10MB
             max-request-size: 10MB
 
-    config:
-        import: optional:file:.env[.properties]
+
     datasource:
         url: ${DATABASE_URL}
 #        username: ${DATABASE_USERNAME}
