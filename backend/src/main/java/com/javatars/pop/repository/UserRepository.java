@@ -28,4 +28,5 @@ public class UserRepository {
     public User getReceipts(String email) {
         return userRepo.getUserByEmail(email);
     }
+
 }
