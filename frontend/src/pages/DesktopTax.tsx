@@ -5,6 +5,7 @@ import Top_Nav from "../components/Top_Nav";
 import Tax from "./Tax";
 import SelectTaxCategory from "./SelectTaxCategory";
 import ViewProject from "./ViewProject";
+import TaxGuide from "../components/TaxGuide";
 
 function DesktopTax() {
   const { isMobile } = useScreenType();
@@ -68,6 +69,11 @@ function DesktopTax() {
               )}
               {showViewProject && <ViewProject />}
             </div>
+          </div>
+        )}
+        {!showSelectTaxCategory && !showViewProject && (
+          <div className="right_side  text-center mt-20">
+            <TaxGuide />
           </div>
         )}
       </div>

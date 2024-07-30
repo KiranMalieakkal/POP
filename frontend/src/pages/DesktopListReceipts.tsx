@@ -5,6 +5,7 @@ import AddReceipt from "./AddReceipt";
 import ReceiptDetail from "./ViewReceipt";
 import Top_Nav from "../components/Top_Nav";
 import BottomNav from "../components/BottomNav";
+import ReceiptGuide from "../components/ReceiptGuide";
 
 function DesktopListReceipts() {
   const { isMobile } = useScreenType();
@@ -75,6 +76,11 @@ function DesktopListReceipts() {
                 />
               )}
             </div>
+          </div>
+        )}
+        {!showAddReceipt && !showViewReceipt && (
+          <div className="right_side  text-center mt-20">
+            <ReceiptGuide />
           </div>
         )}
       </div>
