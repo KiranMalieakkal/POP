@@ -71,8 +71,6 @@ function SelectTaxCategory1({ openTaxCategory }: Props) {
             Select
           </button>
         </div>
-
-        <div className="m-7">hello</div>
       </div>
     </>
   );
