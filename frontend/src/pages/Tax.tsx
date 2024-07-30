@@ -131,7 +131,7 @@ function Tax() {
         </div>
         <div className="flex justify-center items-center">
           <button
-            className="btn btn-primary md:w-1/3 lg:w-1/3 w-1/2 mb-6"
+            className="btn bg-blue-800 text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6"
             onClick={addTaxProject}
           >
             Add Tax Project

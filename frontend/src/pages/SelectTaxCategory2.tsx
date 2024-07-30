@@ -31,7 +31,7 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
   return (
     <>
       <div className="flex flex-col items-center justify-center p-6  ">
-        <img className="w-50 h-50 mb-0 " src={selectedImage} alt="" />
+        <img className="w-50 h-50 mb-0 p-5" src={selectedImage} alt="" />
         <h1 className="text-4xl text-center font-bold m-2">
           {categoryData.title}
         </h1>

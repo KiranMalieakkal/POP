@@ -171,7 +171,7 @@ const ReceiptDetail = () => {
             {message && <div className="text-green-500 mb-4">{message}</div>}
             <div className="space-y-4 text-left">
               <div>
-                <label className="label text-gray-900 mt-0 p-0">Company</label>
+                <label className="label text-gray-900 mt-4 p-0 ">Company</label>
                 {editMode ? (
                   <input
                     type="text"
@@ -204,7 +204,7 @@ const ReceiptDetail = () => {
                   )}
                 </div>
                 <div className="relative">
-                  <label className="label text-gray-900">Currency</label>
+                  <label className="label text-gray-900 mt-0 p-0">Currency</label>
                   {editMode ? (
                     <>
                       <input
@@ -237,7 +237,7 @@ const ReceiptDetail = () => {
                 </div>
               </div>
               <div>
-                <label className="label text-gray-900">Date</label>
+                <label className="label text-gray-900 mt-0 p-0">Date</label>
                 {editMode ? (
                   <input
                     type="date"
@@ -253,7 +253,7 @@ const ReceiptDetail = () => {
                 )}
               </div>
               <div>
-                <label className="label text-gray-900">Text Content</label>
+                <label className="label text-gray-900 mt-0 p-0">Text Content</label>
                 {editMode ? (
                   <textarea
                     name="textContent"
@@ -262,13 +262,13 @@ const ReceiptDetail = () => {
                     className="textarea bg-slate-100 w-full h-40"
                   />
                 ) : (
-                  <div className="max-h-[140px] lg:max-h-[140px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-gray-100 p-3 pl-5 "> {/* w-full items-center rounded-lg border border-slate-300 p-3  */}
+                  <div className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-gray-100 p-3 pl-5 "> {/* w-full items-center rounded-lg border border-slate-300 p-3  */}
                     <p className="">{receiptData.textContent}</p>
                   </div>
                 )}
               </div>
               <div className="relative">
-                <label className="label text-gray-900">Project</label>
+                <label className="label text-gray-900 mt-0 p-0">Project</label>
                 {editMode ? (
                   <>
                     <input
@@ -304,13 +304,13 @@ const ReceiptDetail = () => {
                 {editMode ? (
                   <>
                     <button
-                      className="badge badge-outline p-4 mr-1 mt-3 hover:text-blue-500"
+                      className="btn badge-outline p-4 mr-3 mt-2 hover:text-blue-700"
                       onClick={handleBack}
                     >
                       Cancel
                     </button>
                     <button
-                      className="badge badge-outline p-5 mt-2 bg-blue-800 text-blue-300 hover:text-white"
+                      className="btn badge-outline  mt-2 bg-blue-800 text-white hover:bg-blue-700 hover:text-white"
                       onClick={handleSave}
                     >
                       Save Changes
@@ -318,7 +318,7 @@ const ReceiptDetail = () => {
                   </>
                 ) : (
                   <button
-                    className="badge p-4 bg-blue-100"
+                    className="btn p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
                     onClick={handleEdit}
                   >
                     <svg
@@ -342,7 +342,7 @@ const ReceiptDetail = () => {
               <div className="flex justify-end mt-6">
                 {!editMode && (
                   <button
-                    className="badge p-4   bg-blue-100"
+                    className="btn p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
                     onClick={handleDelete}
                   >
                     <svg
