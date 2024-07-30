@@ -18,10 +18,10 @@ export type receiptType = {
   company: string;
   amount: number;
   currency: string;
-  startDate: string;
   purchaseDate: string;
   project: string;
   category: string;
+  textContent: string;
 };
 
 export type receiptsType = receiptType[];
@@ -29,9 +29,10 @@ export type receiptsType = receiptType[];
 function ListReceipts() {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [receipts, setReceipts] = useState<receiptsType>([]);
+  const [filteredReceipts, setFilteredReceipts] = useState<receiptsType>([]);
   const [showFilter, setShowFilter] = useState(false);
   const navigate = useNavigate();
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<requestType>({
     company: null,
     amountFrom: null,
     amountTo: null,
@@ -41,21 +42,29 @@ function ListReceipts() {
     project: null,
     category: null,
   });
-  const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
-  // const baseUrl = "http://localhost:8080/api/receipts";
+  const [nonNullFilters, setNonNullFilters] = useState<
+    [string, string | number | null][]
+  >([]);
+  const [search, setSearch] = useState("");
+  // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
+  const baseUrl = "http://localhost:8080/api/receipts";
 
-  const { data, isError: fetchError } = useQuery({
-    queryKey: ["fetch1"],
-    queryFn: () =>
-      fetch(`${baseUrl}?email=jane.smith@example.com`)
-        .then((response) => response.json())
-        .then((data) => data)
-        .catch((e) => {
-          setfetchErrorLog(e.message);
-        }),
-  });
+  // const { data, isError: fetchError } = useQuery({
+  //   queryKey: ["fetch1"],
+  //   queryFn: () =>
+  //     fetch(`${baseUrl}?email=jane.smith@example.com`)
+  //       .then((response) => response.json())
+  //       .then((data) => data)
+  //       .catch((e) => {
+  //         setfetchErrorLog(e.message);
+  //       }),
+  // });
 
-  const { data: data2, refetch } = useQuery({
+  const {
+    data: data2,
+    refetch,
+    isError: fetchError,
+  } = useQuery({
     queryKey: ["fetch2"],
     queryFn: () =>
       fetch(`${baseUrl}/filters?email=jane.smith@example.com`, {
@@ -78,16 +87,37 @@ function ListReceipts() {
         }),
   });
 
-  useEffect(() => {
-    console.log("use effect 1");
-    setReceipts(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log("use effect 1");
+  //   setReceipts(data);
+  // }, [data]);
 
   useEffect(() => {
     // console.log(filters);
     console.log("use-effect2");
     setReceipts(data2);
   }, [data2]);
+
+  useEffect(() => {
+    setFilteredReceipts(
+      receipts?.filter((receipt) => {
+        return (
+          receipt.company.toLowerCase().includes(search.toLowerCase()) ||
+          receipt.textContent.toLowerCase().includes(search.toLowerCase()) ||
+          receipt.purchaseDate.toLowerCase().includes(search.toLowerCase())
+        );
+      })
+    );
+  }, [search, receipts]);
+
+  useEffect(() => {
+    const entries = Object.entries(filters);
+    const filteredEntries = entries.filter(([, value]) => value !== null);
+    console.log(entries);
+    console.log(filteredEntries);
+    setNonNullFilters(filteredEntries);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showFilter]);
 
   const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -111,7 +141,7 @@ function ListReceipts() {
   };
 
   function addReceipt() {
-    console.log(data);
+    // console.log(data);
     navigate("/receipts/addReceipt");
   }
 
@@ -124,13 +154,25 @@ function ListReceipts() {
     console.log(`you have deleted receipt with this id ${id}`);
   }
 
+  function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
+    setSearch(e.target.value);
+    console.log(filteredReceipts);
+    console.log(search);
+  }
+
   return (
     <>
       <div className="mb-20">
         <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1>
         <div className="flex justify-center items-center">
-          <label className="input input-bordered flex items-center gap-2 md:w-1/3 lg:w-1/3 w-1/2 m-4">
-            <input type="text" className="grow" placeholder="Search" />
+          <div className="input input-bordered flex items-center gap-2 md:w-1/3 lg:w-1/3 w-1/2 m-4">
+            <input
+              type="text"
+              value={search}
+              className="grow"
+              placeholder="Search"
+              onChange={handleSearchChange}
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -143,7 +185,7 @@ function ListReceipts() {
                 clipRule="evenodd"
               />
             </svg>
-          </label>
+          </div>
           <div className="border-black border-inherit rounded ">
             <svg
               onClick={() => setShowFilter(!showFilter)}
@@ -293,12 +335,24 @@ function ListReceipts() {
             </div>
           </div>
         )}
-
+        {nonNullFilters.length !== 0 ? (
+          <div className="active-filters flex flex-col justify-center items-center">
+            <h3 className="mb-1">Active Filters:</h3>
+            {nonNullFilters.map((filter, index) => (
+              <div key={index} className="mb-1  flex items-center">
+                <span className="font-semibold mr-2">{filter[0]}:</span>
+                <span>{filter[1]}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
         <div className="w-full p-4">
-          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto">
-            <table className="receipt-table w-full border-collapse ml-8 mr-8">
+          <div className="max-h-[350px] hover:h-full overflow-y-auto">
+            <table className="receipt-table w-full border-collapse ">
               <thead>
-                <tr className=" text-black">
+                <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,0.2fr]">
                   {/* <th className="p-2 border-b-2 border-black text-left">
                     <label>
                       <input
@@ -320,13 +374,13 @@ function ListReceipts() {
                 </tr>
               </thead>
               <tbody>
-                {receipts?.map((receipt: receiptType) => (
+                {filteredReceipts?.map((receipt: receiptType) => (
                   <tr
                     onClick={() => {
                       handleViewReceipt(receipt);
                     }}
                     key={receipt.id}
-                    className="hover:bg-gray-100 hover:cursor-pointer transition-transform transform hover:scale-105"
+                    className="hover:bg-gray-100 hover:cursor-pointer transition-transform transform hover:scale-[1.01] grid grid-cols-[1fr,1fr,1fr,0.2fr]"
                   >
                     {/* <th>
                       <label>
@@ -375,7 +429,7 @@ function ListReceipts() {
             </table>
           </div>
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center  ">
           <button
             className="btn bg-blue-800  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
             onClick={addReceipt}

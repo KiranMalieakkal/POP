@@ -2,6 +2,13 @@ import { useState } from "react";
 import SelectTaxCategory1 from "./SelectTaxCategory1";
 import SelectTaxCategory2 from "./SelectTaxCategory2";
 import SelectTaxCategory3 from "./SelectTaxCategory3";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+
+export type NewPost = {
+  projectId: string;
+  taxId: number;
+};
 
 // Description: This component is the wizard for users to connect a tax category to a project.
 
@@ -9,6 +16,34 @@ function SelectTaxCategory() {
   const [taxCategory, setTaxCategory] = useState<number>();
   const [projectName, setProjectName] = useState<string>();
   const [currentStep, setCurrentStep] = useState(1);
+  const [taxId, setTaxId] = useState<number>();
+  const [projectId, setProjectId] = useState<string>();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const { mutate: postTaxCategory } = useMutation<unknown, Error, NewPost>({
+    mutationFn: (newPost) =>
+      fetch(
+        `http://localhost:8080/api/taxes/${taxId}?email=jane.smith@example.com&projectId=${projectId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newPost),
+        }
+      ).then((res) => {
+        if (!res.ok) {
+          throw new Error(`Error Status: ${res.status}`);
+        }
+        return res.json();
+      }),
+    onSuccess: () => {
+      console.log("success");
+      queryClient.invalidateQueries({ queryKey: ["fetch3"] });
+      navigate("/receipts/tax");
+    },
+  });
 
   // -------------------------------------------------------------------------------------
   // nextStep and prevStep help us render the different components.
@@ -33,7 +68,12 @@ function SelectTaxCategory() {
         return <SelectTaxCategory2 taxCategory={taxCategory!} />;
       case 3:
         return (
-          <SelectTaxCategory3 selectProjectName={handleSelectProjectName} />
+          <SelectTaxCategory3
+            setProjectName={setProjectName}
+            setTaxId={setTaxId}
+            setProjectId={setProjectId}
+            taxCategory={taxCategory}
+          />
         );
       default:
         return (
@@ -44,22 +84,31 @@ function SelectTaxCategory() {
   // -------------------------------------------------------------------------------------
   // This function triggers when the user selects a project (last step of the wizard)
   // This will activate the "finish" button which will then do a POST to the server.
-  function handleSelectProjectName(selectedProjectName: string) {
-    setProjectName(selectedProjectName);
-  }
+  // function handleSelectProjectName(selectedProjectName: string) {
+  //   setProjectName(selectedProjectName);
+  // }
 
   // -------------------------------------------------------------------------------------
   // POST to the server (also check if projectName is truthy and navigate back to Tax.tsx)
   // todo: do the function.
-  function postTaxCategory() {
-    if (!projectName) {
-      // todo: when projectName is not set we should show a toast with some error message
-      // maybe: "select a project from the list"
-      return;
-    }
-    // todo: do the post here and also navigate back to Tax.tsx
-    console.log("Tax category selected: " + taxCategory);
-    console.log("Tax category selected: " + projectName);
+  // function postTaxCategory() {
+  //   if (!projectName) {
+  //     // todo: when projectName is not set we should show a toast with some error message
+  //     // maybe: "select a project from the list"
+  //     return;
+  //   }
+  //   // todo: do the post here and also navigate back to Tax.tsx
+  //   console.log("Tax category selected: " + taxCategory);
+  //   console.log("Tax category selected: " + projectName);
+  // }
+
+  function handleClick() {
+    console.log(taxId);
+    console.log(projectId);
+    postTaxCategory({
+      projectId: projectId!,
+      taxId: taxId!,
+    });
   }
 
   // -------------------------------------------------------------------------------------
@@ -88,7 +137,7 @@ function SelectTaxCategory() {
         )}
         {currentStep === 3 && (
           <button
-            onClick={postTaxCategory}
+            onClick={handleClick}
             className={`badge p-4 ${
               projectName
                 ? "bg-blue-700 text-white"

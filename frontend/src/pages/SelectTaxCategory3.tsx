@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import img from "../assets/financial-analysts-doing-income-statement-with-calculator-laptop-income-statement-company-financial-statement-balance-sheet-concept.png";
 import ClickableDiv from "../components/ClickableDiv";
 
@@ -44,30 +44,31 @@ export type projects = {
 
 export type taxCategory = {
   title: string;
-  id: string;
+  id: number;
   description: string;
 };
 
 type Props = {
-  selectProjectName: (projectName: string) => void;
+  setProjectName: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setTaxId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setProjectId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  // postSuccess: boolean;
+  taxCategory: number | undefined;
 };
 
-function SelectTaxCategory3({ selectProjectName }: Props) {
+function SelectTaxCategory3({
+  setProjectName,
+  setTaxId,
+  setProjectId,
+  taxCategory,
+}: Props) {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [projects, setProjects] = useState<project[]>([]);
   const [taxCategories, setTaxCategories] = useState<taxCategory[]>([]);
-  const queryClient = useQueryClient();
-  const [taxId, setTaxId] = useState<string>();
-  const [projectId, setProjectId] = useState<string>();
-  const [invalidInputError, setError] = useState("");
-  const [postErrorDisplay, setPostErrorDisplay] = useState(false);
-
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    projectName: "",
-    taxCategory: "",
-  });
-  const [projectName, setprojectName] = useState("");
+  // const queryClient = useQueryClient();
+  // const [taxId, setTaxId] = useState<string>();
+  // const [projectId, setProjectId] = useState<string>();
+  // const [projectName, setprojectName] = useState("");
   const [activeProjectName, setActiveProjectName] = useState("");
   const baseUrl =
     "https://pop-app-backend.azurewebsites.net/api/projects/withoutTax";
@@ -99,117 +100,38 @@ function SelectTaxCategory3({ selectProjectName }: Props) {
         }),
   });
 
-  const { mutate: postTaxCategory, error: postError } = useMutation<
-    unknown,
-    Error,
-    NewPost
-  >({
-    mutationFn: (newPost) =>
-      fetch(
-        `http://localhost:8080/api/taxes/${taxId}?email=jane.smith@example.com&projectId=${projectId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newPost),
-        }
-      ).then((res) => {
-        if (!res.ok) {
-          throw new Error(`Error Status: ${res.status}`);
-        }
-        return res.json();
-      }),
-    onSuccess: () => {
-      console.log("success");
-      queryClient.invalidateQueries({ queryKey: ["fetch3"] });
-      setFormData({
-        projectName: "",
-        taxCategory: "",
-      });
-      navigate(-1);
-    },
-  });
-
   useEffect(() => {
     setProjects(projectsData);
     setTaxCategories(taxCategoriesData);
   }, [projectsData, taxCategoriesData]);
 
   useEffect(() => {
-    if (postError) {
-      setPostErrorDisplay(true);
-      setTimeout(() => {
-        setPostErrorDisplay(false);
-      }, 2000);
-    }
-  }, [postError]);
-
-  useEffect(() => {
     const taxId2 = taxCategories?.find(
-      (entry: taxCategory) => entry.title === formData.taxCategory
+      (entry: taxCategory) => entry?.id === taxCategory
     )?.id;
     const projectId2 = projects?.find(
-      (entry: project) => entry.title === formData.projectName
+      (entry: project) => entry?.title === activeProjectName
     )?.id;
     setTaxId(taxId2);
     setProjectId(projectId2);
-  }, [formData, taxCategories, projects]);
+  }, [
+    taxCategories,
+    projects,
+    setTaxId,
+    setProjectId,
+    taxCategory,
+    activeProjectName,
+  ]);
 
   const handleClick = (projectName: string) => {
     console.log("you clicked " + projectName);
-    setprojectName(projectName);
+    setProjectName(projectName);
     setActiveProjectName(projectName);
-    selectProjectName(projectName);
   };
-
-  function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    if (formData.projectName == "") {
-      setError("Please select a project");
-    } else if (formData.taxCategory == "") {
-      setError("Please select a tax category ");
-    } else {
-      setError("");
-      console.log(formData);
-      console.log(taxId);
-      console.log(projectId);
-
-      postTaxCategory({
-        projectId: projectId!,
-        taxId: taxId!,
-      });
-    }
-  }
 
   return (
     <>
-      <div className="flex flex-row justify-between p-4">
-        {/* <button onClick={handleSubmit}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-            />
-          </svg>
-          backa?
-        </button> */}
-        {/* <button
-          className={`btn btn-primary min-h-8 h-8 ${
-            projectName === "" ? "btn-disabled" : ""
-          }`}
-        >
-          Finish
-        </button> */}
-      </div>
+      <div className="flex flex-row justify-between p-4"></div>
       <div className="flex justify-center items-center">
         <img src={img} alt="Card Image" className="object-scale-down h-40 " />
       </div>
@@ -243,16 +165,6 @@ function SelectTaxCategory3({ selectProjectName }: Props) {
         {isPending && (
           <p className="text-blue-500 break-words whitespace-normal text-center mt-4">
             Loading...
-          </p>
-        )}
-        {invalidInputError && (
-          <p className="text-red-500 break-words whitespace-normal text-center mt-4">
-            {invalidInputError}
-          </p>
-        )}
-        {postErrorDisplay && (
-          <p className="text-red-500 break-words whitespace-normal text-center mt-4">
-            {`Sorry, Changes could not be saved. Please try again later. ${postError}`}
           </p>
         )}
       </div>
