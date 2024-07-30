@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// Harald 240730: removing routing because desktop rebuild.
+/* import { useNavigate } from "react-router-dom"; */
 
 export type requestType = {
   company: string | null;
@@ -27,7 +28,7 @@ export type receiptType = {
 export type receiptsType = receiptType[];
 
 type Props = {
-  windowToDisplay: (window: string) => void;
+  windowToDisplay: ({ window, id }: { window: string; id?: number }) => void;
 };
 
 function ListReceipts({ windowToDisplay }: Props) {
@@ -35,7 +36,8 @@ function ListReceipts({ windowToDisplay }: Props) {
   const [receipts, setReceipts] = useState<receiptsType>([]);
   const [filteredReceipts, setFilteredReceipts] = useState<receiptsType>([]);
   const [showFilter, setShowFilter] = useState(false);
-  const navigate = useNavigate();
+  // Harald 240730: removing routing because desktop rebuild.
+  /*   const navigate = useNavigate(); */
   const [filters, setFilters] = useState<requestType>({
     company: null,
     amountFrom: null,
@@ -151,7 +153,9 @@ function ListReceipts({ windowToDisplay }: Props) {
 
   function handleViewReceipt(receipt: receiptType) {
     console.log(`You are viewing receipt with id  ${receipt.id}`);
-    navigate(`${receipt.id}`);
+    // Harald 240730: removing routing because desktop rebuild.
+    /*     navigate(`${receipt.id}`); */
+    windowToDisplay({ window: "ViewReceipt", id: receipt.id });
   }
 
   /*   function deleteReceipt(id: number) {
@@ -436,7 +440,7 @@ function ListReceipts({ windowToDisplay }: Props) {
         <div className="flex justify-center items-center  ">
           <button
             className="btn bg-blue-800  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
-            onClick={() => windowToDisplay("AddReceipt")}
+            onClick={() => windowToDisplay({ window: "AddReceipt" })}
           >
             Add Receipts
           </button>

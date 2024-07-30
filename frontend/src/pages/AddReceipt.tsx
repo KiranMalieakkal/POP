@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// Harald 240730: removing routing because desktop rebuild.
+/* import { useNavigate } from "react-router-dom"; */
 import FormChoices from "../components/FormChoices";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -12,7 +13,11 @@ type Receipt = {
   project?: string;
 };
 
-function AddReceipt() {
+type Props = {
+  windowToDisplay: ({ window, id }: { window: string; id?: number }) => void;
+};
+
+function AddReceipt({ windowToDisplay }: Props) {
   // todo: this is the list of existing project the user can choose from.
   // it should be sent to the component as a prop
   const existingProjects = [
@@ -29,7 +34,8 @@ function AddReceipt() {
   // When a certain field is focused we can display FormChoices.tsx (for example)
   const [focusedField, setFocusedField] = useState("");
 
-  const navigate = useNavigate();
+  // Harald 240730: removing routing because desktop rebuild.
+  /* const navigate = useNavigate(); */
 
   // -------------------------------------------------------------------------------------
   // formData is just a useState that stores an object.
@@ -170,7 +176,9 @@ function AddReceipt() {
       }
 
       // Route back to ReceiptList.tsx once form is successfully submitted
-      navigate(-1);
+      // Harald 240730: removing routing because desktop rebuild.
+      /* navigate(-1); */
+      windowToDisplay({ window: "hideAddReceipt" });
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -178,15 +186,16 @@ function AddReceipt() {
 
   // -------------------------------------------------------------------------------------
   // Navigates back to the ReceiptsLists component
-  function handleClick() {
+  // Harald 240730: removing routing because desktop rebuild.
+  /* function handleClick() {
     navigate(-1);
-  }
+  } */
 
   return (
     <>
       <div className="size-full">
         <button
-          onClick={handleClick}
+          onClick={() => windowToDisplay({ window: "hideAddReceipt" })}
           className="badge p-4 bg-blue-100 mt-5 ml-10"
         >
           Close

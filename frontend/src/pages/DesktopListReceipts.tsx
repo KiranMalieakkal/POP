@@ -9,12 +9,13 @@ import BottomNav from "../components/BottomNav";
 function DesktopListReceipts() {
   const { isMobile } = useScreenType();
   const [showAddReceipt, setShowAddReceipt] = useState<boolean>(false);
-  const [showViewReceipt, setShowViewReceipt] = useState<boolean>(false);
   const [showListReceipts, setShowListReceipts] = useState<boolean>(true);
+  const [showViewReceipt, setShowViewReceipt] = useState<boolean>(false);
+  const [viewReceiptId, setViewReceiptId] = useState<number | null>(null);
 
   // -------------------------------------------------------------------------------------
   // This function is decides which component to render.
-  function windowToDisplay(window: string) {
+  function windowToDisplay({ window, id }: { window: string; id?: number }) {
     switch (window) {
       case "AddReceipt":
         setShowAddReceipt(true);
@@ -26,8 +27,9 @@ function DesktopListReceipts() {
         }
         break;
       case "ViewReceipt":
-        setShowViewReceipt(true);
         setShowAddReceipt(false);
+        setShowViewReceipt(true);
+        setViewReceiptId(id ?? null);
         if (!isMobile) {
           setShowListReceipts(true);
         } else {
@@ -54,13 +56,13 @@ function DesktopListReceipts() {
     <>
       {!isMobile && <Top_Nav />}
       <button
-        onClick={() => windowToDisplay("AddReceipt")}
+        onClick={() => windowToDisplay({ window: "AddReceipt" })}
         className="bg-green-200 btn m-5"
       >
         show the add receipt window
       </button>
       <button
-        onClick={() => windowToDisplay("ViewReceipt")}
+        onClick={() => windowToDisplay({ window: "ViewReceipt" })}
         className="bg-pink-200  btn m-"
       >
         show the view receipt window
@@ -78,7 +80,12 @@ function DesktopListReceipts() {
               {showAddReceipt && (
                 <AddReceipt windowToDisplay={windowToDisplay} />
               )}
-              {showViewReceipt && <ReceiptDetail />}
+              {showViewReceipt && (
+                <ReceiptDetail
+                  receiptId={viewReceiptId!}
+                  windowToDisplay={windowToDisplay}
+                />
+              )}
             </div>
           </div>
         )}
