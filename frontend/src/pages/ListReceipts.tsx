@@ -349,7 +349,7 @@ function ListReceipts() {
           ""
         )}
         <div className="w-full p-4">
-          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto">
+          <div className="max-h-[350px] hover:h-full overflow-y-auto">
             <table className="receipt-table w-full border-collapse ">
               <thead>
                 <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,0.2fr]">
