@@ -44,8 +44,8 @@ function Tax() {
   const [taxCategories, setTaxCategories] = useState([]);
   const navigate = useNavigate();
 
-  const baseUrl = "https://pop-app-backend.azurewebsites.net/api/taxes/user";
-  // const baseUrl2 = "http://localhost:8080/api/taxes/user";
+  // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/taxes/user";
+  const baseUrl = "http://localhost:8080/api/taxes/user";
 
   const { data, isError: fetchError } = useQuery({
     queryKey: ["fetch3"],
