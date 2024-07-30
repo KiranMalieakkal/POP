@@ -12,7 +12,11 @@ export type NewPost = {
 
 // Description: This component is the wizard for users to connect a tax category to a project.
 
-function SelectTaxCategory() {
+type Props = {
+  windowToDisplay: ({ window, id }: { window: string; id?: number }) => void;
+};
+
+function SelectTaxCategory({ windowToDisplay }: Props) {
   const [taxCategory, setTaxCategory] = useState<number>();
   const [projectName, setProjectName] = useState<string>();
   const [currentStep, setCurrentStep] = useState(1);
@@ -125,6 +129,14 @@ function SelectTaxCategory() {
   return (
     <div className="wizard">
       <div className="navigation-buttons flex flex-row justify-between m-3">
+        {currentStep == 1 && (
+          <button
+            onClick={() => windowToDisplay({ window: "hideSelectTaxCategory" })}
+            className="badge p-4 bg-blue-100"
+          >
+            Close
+          </button>
+        )}
         {currentStep > 1 && (
           <button onClick={prevStep} className="badge p-4 bg-blue-100">
             Back

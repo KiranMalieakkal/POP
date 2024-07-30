@@ -38,6 +38,10 @@ function DesktopTax() {
           setShowTax(false);
         }
         break;
+      case "hideSelectTaxCategory":
+        console.log("you wanted to close the STC");
+        setShowSelectTaxCategory(false);
+        break;
       default:
         setShowTax(true);
     }
@@ -62,7 +66,9 @@ function DesktopTax() {
         {(showSelectTaxCategory || showViewProject) && (
           <div className="right_side px-20">
             <div className="border border-black rounded-2xl">
-              {showSelectTaxCategory && <SelectTaxCategory />}
+              {showSelectTaxCategory && (
+                <SelectTaxCategory windowToDisplay={windowToDisplay} />
+              )}
               {showViewProject && <ViewProject />}
             </div>
           </div>
