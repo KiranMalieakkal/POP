@@ -284,7 +284,7 @@ function AddReceipt() {
           <br />
           <textarea
             id="text_content"
-            name="text_content"
+            name="textContent"
             className="input w-full bg-slate-100"
             value={formData.textContent}
             onChange={handleChange}
