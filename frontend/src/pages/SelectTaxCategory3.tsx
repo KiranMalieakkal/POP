@@ -70,9 +70,8 @@ function SelectTaxCategory3({
   // const [projectId, setProjectId] = useState<string>();
   // const [projectName, setprojectName] = useState("");
   const [activeProjectName, setActiveProjectName] = useState("");
-  const baseUrl =
-    "https://pop-app-backend.azurewebsites.net/api/projects/withoutTax";
-  // const baseUrl2 = "http://localhost:8080/api/projects/withoutTax";
+  //const baseUrl = "https://pop-app-backend.azurewebsites.net/api/projects/withoutTax";
+  const baseUrl = "http://localhost:8080/api/projects/withoutTax";
 
   const {
     data: projectsData,

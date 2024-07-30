@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Top_Nav from "../components/Top_Nav";
 import AddReceipt from "./AddReceipt";
-import ReceiptDetail from "./ViewReceipt";
+import useScreenType from "../components/useSceenType";
 
 export type requestType = {
   company: string | null;
@@ -30,6 +30,8 @@ export type receiptType = {
 export type receiptsType = receiptType[];
 
 function DesktopListReceipts() {
+  const { isMobile } = useScreenType();
+
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [receipts, setReceipts] = useState<receiptsType>([]);
   const [showFilter, setShowFilter] = useState(false);
@@ -130,6 +132,8 @@ function DesktopListReceipts() {
   return (
     <>
       <Top_Nav />
+      {isMobile && <div>MOBILE YO</div>}
+      {!isMobile && <div>DESKTOP YO</div>}
       <div className="main_container grid grid-cols-2">
         <div className="left_side">
           <div className="flex justify-center items-center">
