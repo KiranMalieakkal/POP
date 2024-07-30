@@ -16,35 +16,40 @@ public class TaxService {
     private final UserRepository userRepo;
     private final ProjectRepository projectRepo;
 
-    public TaxService (TaxCategoryRepository taxRepo, UserRepository userRepo, ProjectRepository projectRepo) {
+    public TaxService(TaxCategoryRepository taxRepo, UserRepository userRepo, ProjectRepository projectRepo) {
         this.taxRepo = taxRepo;
         this.userRepo = userRepo;
         this.projectRepo = projectRepo;
     }
 
-    public List<TaxCategory> getTaxCategories () {
+    public List<TaxCategory> getTaxCategories() {
         return taxRepo.getTaxCategories();
     }
 
-    public List<TaxCategory> getTaxCategories (String email) {
+    public List<TaxCategory> getTaxCategories(String email) {
         User user = userRepo.getUser(email);
         List<TaxCategory> filteredTaxCategories = new ArrayList<>();
-        var taxCategories =  taxRepo.getTaxCategories();
+        var taxCategories = taxRepo.getTaxCategories();
 
         for (TaxCategory taxCategory : taxCategories) {
             var projects = taxCategory.getProjectList();
+            TaxCategory curTaxCategory = null;
             for (Project project : projects) {
-                if(project.getUser().equals(user)) {
-                    filteredTaxCategories.add(taxCategory);
-                    break;
+                if (project.getUser().equals(user)) {
+                    if (curTaxCategory == null) {
+                        curTaxCategory = new TaxCategory(taxCategory.getId(), taxCategory.getTitle(),
+                                taxCategory.getSection(), taxCategory.getForm(),
+                                taxCategory.getSection(), taxCategory.getParagraph());
+                    }
+                    curTaxCategory.addProject(project);
                 }
             }
-
+            if (curTaxCategory != null) filteredTaxCategories.add(curTaxCategory);
         }
         return filteredTaxCategories;
     }
 
-    public TaxCategory addProjectToTaxCategory (Long taxCategoryId, String email, Long projectId) {
+    public TaxCategory addProjectToTaxCategory(Long taxCategoryId, String email, Long projectId) {
         User user = userRepo.getUser(email);
         Project project = projectRepo.getProjectByUserIdAndProjectId(projectId, user.getId());
         TaxCategory taxCategory = taxRepo.getTaxById(taxCategoryId);
@@ -65,11 +70,11 @@ public class TaxService {
         return projects;
     }
 
-    
-        public TaxCategory getTaxCategoryById(Long id) {
-            return taxRepo.getTaxById(id);
-        }
-    
+
+    public TaxCategory getTaxCategoryById(Long id) {
+        return taxRepo.getTaxById(id);
+    }
+
 //-------------------------------
 //    public Project getTaxCategoryProject(Long taxCategoryId, String email) {
 //        User user = userRepo.getUser(email);
