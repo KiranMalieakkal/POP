@@ -69,7 +69,15 @@ public class TaxService {
         public TaxCategory getTaxCategoryById(Long id) {
             return taxRepo.getTaxById(id);
         }
-    
+
+    public void deleteProjectFromTaxCategory(Long taxCategoryId, String email, Long projectId) {
+        User user = userRepo.getUser(email);
+        Project project = projectRepo.getProjectByUserIdAndProjectId(projectId, user.getId());
+        TaxCategory taxCategory = taxRepo.getTaxById(taxCategoryId);
+        project.setTaxCategory(null);
+        projectRepo.saveProject(project);
+    }
+
 //-------------------------------
 //    public Project getTaxCategoryProject(Long taxCategoryId, String email) {
 //        User user = userRepo.getUser(email);
