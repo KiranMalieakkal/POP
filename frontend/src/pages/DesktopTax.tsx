@@ -76,7 +76,7 @@ function DesktopTax() {
           </div>
         )}
         {!showSelectTaxCategory && !showViewProject && (
-          <div className="right_side  text-center mt-20">
+          <div className="right_side  text-center mt-20 flex justify-center">
             <TaxGuide />
           </div>
         )}

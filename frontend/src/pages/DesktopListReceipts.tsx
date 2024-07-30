@@ -81,7 +81,7 @@ function DesktopListReceipts() {
           </div>
         )}
         {!showAddReceipt && !showViewReceipt && (
-          <div className="right_side  text-center mt-20">
+          <div className="right_side  text-center mt-20 flex justify-center">
             <ReceiptGuide />
           </div>
         )}
