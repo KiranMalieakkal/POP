@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
+/* import Footer from "../components/Footer";
 import Top_Nav from "../components/Top_Nav";
+import BottomNav from "../components/BottomNav"; */
+import LoginButton from "../components/LoginButton";
+import LogoutButton from "../components/LogoutButton";
 
 const Home = () => {
   return (
     <>
-      <Top_Nav />
+     {/*  <Top_Nav /> */}
       <div
         className="hero min-h-screen"
         style={{
@@ -104,9 +107,38 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <div className="btm-nav border-transparent text-current btm-nav-lg bg-blue-100 shadow-sky-600">
+     {/*  <Link
+        to="/"
+        className=" bg-blue-100 border  border-t-0 border-x-0 border-b-2 border-blue-900"
+        
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-7 text-blue-600"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+          />
+        </svg>
+        
+      </Link> */}
+      <LoginButton/>
+      <LogoutButton/>
+    </div>
     </>
   );
 };
 
 export default Home;
+
+
+
+
+

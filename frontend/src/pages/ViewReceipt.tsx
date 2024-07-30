@@ -171,7 +171,7 @@ const ReceiptDetail = () => {
             {message && <div className="text-green-500 mb-4">{message}</div>}
             <div className="space-y-4 text-left">
               <div>
-                <label className="label text-gray-300">Company</label>
+                <label className="label text-gray-900 mt-0 p-0">Company</label>
                 {editMode ? (
                   <input
                     type="text"
@@ -181,14 +181,14 @@ const ReceiptDetail = () => {
                     className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center">
-                    <p className="w-full">{receiptData.company}</p>
+                  <div className="input input-bordered w-full flex items-center bg-gray-100">
+                    <p className="w-full text-blue-900 font-semibold">{receiptData.company}</p>
                   </div>
                 )}
               </div>
               <div className="grid grid-cols-[3fr_1fr]">
                 <div className="pr-5">
-                  <label className="label text-gray-300">Amount</label>
+                  <label className="label text-gray-900 mt-0 p-0">Amount</label>
                   {editMode ? (
                     <input
                       type="text"
@@ -198,13 +198,13 @@ const ReceiptDetail = () => {
                       className="input bg-slate-100 w-full"
                     />
                   ) : (
-                    <div className="input input-bordered w-full flex items-center">
-                      <p className="text-gray-700 ">{receiptData.amount}</p>
+                    <div className="input input-bordered w-full flex items-center bg-gray-100">
+                      <p className="text-blue-900 font-semibold ">{receiptData.amount}</p>
                     </div>
                   )}
                 </div>
                 <div className="relative">
-                  <label className="label text-gray-300">Currency</label>
+                  <label className="label text-gray-900">Currency</label>
                   {editMode ? (
                     <>
                       <input
@@ -230,14 +230,14 @@ const ReceiptDetail = () => {
                       )}
                     </>
                   ) : (
-                    <div className="input input-bordered w-full flex items-center">
-                      <p className="text-gray-700 ">{receiptData.currency}</p>
+                    <div className="input input-bordered w-full flex items-center bg-gray-100">
+                      <p className="text-blue-900 font-semibold ">{receiptData.currency}</p>
                     </div>
                   )}
                 </div>
               </div>
               <div>
-                <label className="label text-gray-300">Date</label>
+                <label className="label text-gray-900">Date</label>
                 {editMode ? (
                   <input
                     type="date"
@@ -247,13 +247,13 @@ const ReceiptDetail = () => {
                     className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center">
-                    <p className="text-gray-700">{receiptData.purchaseDate}</p>
+                  <div className="input input-bordered w-full flex items-center bg-gray-100">
+                    <p className="text-blue-900 font-semibold">{receiptData.purchaseDate}</p>
                   </div>
                 )}
               </div>
               <div>
-                <label className="label text-gray-300">Text Content</label>
+                <label className="label text-gray-900">Text Content</label>
                 {editMode ? (
                   <textarea
                     name="textContent"
@@ -262,13 +262,13 @@ const ReceiptDetail = () => {
                     className="textarea bg-slate-100 w-full h-40"
                   />
                 ) : (
-                  <div className="w-full items-center rounded-lg border border-slate-300 p-3">
-                    <p className="text-gray-700">{receiptData.textContent}</p>
+                  <div className="max-h-[140px] lg:max-h-[140px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-gray-100 p-3 pl-5 "> {/* w-full items-center rounded-lg border border-slate-300 p-3  */}
+                    <p className="">{receiptData.textContent}</p>
                   </div>
                 )}
               </div>
               <div className="relative">
-                <label className="label text-gray-300">Project</label>
+                <label className="label text-gray-900">Project</label>
                 {editMode ? (
                   <>
                     <input
@@ -293,8 +293,8 @@ const ReceiptDetail = () => {
                     )}
                   </>
                 ) : (
-                  <div className="input input-bordered w-full flex items-center">
-                    <p className="text-gray-700">{receiptData.project}</p>
+                  <div className="input input-bordered w-full flex items-center bg-gray-100">
+                    <p className="text-blue-900 font-semibold">{receiptData.project}</p>
                   </div>
                 )}
               </div>
@@ -310,7 +310,7 @@ const ReceiptDetail = () => {
                       Cancel
                     </button>
                     <button
-                      className="badge badge-outline p-5 mt-2 bg-blue-800 text-white hover:text-blue-300"
+                      className="badge badge-outline p-5 mt-2 bg-blue-800 text-blue-300 hover:text-white"
                       onClick={handleSave}
                     >
                       Save Changes
@@ -374,3 +374,205 @@ const ReceiptDetail = () => {
 };
 
 export default ReceiptDetail;
+
+
+/* 
+
+  return (
+    <>
+      <h1 className="pt-2 pr-6 pl-6 pb-2">
+        <a href="/receipts">← Go back</a>
+      </h1>
+      <div className="p-2 max-w-4xl mx-auto pb-20 bg-gradient-to-b from-blue-50 rounded-xl">
+        <div className="bg-white shadow-xl  top-shadow rounded-lg p-5 flex flex-col md:flex-row">
+          
+          <div className=" h-full w-full md:w-1/2 md:pr-4 ms:w-full  ms:pr-0 h-112">
+            <img
+              src={imgFile}
+              alt="Receipt"
+              className="w-full h-92 max-h-92 object-contain max-h-full"
+            />
+          </div>
+         
+          <div className="w-full md:w-1/2 pl-4 sm:text-center md:text-left">
+            <div className="flex items-center">
+              <h6 className="text-xl font-semibold mt-4 lg:mt-0 md:mt-0 text-blue-900 font-serif">
+                Receipt Details
+              </h6>
+              <img src={bill} alt="" className="w-7 h-7 mt-3 ml-2" />
+            </div>
+            {alertMessage && (
+              <div className="alert alert-error mb-4">
+                <div>{alertMessage}</div>
+              </div>
+            )}
+            {message && <div className="text-green-500 mb-4">{message}</div>}
+            <div className="space-y-4">
+              <div>
+                <label className="label font-serif font-bold ">Company</label>
+                {editMode ? (
+                  <input
+                    type="text"
+                    name="company"
+                    value={receiptData.company}
+                    onChange={handleChange}
+                    className="input input-bordered w-full bg-gray-100 text-blue-900"
+                  />
+                ) : (
+                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
+                    {receiptData.company}
+                  </p>
+                )}
+              </div>
+              <div className="!mt-1">
+                <label className="label font-serif font-bold">Amount</label>
+                {editMode ? (
+                  <input
+                    type="text"
+                    name="amount"
+                    value={receiptData.amount}
+                    onChange={handleChange}
+                    className="input input-bordered w-full bg-gray-100 text-blue-900"
+                  />
+                ) : (
+                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
+                    {receiptData.currency} {receiptData.amount}
+                  </p>
+                )}
+              </div>
+              <div className="!mt-1">
+                <label className="label font-serif font-bold">Date</label>
+                {editMode ? (
+                  <input
+                    type="text"
+                    name="date"
+                    value={receiptData.purchaseDate}
+                    onChange={handleChange}
+                    className="input input-bordered w-full bg-gray-100 text-blue-900"
+                  />
+                ) : (
+                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
+                    {receiptData.purchaseDate}
+                  </p>
+                )}
+              </div>
+              <div className="!mt-1">
+                <label className="label font-serif font-bold">
+                  Text Content
+                </label>
+                {editMode ? (
+                  <textarea
+                    name="textContent"
+                    value={receiptData.textContent}
+                    onChange={handleChange}
+                    className="textarea textarea-bordered w-full bg-gray-100 text-blue-900"
+                  />
+                ) : (
+                  <p className="max-h-[100px] lg:max-h-[100px] xl:max-h-[100px] mb-2 overflow-y-auto  border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
+                    {receiptData.textContent}
+                  </p>
+                )}
+              </div>
+              <div className="!mt-1">
+                <label className="label font-serif font-bold">Project</label>
+                {editMode ? (
+                  <input
+                    type="text"
+                    name="project"
+                    value={receiptData.project ?? ""}
+                    onChange={handleChange}
+                    className="input input-bordered w-full bg-gray-100 text-blue-900"
+                  />
+                ) : (
+                  <p className="border rounded-lg bg-gray-100 p-3 pl-5 text-blue-900">
+                    {receiptData.project}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex justify-end mt-6">
+                {editMode ? (
+                  <>
+                    <button
+                      className="badge badge-outline p-4 mr-1 mt-3 hover:text-blue-500"
+                      onClick={handleBack}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 19.5 8.25 12l7.5-7.5"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      className="badge badge-outline p-5 mt-2 bg-blue-800 text-blue-300 hover:text-white"
+                      onClick={handleSave}
+                    >
+                      Save Changes
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className="badge badge-outline mt-1 border-blue-800 p-5 bg-blue-800 text-blue-300 hover:text-white"
+                    onClick={handleEdit}
+                  >
+                    Edit{"  "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-6 hover:text-blue-300"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                      />
+                    </svg>
+                  </button>
+                )}
+              </div>
+              <div className="flex justify-end mt-8">
+                <button
+                  className="badge badge-outline p-5  border-blue-100 bg-blue-800 text-blue-300 hover:text-white"
+                  onClick={handleDelete}
+                >
+                  Delete{"  "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-6 hover:text-blue-300"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Toaster position="top-center" reverseOrder={false} />
+      </div>
+      <BottomNav />
+    </>
+  );
+};
+
+export default ReceiptDetail; */

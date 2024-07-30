@@ -5,9 +5,9 @@ import BottomNav from "../components/BottomNav";
 import Tax from "./Tax";
 import ListReceipts from "./ListReceipts";
 import ViewReceipt from "./ViewReceipt";
-import SelectTax from "./SelectTax";
 import AddReceipt from "./AddReceipt";
 import ViewProject from "./ViewProject";
+import SelectTaxCategory from "./SelectTaxCategory";
 
 function Dashboard() {
   // const { data } = useQuery({
@@ -28,7 +28,7 @@ function Dashboard() {
           <Route path="tax" element={<Tax />} />
           <Route path=":id" element={<ViewReceipt />} />
           <Route path="/addReceipt" element={<AddReceipt />} />
-          <Route path="selectTax" element={<SelectTax />} />
+          <Route path="selectTax" element={<SelectTaxCategory />} />
           <Route path="tax/:id" element={<ViewProject />} />
         </Routes>
       </div>

@@ -14,6 +14,7 @@ function App() {
           <Route path="/taxinfo" element={<TaxInfo />} />
           <Route path="/receipts/*" element={<Dashboard />} />
           <Route path="/viewproject" element={<ViewProject />} />
+          
         </Routes>
       </BrowserRouter>
 
