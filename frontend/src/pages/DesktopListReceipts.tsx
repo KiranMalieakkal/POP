@@ -55,18 +55,6 @@ function DesktopListReceipts() {
   return (
     <>
       {!isMobile && <Top_Nav />}
-      <button
-        onClick={() => windowToDisplay({ window: "AddReceipt" })}
-        className="bg-green-200 btn m-5"
-      >
-        show the add receipt window
-      </button>
-      <button
-        onClick={() => windowToDisplay({ window: "ViewReceipt" })}
-        className="bg-pink-200  btn m-"
-      >
-        show the view receipt window
-      </button>
 
       <div className={`main_container ${isMobile ? "" : "grid grid-cols-2"}`}>
         {showListReceipts && (
