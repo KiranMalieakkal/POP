@@ -41,6 +41,7 @@ function DesktopTax() {
       case "hideSelectTaxCategory":
         console.log("you wanted to close the STC");
         setShowSelectTaxCategory(false);
+        setShowTax(true);
         break;
       default:
         setShowTax(true);
@@ -52,10 +53,6 @@ function DesktopTax() {
   return (
     <>
       {!isMobile && <Top_Nav />}
-
-      <button onClick={() => windowToDisplay({ window: "SelectTaxCategory" })}>
-        Open the STC
-      </button>
 
       <div className={`main_container ${isMobile ? "" : "grid grid-cols-2"}`}>
         {showTax && (
