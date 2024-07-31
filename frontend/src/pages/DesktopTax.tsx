@@ -1,7 +1,5 @@
 import { useState } from "react";
 import useScreenType from "../components/useSceenType";
-import BottomNav from "../components/BottomNav";
-import Top_Nav from "../components/Top_Nav";
 import Tax from "./Tax";
 import SelectTaxCategory from "./SelectTaxCategory";
 import ViewProject from "./ViewProject";
@@ -67,7 +65,7 @@ function DesktopTax() {
           </div>
         )}
         {(showSelectTaxCategory || showViewProject) && (
-          <div className="right_side px-2 py-10 flex justify-center">
+          <div className="right_side md:px-40  md:pt-10 lg:px-20">
             <div
               className={`  ${
                 isMobile ? "" : "border border-black rounded-2xl "
