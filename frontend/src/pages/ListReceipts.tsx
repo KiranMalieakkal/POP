@@ -174,7 +174,7 @@ function ListReceipts({ windowToDisplay }: Props) {
 
   return (
     <>
-      <div className="h-screen ml-5 mt-10">
+      <div className={`h-screen ${isMobile ? "mt-5" : "ml-5 mt-10"}`}>
         {/* <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1> */}
         <div className="flex justify-center items-center  mr-5">
           <div className="input flex items-center gap-2 w-full mx-5 bg-slate-100">
