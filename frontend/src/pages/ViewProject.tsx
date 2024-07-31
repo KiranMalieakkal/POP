@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+// Harald 240730: removing routing because desktop rebuild.
+/* import { useParams } from "react-router-dom"; */
 import toast, { Toaster } from "react-hot-toast";
-import BottomNav from "../components/BottomNav";
 import save from "../assets/save.png";
 import vacuum from "../assets/vacuum_1059226.png";
 import bill from "../assets/bill_9564931.png";
 import tool from "../assets/tool-utensils_5790423.png";
 
-type Params = {
+// Harald 240730: removing routing because desktop rebuild.
+/* type Params = {
   id: string;
-};
+}; */
 
 type Project = {
   id: number;
@@ -39,8 +40,15 @@ type TaxCategory = {
   paragraph: string;
 };
 
-const ViewProject = () => {
-  const { id } = useParams<Params>();
+type Props = {
+  windowToDisplay: ({ window, id }: { window: string; id?: number }) => void;
+  projectId: number;
+};
+
+const ViewProject = ({ windowToDisplay, projectId }: Props) => {
+  // todo: replace id from params (url) with id from parent component
+  /*   const { id } = useParams<Params>(); */
+  const id = projectId;
   const [projectData, setProjectData] = useState<Project | null>(null);
   const [taxCategory, setTaxCategory] = useState<TaxCategory | null>(null);
 
@@ -53,6 +61,9 @@ const ViewProject = () => {
   useEffect(() => {
     const fetchProjectData = async () => {
       try {
+        console.log(
+          "From the useEffect inside ViewProject.tsx. The id is: " + id
+        );
         const response = await fetch(
           `${baseUrl}/${id}?email=jane.smith@example.com`
         );
@@ -100,10 +111,16 @@ const ViewProject = () => {
   return (
     <div className="container mx-auto p-4 pt-2">
       <div className="bg-blue-900 pb-4">
-        <h1 className="pt-3 pr-6 pl-3 pb-2 text-white">
+        {/* <h1 className="pt-3 pr-6 pl-3 pb-2 text-white">
           <a href="/receipts/tax">← Go back</a>
-        </h1>
-        <h1 className="text-3xl font-bold mb-4 text-white text-center p-2">
+        </h1> */}
+        <button
+          onClick={() => windowToDisplay({ window: "hideViewProject" })}
+          className="badge p-4 bg-blue-100 mt-5 ml-10"
+        >
+          Close
+        </button>
+        <h1 className="text-3xl font-bold mb-4 text-white text-center">
           {projectData.title}
         </h1>
         <h2 className="text-lg font-semibold text-center text-white">
@@ -246,7 +263,7 @@ const ViewProject = () => {
           </a>
         </p>
       </div>
-      <BottomNav />
+
       <Toaster position="top-center" reverseOrder={false} />
     </div>
   );

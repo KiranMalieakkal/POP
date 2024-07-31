@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+// Harald 240730: removing routing because desktop rebuild.
 // import { useNavigate } from "react-router-dom";
 import img from "../assets/financial-analysts-doing-income-statement-with-calculator-laptop-income-statement-company-financial-statement-balance-sheet-concept.png";
 import ClickableDiv from "../components/ClickableDiv";
@@ -136,42 +137,43 @@ function SelectTaxCategory3({
 
   return (
     <>
-      <div className="flex flex-row justify-between p-4"></div>
-      <div className="flex justify-center items-center">
-        <img src={img} alt="Card Image" className="object-scale-down h-40 " />
-      </div>
-      <h1 className="text-2xl font-semibold text-gray-800  text-center">
-        Link this tax deduction to a project
-      </h1>
-      <div className="flex flex-col justify-center items-center ">
-        <p>Select a project from the list</p>
-        <div className="p-6 w-full max-w-4xl mx-auto max-h-[500px] overflow-y-auto mb-12">
-          {projects?.map((project: project) => {
-            return (
-              <ClickableDiv
-                key={project.id}
-                title={project.title}
-                isActive={activeProjectName === project.title}
-                onClick={() => handleClick(project.title)}
-              />
-            );
-          })}
+      <div className="p-4">
+        <div className="flex justify-center items-center">
+          <img src={img} alt="Card Image" className="object-scale-down h-40 " />
         </div>
-        {fetchError && (
-          <p className="text-red-500 break-words whitespace-normal text-center mt-4">
-            Sorry, Please try again later. {fetchErrorLog}
-          </p>
-        )}
-        {fetchError2 && (
-          <p className="text-red-500 break-words whitespace-normal text-center mt-4">
-            Sorry, Please try again later. {fetchErrorLog}
-          </p>
-        )}
-        {isPending && (
-          <p className="text-blue-500 break-words whitespace-normal text-center mt-4">
-            Loading...
-          </p>
-        )}
+        <h1 className="text-2xl font-semibold text-gray-800  text-center">
+          Link this tax deduction to a project
+        </h1>
+        <div className="flex flex-col justify-center items-center ">
+          <p>Select a project from the list</p>
+          <div className="p-6 w-full max-w-4xl mx-auto max-h-[500px] overflow-y-auto mb-12">
+            {projects?.map((project: project) => {
+              return (
+                <ClickableDiv
+                  key={project.id}
+                  title={project.title}
+                  isActive={activeProjectName === project.title}
+                  onClick={() => handleClick(project.title)}
+                />
+              );
+            })}
+          </div>
+          {fetchError && (
+            <p className="text-red-500 break-words whitespace-normal text-center mt-4">
+              Sorry, Please try again later. {fetchErrorLog}
+            </p>
+          )}
+          {fetchError2 && (
+            <p className="text-red-500 break-words whitespace-normal text-center mt-4">
+              Sorry, Please try again later. {fetchErrorLog}
+            </p>
+          )}
+          {isPending && (
+            <p className="text-blue-500 break-words whitespace-normal text-center mt-4">
+              Loading...
+            </p>
+          )}
+        </div>
       </div>
     </>
   );

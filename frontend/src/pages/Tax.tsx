@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// Harald 240730: removing routing because desktop rebuild.
+/* import { useNavigate } from "react-router-dom"; */
 import toast, { Toaster } from "react-hot-toast";
 // import projectData from "../assets/projectData";
 
@@ -52,7 +53,8 @@ type Props = {
 function Tax({ windowToDisplay }: Props) {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [taxCategories, setTaxCategories] = useState([]);
-  const navigate = useNavigate();
+  // Harald 240730: removing routing because desktop rebuild.
+  /*   const navigate = useNavigate(); */
   const [deleteErrorDisplay, setDeleteErrorDisplay] = useState(false);
   const queryClient = useQueryClient();
 
@@ -113,7 +115,9 @@ function Tax({ windowToDisplay }: Props) {
 
   function handleClick(project: Project) {
     console.log(`Clicked project with id ${project.id}`);
-    navigate(`${project.id}`);
+    // Harald 240730: removing routing because desktop rebuild.
+    /* navigate(`${project.id}`); */
+    windowToDisplay({ window: "ViewProject", id: project.id });
   }
 
   function handleDelete(projectId: number, taxId: number) {
