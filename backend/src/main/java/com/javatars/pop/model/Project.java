@@ -45,4 +45,7 @@ public class Project {
         receiptList.add(receipt);
     }
 
+    public void deleteReceipt(Receipt receipt) {
+        receiptList.remove(receipt);
+    }
 }

@@ -43,21 +43,6 @@ function ListReceipts({ windowToDisplay }: Props) {
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [theToken, setTheToken] = useState<string>();
 
-  useEffect(() => {
-    console.log("isauthenticated effect§");
-    if (isAuthenticated) {
-      console.log("yues");
-      getAccessTokenSilently()
-        .then((token) => {
-          console.log("token=", token);
-          setTheToken(token);
-        })
-        .catch((err) => {
-          console.log("err=", err);
-        });
-    }
-  }, [isAuthenticated, getAccessTokenSilently]);
-
   // Harald 240730: removing routing because desktop rebuild.
   /*   const navigate = useNavigate(); */
   const [filters, setFilters] = useState<requestType>({
@@ -125,6 +110,21 @@ function ListReceipts({ windowToDisplay }: Props) {
   //   console.log("use effect 1");
   //   setReceipts(data);
   // }, [data]);
+
+  useEffect(() => {
+    console.log("isauthenticated effect§");
+    if (isAuthenticated) {
+      console.log("yues");
+      getAccessTokenSilently()
+        .then((token) => {
+          console.log("token=", token);
+          setTheToken(token);
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
 
   useEffect(() => {
     // console.log(filters);
