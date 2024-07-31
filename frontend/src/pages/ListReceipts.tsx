@@ -365,7 +365,7 @@ function ListReceipts({ windowToDisplay }: Props) {
         )}
         <div className="w-full p-4 ">
           <div className=" hover:h-full overflow-y-auto rounded-lg relative ">
-            <table className="receipt-table w-full border-collapse">
+            <table className="receipt-table w-full border-collapse mb-36">
               <thead className=" ">
                 <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,1fr] ">
                   {/* <th className="p-2 border-b-2 border-black text-left">
