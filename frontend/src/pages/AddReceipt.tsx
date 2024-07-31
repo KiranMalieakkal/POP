@@ -257,6 +257,7 @@ function AddReceipt({ windowToDisplay }: Props) {
                 list="existingCurrency"
                 id="currency"
                 name="currency"
+                autoComplete="off"
                 className="input w-full bg-slate-100"
                 value={formData.currency}
                 onChange={handleChange}
@@ -311,6 +312,7 @@ function AddReceipt({ windowToDisplay }: Props) {
               list="existingProjects"
               id="project"
               name="project"
+              autoComplete="off"
               className="input w-full bg-slate-100"
               value={formData.project}
               onChange={handleChange}
