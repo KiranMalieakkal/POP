@@ -63,5 +63,10 @@ public class TaxController {
         return ResponseEntity.ok(taxCategoriesDtos);
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteTrip(@RequestParam String email,  @PathVariable Long id, @RequestParam Long projectId) {
+        taxService.deleteProjectFromTaxCategory(id,email,projectId);
+        return ResponseEntity.noContent().build();
+    }
 
 }

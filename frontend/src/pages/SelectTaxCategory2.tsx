@@ -1,13 +1,13 @@
 // import { useParams } from "react-router-dom";
-import tax_1 from "../assets/tax_1.svg"
-import tax_2 from "../assets/tax_2.svg"
+import tax_1 from "../assets/tax_1.svg";
+import tax_2 from "../assets/tax_2.svg";
 import tax_3 from "../assets/tax_3.svg";
-import BottomNav from "../components/BottomNav";
+// Harald 240730: removing routing because desktop rebuild.
+/* import BottomNav from "../components/BottomNav"; */
 import vacuum from "../assets/vacuum_1059226.png";
 import bill from "../assets/bill_9564931.png";
 import tool from "../assets/tool-utensils_5790423.png";
 import mockData from "../assets/mockDataCategory";
-
 
 type Props = {
   taxCategory: number;
@@ -21,7 +21,7 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
     return <div>Data not found</div>;
   }
 
-  const imageMap:{ [key: number]: string } = {
+  const imageMap: { [key: number]: string } = {
     1: tax_1,
     2: tax_2,
     3: tax_3,
@@ -49,9 +49,7 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
                 Description
               </div>
               <div className="collapse-content">
-                <p>
-                  {categoryData.mainDescription}
-                </p>
+                <p>{categoryData.mainDescription}</p>
               </div>
             </div>
           </div>
@@ -75,21 +73,19 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
                 Approved expenses
               </div>
               <div className="collapse-content">
-                
-                  <h6 className=" text-lg font-serif">
-                    {categoryData.approvedDescription}
-                  </h6>
-                  <ul className="mt-2">
-                    {categoryData.approvedExamples.map((example, index) => (
-                      <li
-                        className="bg-blue-50 border p-2 rounded-lg m-1"
-                        key={index}
-                      >
-                        • {example}
-                      </li>
-                    ))}
-                  </ul>
-                
+                <h6 className=" text-lg font-serif">
+                  {categoryData.approvedDescription}
+                </h6>
+                <ul className="mt-2">
+                  {categoryData.approvedExamples.map((example, index) => (
+                    <li
+                      className="bg-blue-50 border p-2 rounded-lg m-1"
+                      key={index}
+                    >
+                      • {example}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
@@ -130,7 +126,7 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
           </div>
         </div>
       </div>
-      <BottomNav />
+      {/* <BottomNav /> */}
     </>
   );
 };

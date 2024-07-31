@@ -1,12 +1,14 @@
-import { useNavigate, useParams } from "react-router-dom";
+// Harald 240730: removing routing because desktop rebuild. therefore params is also removed
+/* import { useNavigate, useParams } from "react-router-dom"; */
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import BottomNav from "../components/BottomNav";
+/* import BottomNav from "../components/BottomNav"; */
 import FormChoices from "../components/FormChoices";
 
-type Params = {
+// Harald 240730: removing routing because desktop rebuild. therefore params is also removed
+/* type Params = {
   id: string;
-};
+}; */
 
 type Receipt = {
   id: number;
@@ -19,9 +21,17 @@ type Receipt = {
   fileName?: string;
 };
 
-const ReceiptDetail = () => {
-  const { id } = useParams<Params>();
-  const navigate = useNavigate();
+type Props = {
+  windowToDisplay: ({ window, id }: { window: string; id?: number }) => void;
+  receiptId: number;
+};
+
+const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
+  // Harald 240730: removing routing because desktop rebuild. therefore params is also removed
+  /*   const { id } = useParams<Params>(); */
+  const id = receiptId;
+  // Harald 240730: removing routing because desktop rebuild.
+  /*   const navigate = useNavigate(); */
   const [editMode, setEditMode] = useState(false);
   const [receiptData, setReceiptData] = useState<Receipt>({
     id: 0,
@@ -134,7 +144,9 @@ const ReceiptDetail = () => {
         toast.success(`Receipt has been deleted successfully ♳.`);
         setTimeout(() => {
           setAlertMessage("");
-          navigate("/receipts");
+          // Harald 240730: removing routing because desktop rebuild.
+          /* navigate("/receipts"); */
+          windowToDisplay({ window: "hideViewReceipt" });
         }, 2000);
       } else {
         console.log("Failed to delete receipt.");
@@ -184,7 +196,13 @@ const ReceiptDetail = () => {
   return (
     <>
       <h1 className="pt-2 pr-6 pl-6 pb-2">
-        <a href="/receipts">← Go back</a>
+        {/* <a href="/receipts">← Go back</a> */}
+        <button
+          onClick={() => windowToDisplay({ window: "hideViewReceipt" })}
+          className="btn"
+        >
+          Close
+        </button>
       </h1>
       <div className="p-2 max-w-4xl mx-auto pb-20 bg-gradient-to-b from-blue-50 rounded-xl">
         <div className="bg-white shadow-xl  top-shadow rounded-lg p-5 flex flex-col md:flex-row">
@@ -419,7 +437,7 @@ const ReceiptDetail = () => {
         </div>
         <Toaster position="top-center" reverseOrder={false} />
       </div>
-      <BottomNav />
+      {/* <BottomNav /> */}
     </>
   );
 };

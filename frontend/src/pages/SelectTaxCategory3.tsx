@@ -36,6 +36,7 @@ export type NewPost = {
 export type project = {
   title: string;
   id: string;
+  receiptList: receiptsType;
 };
 
 export type projects = {
@@ -101,7 +102,11 @@ function SelectTaxCategory3({
   });
 
   useEffect(() => {
-    setProjects(projectsData);
+    setProjects(
+      projectsData?.filter(
+        (project: project) => project.receiptList.length !== 0
+      )
+    );
     setTaxCategories(taxCategoriesData);
   }, [projectsData, taxCategoriesData]);
 
@@ -141,7 +146,7 @@ function SelectTaxCategory3({
       <div className="flex flex-col justify-center items-center ">
         <p>Select a project from the list</p>
         <div className="p-6 w-full max-w-4xl mx-auto max-h-[500px] overflow-y-auto mb-12">
-          {projectsData?.map((project: project) => {
+          {projects?.map((project: project) => {
             return (
               <ClickableDiv
                 key={project.id}
