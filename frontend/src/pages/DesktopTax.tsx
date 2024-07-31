@@ -62,7 +62,7 @@ function DesktopTax() {
           </div>
         )}
         {(showSelectTaxCategory || showViewProject) && (
-          <div className="right_side px-20 py-10">
+          <div className="right_side px-2 py-10 flex justify-center">
             <div
               className={`  ${
                 isMobile ? "" : "border border-black rounded-2xl "

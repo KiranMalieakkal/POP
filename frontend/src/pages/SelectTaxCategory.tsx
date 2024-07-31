@@ -26,7 +26,7 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
   const navigate = useNavigate();
 
   // This is used to scroll to the top of the parent div when moving between components.
-  const scrollableDivRef = useRef(null);
+  const scrollableDivRef = useRef<HTMLDivElement>(null);
 
   const { mutate: postTaxCategory } = useMutation<unknown, Error, NewPost>({
     mutationFn: (newPost) =>
@@ -135,7 +135,7 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
 
   return (
     <div
-      className="wizard max-h-[calc(100vh-150px)] overflow-y-auto"
+      className="wizard max-h-[calc(100vh-150px)] overflow-y-auto max-w-md"
       ref={scrollableDivRef}
     >
       <div className="navigation-buttons flex flex-row justify-between m-3">

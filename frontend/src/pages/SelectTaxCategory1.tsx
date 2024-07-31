@@ -21,7 +21,7 @@ function SelectTaxCategory1({ openTaxCategory }: Props) {
           <p>Let's find the right deduction for you</p>
         </div>
 
-        <div className=" bg-blue-800 rounded-3xl mx-10 mb-10 flex flex-col p-5 shadow-md shadow-slate-500">
+        <div className=" bg-blue-800 rounded-3xl mx-5 mb-10 flex flex-col p-5 shadow-md shadow-slate-500">
           <img src={tax1} alt="Person selling home" className="w-full" />
           <h1 className="text-2xl text-white py-5">I'm selling my home</h1>
           <p className="text-white p-2 pb-5 text-sm text-left">
@@ -36,7 +36,7 @@ function SelectTaxCategory1({ openTaxCategory }: Props) {
           </button>
         </div>
 
-        <div className=" bg-blue-800 rounded-3xl mx-10 mb-10 flex flex-col p-5 shadow-md shadow-slate-500">
+        <div className=" bg-blue-800 rounded-3xl mx-5 mb-10 flex flex-col p-5 shadow-md shadow-slate-500">
           <img src={tax2} alt="Person selling home" className="w-full" />
           <h1 className="text-2xl text-white py-5">I’m upgrading my home</h1>
           <p className="text-white p-2 pb-5 text-sm text-left">
@@ -53,7 +53,7 @@ function SelectTaxCategory1({ openTaxCategory }: Props) {
           </button>
         </div>
 
-        <div className=" bg-blue-800 rounded-3xl mx-10 mb-10 flex flex-col p-5 shadow-md shadow-slate-500">
+        <div className=" bg-blue-800 rounded-3xl mx-5 mb-10 flex flex-col p-5 shadow-md shadow-slate-500">
           <img src={tax3} alt="Person selling home" className="w-full" />
           <h1 className="text-2xl text-white py-5">
             Home repair & maintenance
