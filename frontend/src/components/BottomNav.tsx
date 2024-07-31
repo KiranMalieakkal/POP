@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function BottomNav() {
-  const [activeButton, setActiveButton] = useState("receipts");
+  const location = useLocation();
+  const [activeButton, setActiveButton] = useState(
+    location.pathname.split("/")[2] || "receipts"
+  );
 
   function handleClick(buttonName: string) {
     setActiveButton(buttonName);
@@ -14,7 +17,7 @@ function BottomNav() {
         to="/"
         className={
           activeButton === "home"
-            ? "active bg-blue-100 border  border-t-0 border-x-0 border-b-8 border-blue-900"
+            ? "active bg-blue-100 border border-t-0 border-x-0 border-b-8 border-blue-900"
             : ""
         }
         onClick={() => handleClick("home")}
@@ -37,7 +40,7 @@ function BottomNav() {
         </svg>
         <div
           className={` ${
-            activeButton === "home" ? "text-blue-600" : "text-blue-900"
+            activeButton === "home" ? "text-blue-600" : "text-blue-900 "
           }`}
         >
           Home
@@ -47,7 +50,7 @@ function BottomNav() {
         to="/desktop"
         className={
           activeButton === "receipts"
-            ? "active bg-blue-100 border  border-t-0 border-x-0 border-b-8 border-blue-900"
+            ? "active bg-blue-100 border border-t-0 border-x-0 border-b-8 border-blue-900"
             : ""
         }
         onClick={() => handleClick("receipts")}
@@ -77,7 +80,7 @@ function BottomNav() {
         </div>
       </Link>
       <Link
-        to="tax"
+        to="/receipts/tax"
         className={
           activeButton === "tax"
             ? "active  bg-blue-100 border border-t-0 border-x-0 border-b-8 border-blue-900"
@@ -110,10 +113,10 @@ function BottomNav() {
         </div>
       </Link>
       <Link
-        to="profile"
+        to="/receipts/profile"
         className={
           activeButton === "profile"
-            ? "active  bg-blue-100 border  border-t-0 border-x-0 border-b-8 border-blue-900"
+            ? "active  bg-blue-100 border border-t-0 border-x-0 border-b-8 border-blue-900"
             : ""
         }
         onClick={() => handleClick("profile")}

@@ -337,7 +337,10 @@ function ListReceipts({ windowToDisplay }: Props) {
               </div>
             </div>
             <div className="flex justify-center items-center mt-4">
-              <button onClick={applyFilters} className="btn btn-primary">
+              <button
+                onClick={applyFilters}
+                className="btn bg-blue-800 text-white"
+              >
                 Apply Filters
               </button>
             </div>

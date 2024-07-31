@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Profile from "./Profile";
 import BottomNav from "../components/BottomNav";
-
 import Tax from "./Tax";
 import ListReceipts from "./ListReceipts";
 import ViewReceipt from "./ViewReceipt";
@@ -10,14 +9,6 @@ import ViewProject from "./ViewProject";
 import SelectTaxCategory from "./SelectTaxCategory";
 
 function Dashboard() {
-  // const { data } = useQuery({
-  //   queryKey: ["fetch"],
-  //   queryFn: () =>
-  //     fetch(`http://localhost:3000/api/users/${username}/trips`)
-  //       .then((response) => response.json())
-  //       .then((data) => data),
-  // });
-
   return (
     <>
       <div className="">
