@@ -6,6 +6,7 @@ import save from "../assets/save.png";
 import vacuum from "../assets/vacuum_1059226.png";
 import bill from "../assets/bill_9564931.png";
 import tool from "../assets/tool-utensils_5790423.png";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // Harald 240730: removing routing because desktop rebuild.
 /* type Params = {
@@ -51,6 +52,8 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
   const id = projectId;
   const [projectData, setProjectData] = useState<Project | null>(null);
   const [taxCategory, setTaxCategory] = useState<TaxCategory | null>(null);
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+  const [theToken, setTheToken] = useState<string>();
 
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/projects";
   const baseUrl = "http://localhost:8080/api/projects";
@@ -59,14 +62,34 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
   const baseUrl2 = "http://localhost:8080/api/taxes";
 
   useEffect(() => {
+    console.log("isauthenticated effect§");
+    if (isAuthenticated) {
+      console.log("yues");
+      getAccessTokenSilently()
+        .then((token) => {
+          console.log("token=", token);
+          setTheToken(token);
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
+
+  useEffect(() => {
     const fetchProjectData = async () => {
+      if (!theToken) return;
+      if (!user?.email) return;
       try {
         console.log(
           "From the useEffect inside ViewProject.tsx. The id is: " + id
         );
-        const response = await fetch(
-          `${baseUrl}/${id}?email=jane.smith@example.com`
-        );
+        const response = await fetch(`${baseUrl}/${id}?email=${user?.email}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${theToken}`,
+          },
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch project data");
         }
@@ -77,7 +100,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
       }
     };
     fetchProjectData();
-  }, [id]);
+  }, [id, theToken, user?.email]);
 
   useEffect(() => {
     const fetchTaxCategories = async () => {
@@ -85,7 +108,13 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
       try {
         console.log("taxCategoryID: " + projectData?.tax_category);
         const response = await fetch(
-          `${baseUrl2}/${projectData?.tax_category}/category`
+          `${baseUrl2}/${projectData?.tax_category}/category`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${theToken}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Failed to fetch project data");
