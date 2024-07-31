@@ -1,9 +1,11 @@
 package com.javatars.pop.controller;
 
 import com.javatars.pop.model.*;
+import com.javatars.pop.repository.UserRepository;
 import com.javatars.pop.service.BlobService;
 import com.javatars.pop.service.ProjectService;
 import com.javatars.pop.service.ReceiptService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +22,16 @@ import java.util.List;
 //@RequiredArgsConstructor
 public class ReceiptController {
 
+    private final UserRepository userRepository;
     ReceiptService receiptService;
     BlobService blobService;
     ProjectService projectService;
 
-    public ReceiptController(ReceiptService receiptService, BlobService blobService, ProjectService projectService) {
+    public ReceiptController(ReceiptService receiptService, BlobService blobService, ProjectService projectService, UserRepository userRepository) {
         this.receiptService = receiptService;
         this.blobService = blobService;
         this.projectService = projectService;
+        this.userRepository = userRepository;
     }
 
 //    @GetMapping("/auth")
@@ -71,7 +75,7 @@ public class ReceiptController {
                                                        @RequestParam Double amount,
                                                        @RequestParam String currency,
                                                        @RequestParam LocalDate purchaseDate,
-                                                       @RequestParam String textContent ) {
+                                                       @RequestParam String textContent) {
         ReceiptDtoGpt receiptDtoGpt = new ReceiptDtoGpt(company, amount, currency, purchaseDate, textContent);
         Receipt receipt = receiptService.createReceipt(receiptDtoGpt, email);
         String filename;
@@ -88,13 +92,13 @@ public class ReceiptController {
 
     @PostMapping("/with-project")
     public ResponseEntity<ReceiptDtoOut> createReceiptWithProject(@RequestParam("file") MultipartFile file,
-                                                       @RequestParam String email,
-                                                       @RequestParam String company,
-                                                       @RequestParam Double amount,
-                                                       @RequestParam String currency,
-                                                       @RequestParam LocalDate purchaseDate,
-                                                       @RequestParam String textContent,
-                                                       @RequestParam String projectTitle) {
+                                                                  @RequestParam String email,
+                                                                  @RequestParam String company,
+                                                                  @RequestParam Double amount,
+                                                                  @RequestParam String currency,
+                                                                  @RequestParam LocalDate purchaseDate,
+                                                                  @RequestParam String textContent,
+                                                                  @RequestParam String projectTitle) {
         ReceiptDtoGpt receiptDtoGpt = new ReceiptDtoGpt(company, amount, currency, purchaseDate, textContent);
         Receipt receipt = receiptService.createReceipt(receiptDtoGpt, email);
         String filename;
@@ -115,7 +119,6 @@ public class ReceiptController {
         projectService.save(project);
         return ResponseEntity.ok(receipt.getDtoOut());
     }
-
 
 
 //------- I added getById to test display details.
@@ -160,11 +163,12 @@ public class ReceiptController {
             receipt.setPurchaseDate(updatedReceipt.purchaseDate());
 
             Project project = receiptService.findProjectByTitle(updatedReceipt.project());
-            Category category = receiptService.findCategoryByTitle(updatedReceipt.category());
-
+            if (project == null) {
+                projectService.createProject(receipt.getUser().getEmail(), updatedReceipt.project());
+            }
             receipt.setProject(project);
-            receipt.setCategory(category);
-
+//            Category category = receiptService.findCategoryByTitle(updatedReceipt.category());
+//            receipt.setCategory(category);
             Receipt updated = receiptService.save(receipt);
             return ResponseEntity.ok(updated.getDtoOut());
         } else {
@@ -176,6 +180,16 @@ public class ReceiptController {
     public ResponseEntity<Void> deleteReceipt(@PathVariable long id) {
         Receipt receipt = receiptService.findById(id);
         if (receipt != null) {
+            Project project = receipt.getProject();
+            if (project != null) {
+                project.deleteReceipt(receipt);
+            }
+            projectService.save(project);
+
+            User user = receipt.getUser();
+            user.deleteReceipt(receipt);
+            userRepository.saveUser(user);
+
             receiptService.delete(receipt);
             return ResponseEntity.noContent().build();
         } else {
