@@ -37,7 +37,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   sql:
     init:
-      mode: always
+#      mode: always
       #            platform: mssql
       platform: postgresql
   cloud:

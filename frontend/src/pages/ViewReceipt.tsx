@@ -195,19 +195,20 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
 
   return (
     <>
-      <h1 className="pt-2 pr-6 pl-6 pb-2">
+     
+      <div className="p-2 lg:p-5 lg:pt-2 max-w-4xl mx-auto pb-20 rounded-xl">
+        <div className="bg-white shadow-xl  top-shadow  lg:shadow-none rounded-lg p-5 flex flex-col">
+         <div className="pt-0 pr-6  pb-2">
         {/* <a href="/receipts">← Go back</a> */}
         <button
           onClick={() => windowToDisplay({ window: "hideViewReceipt" })}
-          className="btn"
+          className="badge p-4 bg-blue-100"
         >
           Close
         </button>
-      </h1>
-      <div className="p-2 max-w-4xl mx-auto pb-20 bg-gradient-to-b from-blue-50 rounded-xl">
-        <div className="bg-white shadow-xl  top-shadow rounded-lg p-5 flex flex-col md:flex-row">
+      </div>
           {/* img section .......*/}
-          <div className="border border-gray-300 rounded-lg p-5 h-full w-full md:w-1/2 md:pr-4 ms:w-full  ms:pr-0 h-112">
+          <div className="border border-gray-300 rounded-lg p-5 h-full w-full md:pr-4 ms:w-full  ms:pr-0 h-112">
             <img
               src={imgFile}
               alt="Receipt"
@@ -215,7 +216,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
             />
           </div>
           {/* form section .......*/}
-          <div className="w-full md:w-1/2 pl-4 sm:text-center md:text-left">
+          <div className="w-full sm:text-center md:text-left">
             {alertMessage && (
               <div className="alert alert-error mb-4">
                 <div>{alertMessage}</div>
@@ -234,8 +235,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-gray-100">
-                    <p className="w-full text-blue-900 font-semibold">
+                  <div className="input input-bordered w-full flex items-center bg-slate-100">
+                    <p className="w-full ">
                       {receiptData.company}
                     </p>
                   </div>
@@ -253,8 +254,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       className="input bg-slate-100 w-full"
                     />
                   ) : (
-                    <div className="input input-bordered w-full flex items-center bg-gray-100">
-                      <p className="text-blue-900 font-semibold ">
+                    <div className="input input-bordered w-full flex items-center bg-slate-100">
+                      <p className=" ">
                         {receiptData.amount}
                       </p>
                     </div>
@@ -289,8 +290,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       )}
                     </>
                   ) : (
-                    <div className="input input-bordered w-full flex items-center bg-gray-100">
-                      <p className="text-blue-900 font-semibold ">
+                    <div className="input input-bordered w-full flex items-center bg-slate-100">
+                      <p className="">
                         {receiptData.currency}
                       </p>
                     </div>
@@ -308,8 +309,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-gray-100">
-                    <p className="text-blue-900 font-semibold">
+                  <div className="input input-bordered w-full flex items-center bg-slate-100">
+                    <p className="">
                       {receiptData.purchaseDate}
                     </p>
                   </div>
@@ -327,7 +328,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     className="textarea bg-slate-100 w-full h-40"
                   />
                 ) : (
-                  <div className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-gray-100 p-3 pl-5 ">
+                  <div className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-slate-100 p-3 pl-5 ">
                     {" "}
                     {/* w-full items-center rounded-lg border border-slate-300 p-3  */}
                     <p className="">{receiptData.textContent}</p>
@@ -360,8 +361,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     )}
                   </>
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-gray-100">
-                    <p className="text-blue-900 font-semibold">
+                  <div className="input input-bordered w-full flex items-center bg-slate-100">
+                    <p className="">
                       {receiptData.project}
                     </p>
                   </div>

@@ -22,6 +22,7 @@ function App() {
       <BrowserRouter>
         {isAuthenticated && !isMobile && <Top_Nav />}
         <Routes>
+          
           <Route path="/" element={<Home />} />
           {/* <Route path="/taxinfo" element={<TaxInfo />} />
           <Route path="/receipts/*" element={<Dashboard />} />
