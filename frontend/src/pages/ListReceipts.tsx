@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
 // Harald 240730: removing routing because desktop rebuild.
@@ -36,6 +37,7 @@ function ListReceipts({ windowToDisplay }: Props) {
   const [receipts, setReceipts] = useState<receiptsType>([]);
   const [filteredReceipts, setFilteredReceipts] = useState<receiptsType>([]);
   const [showFilter, setShowFilter] = useState(false);
+  const { user } = useAuth0();
   // Harald 240730: removing routing because desktop rebuild.
   /*   const navigate = useNavigate(); */
   const [filters, setFilters] = useState<requestType>({
@@ -214,7 +216,7 @@ function ListReceipts({ windowToDisplay }: Props) {
         </div>
 
         {showFilter && (
-          <div className="p-4 border border-gray-300 rounded m-4">
+          <div className="p-4 border-2 rounded-lg m-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center mb-4">
                 <label htmlFor="company" className="mr-2">
@@ -356,11 +358,11 @@ function ListReceipts({ windowToDisplay }: Props) {
         ) : (
           ""
         )}
-        <div className="w-full p-4">
-          <div className="max-h-[350px] hover:h-full overflow-y-auto">
-            <table className="receipt-table w-full border-collapse ">
-              <thead>
-                <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,1fr]">
+        <div className="w-full p-4 ">
+          <div className="max-h-[350px] hover:h-full overflow-y-auto border-2 rounded-lg p-4 relative ">
+            <table className="receipt-table w-full border-collapse">
+              <thead className=" ">
+                <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,1fr] ">
                   {/* <th className="p-2 border-b-2 border-black text-left">
                     <label>
                       <input
@@ -422,12 +424,20 @@ function ListReceipts({ windowToDisplay }: Props) {
             </table>
           </div>
         </div>
+        {receipts?.length === 0 && (
+          <div className="flex justify-center items-center p-4 text-center rounded m-2">
+            <p className="text-gray-400">
+              Hi {user?.name}, start adding receipts by clicking on the Add
+              Receipt button.
+            </p>
+          </div>
+        )}
         <div className="flex justify-center items-center  ">
           <button
-            className="btn bg-blue-800  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
+            className="btn bg-blue-800 btn-primary text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
             onClick={() => windowToDisplay({ window: "AddReceipt" })}
           >
-            Add Receipts
+            Add Receipt
           </button>
         </div>
         {fetchError && (
