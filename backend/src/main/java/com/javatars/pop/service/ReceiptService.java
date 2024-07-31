@@ -54,7 +54,11 @@ public class ReceiptService {
 
     public List<ReceiptDtoOut> getReceipts(String email, FilterDto filters) {
         User user = userRepository.getReceipts(email);
-        if (user == null) return null;
+        if (user == null) {
+            user = new User("userFirstName", "userLastName", email);
+            userRepository.saveUser(user);
+            return new ArrayList<>();
+        }
 
         return user.getReceipts().stream()
                 .filter(r -> filters.company() == null || r.getCompany().equalsIgnoreCase(filters.company().strip()))

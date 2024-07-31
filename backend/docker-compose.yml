@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: 'postgres:15'
+    container_name: 'salt-postgres'
+    environment:
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+    volumes:
+      - .data/postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    restart: always

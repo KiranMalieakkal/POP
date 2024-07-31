@@ -71,7 +71,7 @@ public class TaxService {
     }
 
     
-        public TaxCategory getTaxCategoryById(Long id) {
+    public TaxCategory getTaxCategoryById(Long id) {
             return taxRepo.getTaxById(id);
         }
 

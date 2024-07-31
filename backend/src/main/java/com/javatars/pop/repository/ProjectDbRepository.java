@@ -16,4 +16,6 @@ public interface ProjectDbRepository extends JpaRepository<Project, Long> {
     List<Project> findByUserIdAndTaxCategoryNull(Long userId);
 
     Project findByIdAndUserId(Long projectId, Long userId);
+
+    Project findByTitleAndUserId(String projectTitle, Long userId);
 }

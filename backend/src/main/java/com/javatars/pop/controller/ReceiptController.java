@@ -4,6 +4,7 @@ import com.javatars.pop.model.*;
 import com.javatars.pop.service.BlobService;
 import com.javatars.pop.service.ProjectService;
 import com.javatars.pop.service.ReceiptService;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -90,7 +91,10 @@ public class ReceiptController {
         ReceiptDtoGpt receiptDtoGpt = new ReceiptDtoGpt(company, amount, currency, purchaseDate, textContent);
         Receipt receipt = receiptService.createReceipt(receiptDtoGpt, email);
         String filename;
-        Project project = projectService.createProject(email, projectTitle);
+        Project project = projectService.getProject(email, projectTitle);
+        if (project == null) {
+            project = projectService.createProject(email, projectTitle);
+        }
         try {
             filename = blobService.uploadImage(file, receipt.getId());
         } catch (IOException e) {

@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 const Top_Nav = () => {
   function handleClick(buttonName: string) {
-    setActiveButton(buttonName);
+    //setActiveButton(buttonName);
+    console.log("button in top nav clicked" + buttonName);
   }
   return (
     <>
@@ -12,24 +13,42 @@ const Top_Nav = () => {
         <div className="navbar-start w-20">
           <a className="text-2xl text-white flex mx-3">POP</a>
         </div>
-        <div className="navbar-start hidden lg:flex">
+        <div className="navbar-start">
           <ul className="menu menu-horizontal px-1 text-lg">
             <li>
               <Link
                 to="/"
                 className="text-white"
-                onClick={() => handleClick("home")}
+                onClick={() => handleClick("homee")}
               >
                 Home
               </Link>
             </li>
             <li>
               <Link
-                to="/desktoptax"
+                to="/receipts"
                 className="text-white"
-                onClick={() => handleClick("taxinfo")}
+                onClick={() => handleClick("receipto")}
+              >
+                Receipts
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/tax"
+                className="text-white"
+                onClick={() => handleClick("taxas")}
               >
                 Tax
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/profile"
+                className="text-white"
+                onClick={() => handleClick("profile")}
+              >
+                Profile
               </Link>
             </li>
           </ul>
