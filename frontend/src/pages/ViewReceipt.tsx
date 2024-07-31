@@ -1,12 +1,14 @@
-import { useNavigate, useParams } from "react-router-dom";
+// Harald 240730: removing routing because desktop rebuild. therefore params is also removed
+/* import { useNavigate, useParams } from "react-router-dom"; */
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import BottomNav from "../components/BottomNav";
+/* import BottomNav from "../components/BottomNav"; */
 import FormChoices from "../components/FormChoices";
 
-type Params = {
+// Harald 240730: removing routing because desktop rebuild. therefore params is also removed
+/* type Params = {
   id: string;
-};
+}; */
 
 type Receipt = {
   id: number;
@@ -19,9 +21,17 @@ type Receipt = {
   fileName?: string;
 };
 
-const ReceiptDetail = () => {
-  const { id } = useParams<Params>();
-  const navigate = useNavigate();
+type Props = {
+  windowToDisplay: ({ window, id }: { window: string; id?: number }) => void;
+  receiptId: number;
+};
+
+const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
+  // Harald 240730: removing routing because desktop rebuild. therefore params is also removed
+  /*   const { id } = useParams<Params>(); */
+  const id = receiptId;
+  // Harald 240730: removing routing because desktop rebuild.
+  /*   const navigate = useNavigate(); */
   const [editMode, setEditMode] = useState(false);
   const [receiptData, setReceiptData] = useState<Receipt>({
     id: 0,
@@ -134,13 +144,50 @@ const ReceiptDetail = () => {
         toast.success(`Receipt has been deleted successfully ♳.`);
         setTimeout(() => {
           setAlertMessage("");
-          navigate("/receipts");
+          // Harald 240730: removing routing because desktop rebuild.
+          /* navigate("/receipts"); */
+          windowToDisplay({ window: "hideViewReceipt" });
         }, 2000);
       } else {
         console.log("Failed to delete receipt.");
       }
     }
   };
+
+  // const handleDelete = async () => {
+  //   const confirmDelete = () => (
+  //     <div>
+  //       <p>Are you sure you want to delete this receipt?</p>
+  //       <button onClick={() => confirmDeleteAction(true)} className="btn">Yes</button>
+  //       <button onClick={() => confirmDeleteAction(false)} className="btn">No</button>
+  //     </div>
+  //   );
+
+  //   const confirmDeleteAction = async (confirmed: boolean) => {
+  //     if (confirmed) {
+  //       const response = await fetch(`${baseUrl2}/${id}`, {
+  //         method: "DELETE",
+  //       });
+  //       if (response.ok) {
+  //         toast.dismiss();
+  //         toast.success(`Receipt has been deleted successfully ♳.`);
+  //         setTimeout(() => {
+  //           setAlertMessage("");
+  //           navigate("/receipts");
+  //         }, 2000);
+  //       } else {
+  //         console.log("Failed to delete receipt.");
+  //       }
+  //     } else {
+  //       toast.dismiss();
+  //     }
+  //   };
+
+  //   toast.custom(confirmDelete, {
+  //     position: "top-center",
+  //     style: {border: "1px solid black", },
+  //   });
+  // };
 
   const handleBack = () => {
     setEditMode(false);
@@ -149,7 +196,13 @@ const ReceiptDetail = () => {
   return (
     <>
       <h1 className="pt-2 pr-6 pl-6 pb-2">
-        <a href="/receipts">← Go back</a>
+        {/* <a href="/receipts">← Go back</a> */}
+        <button
+          onClick={() => windowToDisplay({ window: "hideViewReceipt" })}
+          className="btn"
+        >
+          Close
+        </button>
       </h1>
       <div className="p-2 max-w-4xl mx-auto pb-20 bg-gradient-to-b from-blue-50 rounded-xl">
         <div className="bg-white shadow-xl  top-shadow rounded-lg p-5 flex flex-col md:flex-row">
@@ -171,7 +224,7 @@ const ReceiptDetail = () => {
             {message && <div className="text-green-500 mb-4">{message}</div>}
             <div className="space-y-4 text-left">
               <div>
-                <label className="label text-gray-300">Company</label>
+                <label className="label text-gray-900 mt-4 p-0 ">Company</label>
                 {editMode ? (
                   <input
                     type="text"
@@ -181,14 +234,16 @@ const ReceiptDetail = () => {
                     className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center">
-                    <p className="w-full">{receiptData.company}</p>
+                  <div className="input input-bordered w-full flex items-center bg-gray-100">
+                    <p className="w-full text-blue-900 font-semibold">
+                      {receiptData.company}
+                    </p>
                   </div>
                 )}
               </div>
               <div className="grid grid-cols-[3fr_1fr]">
                 <div className="pr-5">
-                  <label className="label text-gray-300">Amount</label>
+                  <label className="label text-gray-900 mt-0 p-0">Amount</label>
                   {editMode ? (
                     <input
                       type="text"
@@ -198,13 +253,17 @@ const ReceiptDetail = () => {
                       className="input bg-slate-100 w-full"
                     />
                   ) : (
-                    <div className="input input-bordered w-full flex items-center">
-                      <p className="text-gray-700 ">{receiptData.amount}</p>
+                    <div className="input input-bordered w-full flex items-center bg-gray-100">
+                      <p className="text-blue-900 font-semibold ">
+                        {receiptData.amount}
+                      </p>
                     </div>
                   )}
                 </div>
                 <div className="relative">
-                  <label className="label text-gray-300">Currency</label>
+                  <label className="label text-gray-900 mt-0 p-0">
+                    Currency
+                  </label>
                   {editMode ? (
                     <>
                       <input
@@ -230,14 +289,16 @@ const ReceiptDetail = () => {
                       )}
                     </>
                   ) : (
-                    <div className="input input-bordered w-full flex items-center">
-                      <p className="text-gray-700 ">{receiptData.currency}</p>
+                    <div className="input input-bordered w-full flex items-center bg-gray-100">
+                      <p className="text-blue-900 font-semibold ">
+                        {receiptData.currency}
+                      </p>
                     </div>
                   )}
                 </div>
               </div>
               <div>
-                <label className="label text-gray-300">Date</label>
+                <label className="label text-gray-900 mt-0 p-0">Date</label>
                 {editMode ? (
                   <input
                     type="date"
@@ -247,13 +308,17 @@ const ReceiptDetail = () => {
                     className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center">
-                    <p className="text-gray-700">{receiptData.purchaseDate}</p>
+                  <div className="input input-bordered w-full flex items-center bg-gray-100">
+                    <p className="text-blue-900 font-semibold">
+                      {receiptData.purchaseDate}
+                    </p>
                   </div>
                 )}
               </div>
               <div>
-                <label className="label text-gray-300">Text Content</label>
+                <label className="label text-gray-900 mt-0 p-0">
+                  Text Content
+                </label>
                 {editMode ? (
                   <textarea
                     name="textContent"
@@ -262,13 +327,15 @@ const ReceiptDetail = () => {
                     className="textarea bg-slate-100 w-full h-40"
                   />
                 ) : (
-                  <div className="w-full items-center rounded-lg border border-slate-300 p-3">
-                    <p className="text-gray-700">{receiptData.textContent}</p>
+                  <div className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-gray-100 p-3 pl-5 ">
+                    {" "}
+                    {/* w-full items-center rounded-lg border border-slate-300 p-3  */}
+                    <p className="">{receiptData.textContent}</p>
                   </div>
                 )}
               </div>
               <div className="relative">
-                <label className="label text-gray-300">Project</label>
+                <label className="label text-gray-900 mt-0 p-0">Project</label>
                 {editMode ? (
                   <>
                     <input
@@ -293,8 +360,10 @@ const ReceiptDetail = () => {
                     )}
                   </>
                 ) : (
-                  <div className="input input-bordered w-full flex items-center">
-                    <p className="text-gray-700">{receiptData.project}</p>
+                  <div className="input input-bordered w-full flex items-center bg-gray-100">
+                    <p className="text-blue-900 font-semibold">
+                      {receiptData.project}
+                    </p>
                   </div>
                 )}
               </div>
@@ -304,13 +373,13 @@ const ReceiptDetail = () => {
                 {editMode ? (
                   <>
                     <button
-                      className="badge badge-outline p-4 mr-1 mt-3 hover:text-blue-500"
+                      className="btn badge-outline p-4 mr-3 mt-2 hover:text-blue-700"
                       onClick={handleBack}
                     >
                       Cancel
                     </button>
                     <button
-                      className="badge badge-outline p-5 mt-2 bg-blue-800 text-white hover:text-blue-300"
+                      className="btn badge-outline  mt-2 bg-blue-800 text-white hover:bg-blue-700 hover:text-white"
                       onClick={handleSave}
                     >
                       Save Changes
@@ -318,7 +387,7 @@ const ReceiptDetail = () => {
                   </>
                 ) : (
                   <button
-                    className="badge p-4 bg-blue-100"
+                    className="btn p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
                     onClick={handleEdit}
                   >
                     <svg
@@ -342,7 +411,7 @@ const ReceiptDetail = () => {
               <div className="flex justify-end mt-6">
                 {!editMode && (
                   <button
-                    className="badge p-4   bg-blue-100"
+                    className="btn p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
                     onClick={handleDelete}
                   >
                     <svg
@@ -368,7 +437,7 @@ const ReceiptDetail = () => {
         </div>
         <Toaster position="top-center" reverseOrder={false} />
       </div>
-      <BottomNav />
+      {/* <BottomNav /> */}
     </>
   );
 };

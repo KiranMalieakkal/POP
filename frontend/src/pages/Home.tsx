@@ -1,43 +1,89 @@
-import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
-import Top_Nav from "../components/Top_Nav";
+import LoginButton from "../components/LoginButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import loginImg from "../assets/loginImg.jpg";
+import mainImg from "../assets/mainBlue1.jpg";
+import short from "../assets/short.jpeg";
+import largeMain from "../assets/mainShort.jpg";
 
 const Home = () => {
+  const { isAuthenticated } = useAuth0();
+
   return (
     <>
-      <Top_Nav />
-      <div
-        className="hero min-h-screen"
-        style={{
-          backgroundImage:
-            "url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)",
-        }}
-      >
-        <div className="hero-overlay bg-opacity-60"></div>
-        <div className="hero-content text-neutral-content text-center">
-          <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-bold">
-              Now you can upload and categorize your receipt anywhere.
+      {/*  <Top_Nav /> */}
+      <div className="hero  relative">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${isAuthenticated ? loginImg : mainImg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            filter: "brightness(50%)",
+          }}
+        ></div>
+
+        <div className="flex flex-col md:flex-row lg:flex-row items-center h-full relative">
+        {/* max-h-[90vh] */}
+          <div className="flex-1 flex items-center justify-center h-full px-4 ml-0 md:ml-6 ">
+            <img
+              src={short}
+              alt="Central Image"
+              className="h-full w-full object-cover block md:hidden"
+            />
+            <img
+              src={largeMain}
+              alt="Central Image"
+              className="h-full w-full object-cover hidden md:block "
+            />
+          </div>
+          <div className="">
+            <h1 className="text-center text-3xl md:text-2xl lg:text-5xl lg:mb-4 md:mb-3 mt-2 text-white ">
+              Proof Of Purchase
             </h1>
-            <p className="mb-5">
-              Are you tired of losing track of your receipts and missing out on
-              tax deductions? Our Receipt Organizer app is here to help you stay
-              on top of your finances effortlessly.
-            </p>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
-              <Link to="/receipts">Get Started</Link>
-            </button>
+            <div className="flex-1 flex items-center justify-center py-7 mt-1 md:py-7 lg:py-10 md:px-5 px-3 lg:px-1 mr-7 m-7 xl:ml-16 bg-white bg-opacity-55 rounded-lg shadow-lg md:max-w-sm xl:max-w-2xl">
+              <div className="text-center">
+                {isAuthenticated ? (
+                  <>
+                    <h3 className="mb-1 text-xl font-bold lg:p-1 md:text-xl lg:text-3xl ">
+                      POP is here to help you stay on top of your finances
+                      effortlessly
+                    </h3>
+                    <p className="mb-5 text-sm p-2 lg:text-lg">
+                      Let us handle the details, making it easy for you to
+                      manage receipts, view them anytime and ensure you have all
+                      receipts handy to benefit from potential deductions!
+                    </p>
+                    <p className="text-lg font-semibold border rounded-lg p-2 lg:mx-3">
+                      Enjoy having everything in order!
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="mb-1 text-xl font-bold lg:p-1 md:text-xl lg:text-3xl ">
+                      Now you can upload and categorize your receipt anywhere.
+                    </h3>
+                    <p className="mb-5 text-sm p-2 lg:text-lg">
+                      Our app allows you to store all your receipts in one
+                      place, making it simple to track your expenses.
+                    </p>
+                    <div className="bg-blue-400 text-white font-bold py-2 px-4 rounded-md text-center mx-10 bg-opacity-55">
+                      <p>POP Always!</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="hero bg-white min-h-[50vh]">
-        <div className=" max-w-5xl mx-auto hero-content flex-col gap-12 lg:flex-row">
+      <div className="hero bg-white min-h-[40vh]">
+        <div className=" max-w-2xl md:max-w-4xl mx-auto hero-content flex-col gap-12 lg:flex-row">
           <img
-            src="https://www.adobe.com/content/dam/dx-dc/images/mobile/scan/01-acom-scan-scananything-986x1104.png.img.png"
-            className="max-w-sm rounded-lg"
+            src="https://img.freepik.com/free-photo/hand-holding-receipt-shopping-campaign_53876-129567.jpg?uid=R157119579&ga=GA1.1.759350799.1721280675&semt=ais_hybrid"
+            className="md:max-w-sm max-w-auto rounded-full h-48 w-48 object-cover"
           />
-          <div>
+          <div className="text-center">
             <h1 className="text-5xl font-bold">Turn paper into PDFs.</h1>
             <p className="py-6">
               Prepare for tax season with ease by utilizing our app to complete
@@ -48,11 +94,11 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="hero bg-white min-h-[50vh]">
-        <div className=" max-w-5xl mx-auto hero-content flex-col lg:flex-row-reverse">
+      <div className="hero bg-white min-h-[40vh]">
+        <div className=" max-w-2xl  md:max-w-4xl mx-auto hero-content flex-col lg:flex-row-reverse">
           <img
-            src="https://www.adobe.com/content/dam/dx-dc/images/mobile/scan/02-acom-scan-cleanandclear-986x1104.png.img.png"
-            className="max-w-sm rounded-lg"
+            src="https://img.freepik.com/free-photo/hand-holding-calculator-finance-concept_53876-129568.jpg?t=st=1722388650~exp=1722392250~hmac=a375c8a80e17dd006eba83ee0708aa8dfad8487b34efac7bb456812a2b686163&w=1380"
+            className="md:max-w-sm max-w-auto rounded-full h-48 w-48 object-cover"
           />
           <div className="text-center">
             <h1 className="text-5xl font-bold">
@@ -70,13 +116,14 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="hero bg-base-200 min-h-[50vh]">
-        <div className="hero-content flex-col gap-20 lg:flex-row">
-          <div className="card glass w-96">
+      <div className="hero bg-base-200 min-h-[40vh] p-2 mb-7">
+        <div className="hero-content flex-col gap-20 md:flex-row">
+          <div className="card glass w-90">
             <figure>
               <img
-                src="https://www.adobe.com/content/dam/dx-dc/images/mobile/scan/05_Mobile_acom-scan-save-430x480.png.img.png"
+                src="https://img.freepik.com/free-photo/top-view-smartphone-template-workspace_23-2148175198.jpg?t=st=1722388831~exp=1722392431~hmac=a5c784576eb4a196d253afdb99ffcc80e6a9c2960b06b96f5b3ec6e0ff65c607&w=2000"
                 alt="car!"
+                className=" h-60 w-75 object-cover"
               />
             </figure>
             <div className="card-body text-center">
@@ -87,11 +134,12 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className="card glass w-96">
+          <div className="card glass w-90">
             <figure>
               <img
-                src="https://www.adobe.com/content/dam/dx-dc/images/mobile/scan/06_Mobile_acom-scan-acrobat-430x480.png.img.png"
+                src="https://img.freepik.com/free-photo/excited-young-woman-hold-paper-letter-feel-euphoric-receiving-job-promotion-tax-refund-from-bank-happy-woman-reading-paperwork-document-smiling-good-pleasant-news-getting-student-scholarship_657921-661.jpg?t=st=1722389231~exp=1722392831~hmac=65429f0e00834fc15534b08cd17ab172f4c06f5cae85b668dd40ff66b17db026&w=1800"
                 alt="car!"
+                className=" h-60 w-76 object-cover"
               />
             </figure>
             <div className="card-body text-center">
@@ -104,7 +152,9 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <div className="btm-nav border-transparent text-current btm-nav-lg bg-blue-100 shadow-sky-600 w-auto">
+        <LoginButton />
+      </div>
     </>
   );
 };

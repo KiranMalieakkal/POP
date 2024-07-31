@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// Harald 240730: removing routing because desktop rebuild.
+/* import { useNavigate } from "react-router-dom"; */
 
 export type requestType = {
   company: string | null;
@@ -18,20 +19,26 @@ export type receiptType = {
   company: string;
   amount: number;
   currency: string;
-  startDate: string;
   purchaseDate: string;
   project: string;
   category: string;
+  textContent: string;
 };
 
 export type receiptsType = receiptType[];
 
-function ListReceipts() {
+type Props = {
+  windowToDisplay: ({ window, id }: { window: string; id?: number }) => void;
+};
+
+function ListReceipts({ windowToDisplay }: Props) {
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [receipts, setReceipts] = useState<receiptsType>([]);
+  const [filteredReceipts, setFilteredReceipts] = useState<receiptsType>([]);
   const [showFilter, setShowFilter] = useState(false);
-  const navigate = useNavigate();
-  const [filters, setFilters] = useState({
+  // Harald 240730: removing routing because desktop rebuild.
+  /*   const navigate = useNavigate(); */
+  const [filters, setFilters] = useState<requestType>({
     company: null,
     amountFrom: null,
     amountTo: null,
@@ -41,21 +48,29 @@ function ListReceipts() {
     project: null,
     category: null,
   });
-  const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
-  // const baseUrl = "http://localhost:8080/api/receipts";
+  const [nonNullFilters, setNonNullFilters] = useState<
+    [string, string | number | null][]
+  >([]);
+  const [search, setSearch] = useState("");
+  // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
+  const baseUrl = "http://localhost:8080/api/receipts";
 
-  const { data, isError: fetchError } = useQuery({
-    queryKey: ["fetch1"],
-    queryFn: () =>
-      fetch(`${baseUrl}?email=jane.smith@example.com`)
-        .then((response) => response.json())
-        .then((data) => data)
-        .catch((e) => {
-          setfetchErrorLog(e.message);
-        }),
-  });
+  // const { data, isError: fetchError } = useQuery({
+  //   queryKey: ["fetch1"],
+  //   queryFn: () =>
+  //     fetch(`${baseUrl}?email=jane.smith@example.com`)
+  //       .then((response) => response.json())
+  //       .then((data) => data)
+  //       .catch((e) => {
+  //         setfetchErrorLog(e.message);
+  //       }),
+  // });
 
-  const { data: data2, refetch } = useQuery({
+  const {
+    data: data2,
+    refetch,
+    isError: fetchError,
+  } = useQuery({
     queryKey: ["fetch2"],
     queryFn: () =>
       fetch(`${baseUrl}/filters?email=jane.smith@example.com`, {
@@ -78,16 +93,37 @@ function ListReceipts() {
         }),
   });
 
-  useEffect(() => {
-    console.log("use effect 1");
-    setReceipts(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log("use effect 1");
+  //   setReceipts(data);
+  // }, [data]);
 
   useEffect(() => {
     // console.log(filters);
     console.log("use-effect2");
     setReceipts(data2);
   }, [data2]);
+
+  useEffect(() => {
+    setFilteredReceipts(
+      receipts?.filter((receipt) => {
+        return (
+          receipt.company.toLowerCase().includes(search.toLowerCase()) ||
+          receipt.textContent.toLowerCase().includes(search.toLowerCase()) ||
+          receipt.purchaseDate.toLowerCase().includes(search.toLowerCase())
+        );
+      })
+    );
+  }, [search, receipts]);
+
+  useEffect(() => {
+    const entries = Object.entries(filters);
+    const filteredEntries = entries.filter(([, value]) => value !== null);
+    console.log(entries);
+    console.log(filteredEntries);
+    setNonNullFilters(filteredEntries);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showFilter]);
 
   const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -110,27 +146,41 @@ function ListReceipts() {
     console.log("Applying filters:", filters);
   };
 
-  function addReceipt() {
-    console.log(data);
-    navigate("/receipts/addReceipt");
-  }
+  /*   function addReceipt(window: string) {
+    // Harald 240730: removing routing because desktop rebuild.
+    //navigate("/receipts/addReceipt");
+  } */
 
   function handleViewReceipt(receipt: receiptType) {
     console.log(`You are viewing receipt with id  ${receipt.id}`);
-    navigate(`${receipt.id}`);
+    // Harald 240730: removing routing because desktop rebuild.
+    /*     navigate(`${receipt.id}`); */
+    windowToDisplay({ window: "ViewReceipt", id: receipt.id });
   }
 
-  function deleteReceipt(id: number) {
+  /*   function deleteReceipt(id: number) {
     console.log(`you have deleted receipt with this id ${id}`);
+  } */
+
+  function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
+    setSearch(e.target.value);
+    console.log(filteredReceipts);
+    console.log(search);
   }
 
   return (
     <>
       <div className="mb-20">
-        <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1>
+        {/* <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1> */}
         <div className="flex justify-center items-center">
-          <label className="input input-bordered flex items-center gap-2 md:w-1/3 lg:w-1/3 w-1/2 m-4">
-            <input type="text" className="grow" placeholder="Search" />
+          <div className="input input-bordered flex items-center gap-2 md:w-1/3 lg:w-1/3 w-1/2 m-4">
+            <input
+              type="text"
+              value={search}
+              className="grow"
+              placeholder="Search"
+              onChange={handleSearchChange}
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -143,7 +193,7 @@ function ListReceipts() {
                 clipRule="evenodd"
               />
             </svg>
-          </label>
+          </div>
           <div className="border-black border-inherit rounded ">
             <svg
               onClick={() => setShowFilter(!showFilter)}
@@ -287,18 +337,33 @@ function ListReceipts() {
               </div>
             </div>
             <div className="flex justify-center items-center mt-4">
-              <button onClick={applyFilters} className="btn btn-primary">
+              <button
+                onClick={applyFilters}
+                className="btn bg-blue-800 text-white"
+              >
                 Apply Filters
               </button>
             </div>
           </div>
         )}
-
+        {nonNullFilters.length !== 0 ? (
+          <div className="active-filters flex flex-col justify-center items-center">
+            <h3 className="mb-1">Active Filters:</h3>
+            {nonNullFilters.map((filter, index) => (
+              <div key={index} className="mb-1  flex items-center">
+                <span className="font-semibold mr-2">{filter[0]}:</span>
+                <span>{filter[1]}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
         <div className="w-full p-4">
-          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto">
-            <table className="receipt-table w-full border-collapse ml-8 mr-8">
+          <div className="max-h-[350px] hover:h-full overflow-y-auto">
+            <table className="receipt-table w-full border-collapse ">
               <thead>
-                <tr className=" text-black">
+                <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,1fr]">
                   {/* <th className="p-2 border-b-2 border-black text-left">
                     <label>
                       <input
@@ -314,19 +379,21 @@ function ListReceipts() {
                     Date
                   </th>
                   <th className="p-2 border-b-2 border-black text-left text-lg">
+                    Project
+                  </th>
+                  <th className="p-2 border-b-2 border-black text-right text-lg">
                     Amount
                   </th>
-                  <th className="p-2 border-b-2 border-black text-center text-lg"></th>
                 </tr>
               </thead>
               <tbody>
-                {receipts?.map((receipt: receiptType) => (
+                {filteredReceipts?.map((receipt: receiptType) => (
                   <tr
                     onClick={() => {
                       handleViewReceipt(receipt);
                     }}
                     key={receipt.id}
-                    className="hover:bg-gray-100 hover:cursor-pointer transition-transform transform hover:scale-105"
+                    className="hover:bg-gray-100 hover:cursor-pointer transition-transform transform hover:scale-[1.01] grid grid-cols-[1fr,1fr,1fr,1fr]"
                   >
                     {/* <th>
                       <label>
@@ -348,37 +415,20 @@ function ListReceipts() {
                     <td className="p-2 border-b border-gray-300">
                       {receipt.purchaseDate}
                     </td>
-                    <td className="p-2 border-b border-gray-300 text-left">{`${receipt.amount} ${receipt.currency}`}</td>
                     <td className="p-2 border-b border-gray-300 text-left">
-                      <svg
-                        onClick={(e) => {
-                          deleteReceipt(receipt.id);
-                          e.stopPropagation();
-                        }}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6 text-black hover:text-red-500 cursor-pointer"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                        />
-                      </svg>
+                      {receipt.project}
                     </td>
+                    <td className="p-2 border-b border-gray-300 text-right">{`${receipt.amount} ${receipt.currency}`}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center  ">
           <button
-            className="btn bg-blue-700  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
-            onClick={addReceipt}
+            className="btn bg-blue-800  text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
+            onClick={() => windowToDisplay({ window: "AddReceipt" })}
           >
             Add Receipts
           </button>
