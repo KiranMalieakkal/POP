@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 // Harald 240730: removing routing because desktop rebuild.
 /* import { useParams } from "react-router-dom"; */
 import toast, { Toaster } from "react-hot-toast";
-import BottomNav from "../components/BottomNav";
 import save from "../assets/save.png";
 import vacuum from "../assets/vacuum_1059226.png";
 import bill from "../assets/bill_9564931.png";
@@ -264,7 +263,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
           </a>
         </p>
       </div>
-      <BottomNav />
+
       <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
