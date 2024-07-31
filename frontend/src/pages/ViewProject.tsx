@@ -109,14 +109,14 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
   }
 
   return (
-    <div className="container mx-auto p-4 pt-2">
-      <div className="bg-blue-900 pb-4">
+    <div className="container mx-auto p-4 pt-2 md:p-1 md:mb-20 lg:mb-0">
+      <div className="bg-blue-900 pb-4 rounded-xl">
         {/* <h1 className="pt-3 pr-6 pl-3 pb-2 text-white">
           <a href="/receipts/tax">← Go back</a>
         </h1> */}
         <button
           onClick={() => windowToDisplay({ window: "hideViewProject" })}
-          className="badge p-4 bg-blue-100 mt-5 ml-10"
+          className="badge p-4 bg-blue-100 mt-5 ml-2 md:ml-2 xl:ml-5"
         >
           Close
         </button>
@@ -164,7 +164,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
                     {receipt.purchaseDate}
                   </td>
                   <td className="px-1 py-4 whitespace-nowrap ">
-                    {receipt.currency} {receipt.amount.toFixed(2)}
+                    {receipt.amount.toFixed(2)} {receipt.currency}
                   </td>
                 </tr>
               ))}
@@ -173,7 +173,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
         </div>
       </div>
 
-      <div className="bg-blue-50  shadow-2xl rounded-lg p-6 mx-auto w-full  md:w-[50%] mb-10 border border-gray-800">
+      <div className="bg-blue-50  shadow-2xl rounded-lg p-6 mx-auto w-full  md:w-full lg:w-full lg:p-4 mb-10 border border-gray-800">
         <h2 className="text-2xl font-semibold mb-2 text-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -186,7 +186,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+              d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
             />
           </svg>
           File your taxes{" "}
@@ -213,7 +213,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
         </div>
       </div>
 
-      <div className="shadow-2xl items-center justify-center p-4 border border-gray-300 rounded-lg mb-24 bg-blue-900">
+      <div className="shadow-2xl items-center justify-center p-4 border border-gray-300 rounded-lg bg-blue-900">
         <h1 className="text-3xl text-white font-bold mb-1 text-center">
           Rules
         </h1>
@@ -225,27 +225,27 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
               Must have been done within the last 5 years.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 h-64 w-full  lg:w-[48.3%] md:w-[47.7%]">
+          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 h-64 w-full  lg:w-[46.8%] md:w-[45.7%]">
             <img src={tool} alt="" className="w-16 h-16 mb-4" />
             <p className="text-center">
               The actions should have improved the condition of the property at
               the time of sale compared to when it was purchased.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 h-64 w-full  lg:w-[48.3%] md:w-[47.7%]">
+          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 h-64 w-full  lg:w-[46.8%] md:w-[45.7%]">
             <img src={vacuum} alt="" className="w-16 h-16 mb-4" />
             <p className="text-center">
               Expenses covered by ROT deductions cannot be included.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full  lg:w-[48.3%] md:w-[47.7%]">
+          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full  lg:w-[46.8%] md:w-[45.7%]">
             <h2 className="text-4xl text-blue-300 font-bold mb-2">5000+</h2>
             <p className="text-center">
               To qualify for deductions, the total improvement expenses in the
               calendar year must be at least 5,000 SEK.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full  lg:w-[48.3%] md:w-[47.7%]">
+          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full  lg:w-[46.8%] md:w-[45.7%]">
             <img src={bill} alt="" className="w-16 h-16 mb-4" />
             <p className="text-center">
               The basic principle for eligibility is that expenses must be
