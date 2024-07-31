@@ -6,7 +6,7 @@ const LoginButton = () => {
   return (
     <>
       {!isAuthenticated && (
-        <button className="text-blue-900 font-semibold" onClick={() => loginWithRedirect()}>
+        <button className="text-blue-900 font-semibold hover:text-blue-600 hover:border-b-8 hover:border-blue-900" onClick={() => loginWithRedirect()}>
           {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +14,7 @@ const LoginButton = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-7 text-blue-900 "
+            className="size-7 text-blue-900 hover:text-blue-600 "
           >
             <path
               strokeLinecap="round"

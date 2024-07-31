@@ -1,5 +1,4 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import BottomNav from "./BottomNav";
 
 const LogoutButton = () => {
   const { logout, isAuthenticated } = useAuth0();
@@ -8,8 +7,7 @@ const LogoutButton = () => {
     <>
       {isAuthenticated && (
         <div>
-          <button onClick={() => logout()}>Log out</button>
-          <BottomNav />
+          <button className="btn text-blue-800" onClick={() => logout()}>Log out</button>
         </div>
       )}
     </>

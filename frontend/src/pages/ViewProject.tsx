@@ -70,7 +70,6 @@ const ViewProject = () => {
 
   useEffect(() => {
     const fetchTaxCategories = async () => {
-     
       if (!projectData?.tax_category) return;
       try {
         console.log("taxCategoryID: " + projectData?.tax_category);
@@ -104,7 +103,7 @@ const ViewProject = () => {
         <h1 className="pt-3 pr-6 pl-3 pb-2 text-white">
           <a href="/receipts/tax">← Go back</a>
         </h1>
-        <h1 className="text-3xl font-bold mb-4 text-white text-center">
+        <h1 className="text-3xl font-bold mb-4 text-white text-center p-2">
           {projectData.title}
         </h1>
         <h2 className="text-lg font-semibold text-center text-white">
@@ -254,4 +253,3 @@ const ViewProject = () => {
 };
 
 export default ViewProject;
-
