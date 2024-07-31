@@ -1,52 +1,89 @@
-import { Link } from "react-router-dom";
-/* import Footer from "../components/Footer";
-import Top_Nav from "../components/Top_Nav";
-import BottomNav from "../components/BottomNav"; */
 import LoginButton from "../components/LoginButton";
-import LogoutButton from "../components/LogoutButton";
-import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import loginImg from "../assets/loginImg.jpg";
+import mainImg from "../assets/mainBlue1.jpg";
+import short from "../assets/short.jpeg";
+import largeMain from "../assets/mainShort.jpg";
 
 const Home = () => {
-  const [activeButton, setActiveButton] = useState("receipts");
+  const { isAuthenticated } = useAuth0();
 
-  function handleClick(buttonName: string) {
-    setActiveButton(buttonName);
-  }
   return (
     <>
-     {/*  <Top_Nav /> */}
-      <div
-        className="hero min-h-screen"
-        style={{
-          backgroundImage:
-            "url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)",
-        }}
-      >
-        <div className="hero-overlay bg-opacity-60"></div>
-        <div className="hero-content text-neutral-content text-center">
-          <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-bold">
-              Now you can upload and categorize your receipt anywhere.
+      {/*  <Top_Nav /> */}
+      <div className="hero  relative">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${isAuthenticated ? loginImg : mainImg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            filter: "brightness(50%)",
+          }}
+        ></div>
+
+        <div className="flex flex-col md:flex-row lg:flex-row items-center h-full relative">
+        {/* max-h-[90vh] */}
+          <div className="flex-1 flex items-center justify-center h-full px-4 ml-0 md:ml-6 ">
+            <img
+              src={short}
+              alt="Central Image"
+              className="h-full w-full object-cover block md:hidden"
+            />
+            <img
+              src={largeMain}
+              alt="Central Image"
+              className="h-full w-full object-cover hidden md:block "
+            />
+          </div>
+          <div className="">
+            <h1 className="text-center text-3xl md:text-2xl lg:text-5xl lg:mb-4 md:mb-3 mt-2 text-white ">
+              Proof Of Purchase
             </h1>
-            <p className="mb-5">
-              Are you tired of losing track of your receipts and missing out on
-              tax deductions? Our Receipt Organizer app is here to help you stay
-              on top of your finances effortlessly.
-            </p>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
-              <Link to="/receipts">Get Started</Link>
-            </button>
+            <div className="flex-1 flex items-center justify-center py-7 mt-1 md:py-7 lg:py-10 md:px-5 px-3 lg:px-1 mr-7 m-7 xl:ml-16 bg-white bg-opacity-55 rounded-lg shadow-lg md:max-w-sm xl:max-w-2xl">
+              <div className="text-center">
+                {isAuthenticated ? (
+                  <>
+                    <h3 className="mb-1 text-xl font-bold lg:p-1 md:text-xl lg:text-3xl ">
+                      POP is here to help you stay on top of your finances
+                      effortlessly
+                    </h3>
+                    <p className="mb-5 text-sm p-2 lg:text-lg">
+                      Let us handle the details, making it easy for you to
+                      manage receipts, view them anytime and ensure you have all
+                      receipts handy to benefit from potential deductions!
+                    </p>
+                    <p className="text-lg font-semibold border rounded-lg p-2 lg:mx-3">
+                      Enjoy having everything in order!
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="mb-1 text-xl font-bold lg:p-1 md:text-xl lg:text-3xl ">
+                      Now you can upload and categorize your receipt anywhere.
+                    </h3>
+                    <p className="mb-5 text-sm p-2 lg:text-lg">
+                      Our app allows you to store all your receipts in one
+                      place, making it simple to track your expenses.
+                    </p>
+                    <div className="bg-blue-400 text-white font-bold py-2 px-4 rounded-md text-center mx-10 bg-opacity-55">
+                      <p>POP Always!</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="hero bg-white min-h-[50vh]">
-        <div className=" max-w-5xl mx-auto hero-content flex-col gap-12 lg:flex-row">
+      <div className="hero bg-white min-h-[40vh]">
+        <div className=" max-w-2xl md:max-w-4xl mx-auto hero-content flex-col gap-12 lg:flex-row">
           <img
-            src="https://www.adobe.com/content/dam/dx-dc/images/mobile/scan/01-acom-scan-scananything-986x1104.png.img.png"
-            className="max-w-sm rounded-lg"
+            src="https://img.freepik.com/free-photo/hand-holding-receipt-shopping-campaign_53876-129567.jpg?uid=R157119579&ga=GA1.1.759350799.1721280675&semt=ais_hybrid"
+            className="md:max-w-sm max-w-auto rounded-full h-48 w-48 object-cover"
           />
-          <div>
+          <div className="text-center">
             <h1 className="text-5xl font-bold">Turn paper into PDFs.</h1>
             <p className="py-6">
               Prepare for tax season with ease by utilizing our app to complete
@@ -57,11 +94,11 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="hero bg-white min-h-[50vh]">
-        <div className=" max-w-5xl mx-auto hero-content flex-col lg:flex-row-reverse">
+      <div className="hero bg-white min-h-[40vh]">
+        <div className=" max-w-2xl  md:max-w-4xl mx-auto hero-content flex-col lg:flex-row-reverse">
           <img
-            src="https://www.adobe.com/content/dam/dx-dc/images/mobile/scan/02-acom-scan-cleanandclear-986x1104.png.img.png"
-            className="max-w-sm rounded-lg"
+            src="https://img.freepik.com/free-photo/hand-holding-calculator-finance-concept_53876-129568.jpg?t=st=1722388650~exp=1722392250~hmac=a375c8a80e17dd006eba83ee0708aa8dfad8487b34efac7bb456812a2b686163&w=1380"
+            className="md:max-w-sm max-w-auto rounded-full h-48 w-48 object-cover"
           />
           <div className="text-center">
             <h1 className="text-5xl font-bold">
@@ -79,13 +116,14 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="hero bg-base-200 min-h-[50vh]">
-        <div className="hero-content flex-col gap-20 lg:flex-row">
-          <div className="card glass w-96">
+      <div className="hero bg-base-200 min-h-[40vh] p-2 mb-7">
+        <div className="hero-content flex-col gap-20 md:flex-row">
+          <div className="card glass w-90">
             <figure>
               <img
-                src="https://www.adobe.com/content/dam/dx-dc/images/mobile/scan/05_Mobile_acom-scan-save-430x480.png.img.png"
+                src="https://img.freepik.com/free-photo/top-view-smartphone-template-workspace_23-2148175198.jpg?t=st=1722388831~exp=1722392431~hmac=a5c784576eb4a196d253afdb99ffcc80e6a9c2960b06b96f5b3ec6e0ff65c607&w=2000"
                 alt="car!"
+                className=" h-60 w-75 object-cover"
               />
             </figure>
             <div className="card-body text-center">
@@ -96,11 +134,12 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className="card glass w-96">
+          <div className="card glass w-90">
             <figure>
               <img
-                src="https://www.adobe.com/content/dam/dx-dc/images/mobile/scan/06_Mobile_acom-scan-acrobat-430x480.png.img.png"
+                src="https://img.freepik.com/free-photo/excited-young-woman-hold-paper-letter-feel-euphoric-receiving-job-promotion-tax-refund-from-bank-happy-woman-reading-paperwork-document-smiling-good-pleasant-news-getting-student-scholarship_657921-661.jpg?t=st=1722389231~exp=1722392831~hmac=65429f0e00834fc15534b08cd17ab172f4c06f5cae85b668dd40ff66b17db026&w=1800"
                 alt="car!"
+                className=" h-60 w-76 object-cover"
               />
             </figure>
             <div className="card-body text-center">
@@ -113,152 +152,11 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="btm-nav border-transparent text-current btm-nav-lg bg-blue-100 shadow-sky-600">
-     
-      <LoginButton/>
-       <LogoutButton/> 
-      {/* <div className="btm-nav border-transparent text-current btm-nav-lg bg-blue-100 shadow-sky-600">
-      <Link
-        to="/"
-        className={
-          activeButton === "home"
-            ? "active bg-blue-100 border  border-t-0 border-x-0 border-b-8 border-blue-900"
-            : ""
-        }
-        onClick={() => handleClick("home")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className={`size-7 ${
-            activeButton === "home" ? "text-blue-600" : "text-blue-900"
-          }`}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-          />
-        </svg>
-        <div
-          className={` ${
-            activeButton === "home" ? "text-blue-600" : "text-blue-900"
-          }`}
-        >
-          Home
-        </div>
-      </Link>
-      <Link
-        to="receipts"
-        className={
-          activeButton === "receipts"
-            ? "active bg-blue-100 border  border-t-0 border-x-0 border-b-8 border-blue-900"
-            : ""
-        }
-        onClick={() => handleClick("receipts")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className={`size-7 ${
-            activeButton === "receipts" ? "text-blue-600" : "text-blue-900"
-          }`}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-          />
-        </svg>
-        <div
-          className={` ${
-            activeButton === "receipts" ? "text-blue-600" : "text-blue-900"
-          }`}
-        >
-          Receipts
-        </div>
-      </Link>
-      <Link
-        to="receipts/tax"
-        className={
-          activeButton === "tax"
-            ? "active  bg-blue-100 border border-t-0 border-x-0 border-b-8 border-blue-900"
-            : ""
-        }
-        onClick={() => handleClick("tax")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className={`size-7 ${
-            activeButton === "tax" ? "text-blue-600" : "text-blue-900"
-          }`}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z"
-          />
-        </svg>
-        <div
-          className={` ${
-            activeButton === "tax" ? "text-blue-600" : "text-blue-900"
-          }`}
-        >
-          Tax
-        </div>
-      </Link>
-      <Link
-        to="profile"
-        className={
-          activeButton === "profile"
-            ? "active  bg-blue-100 border  border-t-0 border-x-0 border-b-8 border-blue-900"
-            : ""
-        }
-        onClick={() => handleClick("profile")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className={`size-7 ${
-            activeButton === "profile" ? "text-blue-600" : "text-blue-900"
-          }`}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-          />
-        </svg>
-        <div
-          className={` ${
-            activeButton === "profile" ? "text-blue-600" : "text-blue-900"
-          }`}
-        >
-          Profile
-        </div>
-      </Link>
-    </div> */}
-    </div>
+      <div className="btm-nav border-transparent text-current btm-nav-lg bg-blue-100 shadow-sky-600 w-auto">
+        <LoginButton />
+      </div>
     </>
   );
 };
 
 export default Home;
-
-
-
-
-

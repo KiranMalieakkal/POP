@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       domain={domain}
       clientId={clientId}
       authorizationParams={{
-        redirect_uri: "http://localhost:5174/receipts",
+        redirect_uri: "http://localhost:5173/receipts",
       }}
       /*  authorizationParams={{
       redirect_uri: authConfig.redirectUri,
