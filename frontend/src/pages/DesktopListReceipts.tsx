@@ -3,8 +3,6 @@ import useScreenType from "../components/useSceenType";
 import ListReceipts from "./ListReceipts";
 import AddReceipt from "./AddReceipt";
 import ReceiptDetail from "./ViewReceipt";
-import Top_Nav from "../components/Top_Nav";
-import BottomNav from "../components/BottomNav";
 import ReceiptGuide from "../components/ReceiptGuide";
 
 function DesktopListReceipts() {
@@ -55,8 +53,6 @@ function DesktopListReceipts() {
   // -------------------------------------------------------------------------------------
   return (
     <>
-      {/* {!isMobile && <Top_Nav />} */}
-
       <div className={`main_container ${isMobile ? "" : "grid grid-cols-2"}`}>
         {showListReceipts && (
           <div className="left_side">
@@ -80,13 +76,13 @@ function DesktopListReceipts() {
             </div>
           </div>
         )}
-        {!showAddReceipt && !showViewReceipt && (
+        {!showAddReceipt && !showViewReceipt && !isMobile && (
           <div className="right_side  text-center mt-20 flex justify-center">
             <ReceiptGuide />
           </div>
         )}
+        {/* <button className="btn sticky bottom-20">hello</button> */}
       </div>
-      {/* {isMobile && <BottomNav />} */}
     </>
   );
 }

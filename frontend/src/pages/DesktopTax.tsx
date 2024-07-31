@@ -1,7 +1,5 @@
 import { useState } from "react";
 import useScreenType from "../components/useSceenType";
-import BottomNav from "../components/BottomNav";
-import Top_Nav from "../components/Top_Nav";
 import Tax from "./Tax";
 import SelectTaxCategory from "./SelectTaxCategory";
 import ViewProject from "./ViewProject";
@@ -58,8 +56,6 @@ function DesktopTax() {
 
   return (
     <>
-      {/* {!isMobile && <Top_Nav />} */}
-
       <div className={`main_container ${isMobile ? "" : "grid grid-cols-2"}`}>
         {showTax && (
           <div className="left_side">
@@ -85,13 +81,12 @@ function DesktopTax() {
             </div>
           </div>
         )}
-        {!showSelectTaxCategory && !showViewProject && (
-          <div className="right_side  text-center mt-20 flex justify-center">
+        {!showSelectTaxCategory && !showViewProject && !isMobile && (
+          <div className="right_side text-center mt-20 flex justify-center">
             <TaxGuide />
           </div>
         )}
       </div>
-      {/* {isMobile && <BottomNav />} */}
     </>
   );
 }

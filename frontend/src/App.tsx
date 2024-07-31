@@ -20,7 +20,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {isAuthenticated && !isMobile ? <Top_Nav /> : <LoginButton />}
+        {isAuthenticated && !isMobile && <Top_Nav />}
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/taxinfo" element={<TaxInfo />} />

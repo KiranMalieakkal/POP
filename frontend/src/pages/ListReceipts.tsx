@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
+import useScreenType from "../components/useSceenType";
 // Harald 240730: removing routing because desktop rebuild.
 /* import { useNavigate } from "react-router-dom"; */
 
@@ -38,6 +39,7 @@ function ListReceipts({ windowToDisplay }: Props) {
   const [filteredReceipts, setFilteredReceipts] = useState<receiptsType>([]);
   const [showFilter, setShowFilter] = useState(false);
   const { user } = useAuth0();
+  const { isMobile } = useScreenType();
   // Harald 240730: removing routing because desktop rebuild.
   /*   const navigate = useNavigate(); */
   const [filters, setFilters] = useState<requestType>({
@@ -172,7 +174,7 @@ function ListReceipts({ windowToDisplay }: Props) {
 
   return (
     <>
-      <div className="mb-20">
+      <div className="h-screen">
         {/* <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1> */}
         <div className="flex justify-center items-center">
           <div className="input input-bordered flex items-center gap-2 md:w-1/3 lg:w-1/3 w-1/2 m-4">
@@ -435,13 +437,17 @@ function ListReceipts({ windowToDisplay }: Props) {
             </p>
           </div>
         )}
-        <div className="flex justify-center items-center  ">
-          <button
-            className="btn bg-blue-800 btn-primary text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
-            onClick={() => windowToDisplay({ window: "AddReceipt" })}
-          >
-            Add Receipt
-          </button>
+        <div className="flex justify-center">
+          {!showFilter && (
+            <button
+              className={`fixed m-5 btn bg-blue-800 btn-primary text-white md:w-1/3 lg:w-1/3 w-1/2 ${
+                isMobile ? "bottom-20" : "bottom-0"
+              }`}
+              onClick={() => windowToDisplay({ window: "AddReceipt" })}
+            >
+              Add Receipt
+            </button>
+          )}
         </div>
         {fetchError && (
           <p className="text-red-500 break-words whitespace-normal text-center">{`Sorry, we are unable to retrieve your data. Please try again later. ERROR MESSAGE - ${fetchErrorLog}`}</p>
