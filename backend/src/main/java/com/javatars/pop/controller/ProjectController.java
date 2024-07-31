@@ -57,8 +57,13 @@ public class ProjectController {
 
     @PostMapping
     public ResponseEntity<ProjectDto> createProject(@RequestParam String email, @RequestParam String title) {
-        Project project = projectService.createProject(email, title);
-        URI uri = URI.create("api/projects/" + project.getId());
-        return ResponseEntity.created(uri).body(project.toProjectDto());
+        Project project = projectService.getProject(email, title);
+        if (project == null) {
+            project = projectService.createProject(email, title);
+            URI uri = URI.create("api/projects/" + project.getId());
+            return ResponseEntity.created(uri).body(project.toProjectDto());
+        } else {
+            return ResponseEntity.badRequest().body(project.toProjectDto());
+        }
     }
 }

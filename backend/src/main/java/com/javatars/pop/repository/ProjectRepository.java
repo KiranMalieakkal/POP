@@ -31,6 +31,10 @@ public class ProjectRepository {
         return projectDbRepository.findByIdAndUserId(projectId, userId);
     }
 
+    public Project getProjectByUserIdAndProjectTitle(String projectTitle, Long userId) {
+        return projectDbRepository.findByTitleAndUserId(projectTitle, userId);
+    }
+
     public Project createProject(String title, User user) {
         return projectDbRepository.save(new Project(title, user));
     }
