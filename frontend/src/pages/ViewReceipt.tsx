@@ -46,7 +46,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   });
   const [imgFile, setImgFile] = useState(" ");
   const [message, setMessage] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
+  // const [alertMessage, setAlertMessage] = useState("");
 
   // todo: this is the list of existing project the user can choose from.
   // it should be sent to the component as a prop
@@ -166,28 +166,60 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   };
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this receipt?"
-    );
-    if (confirmDelete) {
-      const response = await fetch(`${baseUrl2}/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${theToken}`,
-        },
-      });
-      if (response.ok) {
-        toast.success(`Receipt has been deleted successfully ♳.`);
-        setTimeout(() => {
-          setAlertMessage("");
-          // Harald 240730: removing routing because desktop rebuild.
-          /* navigate("/receipts"); */
-          windowToDisplay({ window: "hideViewReceipt" });
-        }, 2000);
-      } else {
-        console.log("Failed to delete receipt.");
-      }
-    }
+    // const confirmDelete = window.confirm(
+    //   "Are you sure you want to delete this receipt?"
+    // );
+    // if (confirmDelete) {
+    //   const response = await fetch(`${baseUrl2}/${id}`, {
+    //     method: "DELETE",
+    //     headers: {
+    //       Authorization: `Bearer ${theToken}`,
+    //     },
+    //   });
+    //   if (response.ok) {
+    //     toast.success(`Receipt has been deleted successfully ♳.`);
+    //     setTimeout(() => {
+    //       setAlertMessage("");
+    //       // Harald 240730: removing routing because desktop rebuild.
+    //       /* navigate("/receipts"); */
+    //       windowToDisplay({ window: "hideViewReceipt" });
+    //     }, 2000);
+    //   } else {
+    //     console.log("Failed to delete receipt.");
+    //   }
+    // }
+
+    toast((t) => (
+      <span>
+        Are you sure you want to delete this receipt?
+        <div className="flex justify-center mt-2">
+          <button
+            className="bg-red-500 text-white py-1 px-3 rounded-lg text-sm mr-2"
+            onClick={() => {
+              fetch(`${baseUrl2}/${id}`, {
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${theToken}`,
+                },
+              }).then((response) => {
+                if (!response.ok) {
+                  throw new Error(`Error Status: ${response.status}`);
+                } else windowToDisplay({ window: "hideViewReceipt" });
+                toast.dismiss(t.id);
+              });
+            }}
+          >
+            Yes
+          </button>
+          <button
+            className="bg-gray-300 text-black py-1 px-3 rounded-lg text-sm"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </button>
+        </div>
+      </span>
+    ));
   };
 
   // const handleDelete = async () => {
@@ -252,11 +284,11 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
           </div>
           {/* form section .......*/}
           <div className="w-full sm:text-center md:text-left">
-            {alertMessage && (
+            {/* {alertMessage && (
               <div className="alert alert-error mb-4">
                 <div>{alertMessage}</div>
               </div>
-            )}
+            )} */}
             {message && <div className="text-green-500 mb-4">{message}</div>}
             <div className="space-y-4 text-left">
               <div>
