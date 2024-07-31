@@ -36,6 +36,11 @@ public class ProjectService {
         return projectRepository.getProjectByUserIdAndProjectId(projectId, user.getId());
     }
 
+    public Project getProject(String email, String projectTitle) {
+        User user = userRepository.getUser(email);
+        return projectRepository.getProjectByUserIdAndProjectTitle(projectTitle, user.getId());
+    }
+
     public Project createProject(String email, String title) {
         User user = userRepository.getUser(email);
         Project project = projectRepository.createProject(title, user);

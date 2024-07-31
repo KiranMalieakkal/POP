@@ -90,7 +90,10 @@ public class ReceiptController {
         ReceiptDtoGpt receiptDtoGpt = new ReceiptDtoGpt(company, amount, currency, purchaseDate, textContent);
         Receipt receipt = receiptService.createReceipt(receiptDtoGpt, email);
         String filename;
-        Project project = projectService.createProject(email, projectTitle);
+        Project project = projectService.getProject(email, projectTitle);
+        if (project == null) {
+            project = projectService.createProject(email, projectTitle);
+        }
         try {
             filename = blobService.uploadImage(file, receipt.getId());
         } catch (IOException e) {
