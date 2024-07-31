@@ -17,12 +17,13 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          
           <Route path="/" element={<Home />} />
           <Route path="/taxinfo" element={<TaxInfo />} />
           <Route path="/receipts/*" element={<Dashboard />} />
           <Route path="/viewproject" element={<ViewProject />} />
 
-          <Route path="/viewtaxproject" element={<SelectTaxCategory />} />
+          <Route path="/viewtaxproject" element={<SelectTaxCategory/>} />
 
           <Route path="/desktop" element={<DesktopListReceipts />} />
           <Route path="/desktoptax" element={<DesktopTax />} />
