@@ -58,7 +58,7 @@ function DesktopTax() {
 
   return (
     <>
-      {!isMobile && <Top_Nav />}
+      {/* {!isMobile && <Top_Nav />} */}
 
       <div className={`main_container ${isMobile ? "" : "grid grid-cols-2"}`}>
         {showTax && (
@@ -91,7 +91,7 @@ function DesktopTax() {
           </div>
         )}
       </div>
-      {isMobile && <BottomNav />}
+      {/* {isMobile && <BottomNav />} */}
     </>
   );
 }
