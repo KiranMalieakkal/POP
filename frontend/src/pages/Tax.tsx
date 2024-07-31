@@ -149,7 +149,7 @@ function Tax({ windowToDisplay }: Props) {
 
   return (
     <>
-      <div className="h-screen">
+      <div className="">
         <h1 className="text-center mt-4">
           Here are your current tax projects. Select a project or create a new
           project.
