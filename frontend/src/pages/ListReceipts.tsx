@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 // Harald 240730: removing routing because desktop rebuild.
 /* import { useNavigate } from "react-router-dom"; */
 
@@ -37,7 +37,24 @@ function ListReceipts({ windowToDisplay }: Props) {
   const [receipts, setReceipts] = useState<receiptsType>([]);
   const [filteredReceipts, setFilteredReceipts] = useState<receiptsType>([]);
   const [showFilter, setShowFilter] = useState(false);
-  const { user } = useAuth0();
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+  const [theToken, setTheToken] = useState<string>();
+
+  useEffect(() => {
+    console.log("isauthenticated effect§");
+    if (isAuthenticated) {
+      console.log("yues");
+      getAccessTokenSilently()
+        .then((token) => {
+          console.log("token=", token);
+          setTheToken(token);
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
+
   // Harald 240730: removing routing because desktop rebuild.
   /*   const navigate = useNavigate(); */
   const [filters, setFilters] = useState<requestType>({
@@ -75,14 +92,19 @@ function ListReceipts({ windowToDisplay }: Props) {
   } = useQuery({
     queryKey: ["fetch2"],
     queryFn: () =>
-      fetch(`${baseUrl}/filters?email=jane.smith@example.com`, {
+      fetch(`${baseUrl}/filters?email=${user?.email}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${theToken}`,
         },
         body: JSON.stringify(filters),
       })
         .then((response) => {
+          console.log("hello");
+          if (!response.ok) {
+            throw new Error(`Error Status: ${response.status}`);
+          }
           return response.json();
         })
         .then((data) => {
@@ -93,6 +115,7 @@ function ListReceipts({ windowToDisplay }: Props) {
           console.log("post error");
           setfetchErrorLog(e.message);
         }),
+    enabled: () => !!user?.email && !!theToken,
   });
 
   // useEffect(() => {
