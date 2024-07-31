@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 // Harald 240730: removing routing because desktop rebuild.
@@ -57,6 +58,8 @@ function Tax({ windowToDisplay }: Props) {
   /*   const navigate = useNavigate(); */
   const [deleteErrorDisplay, setDeleteErrorDisplay] = useState(false);
   const queryClient = useQueryClient();
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+  const [theToken, setTheToken] = useState<string>();
 
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/taxes/user";
   const baseUrl = "http://localhost:8080/api/taxes/user";
@@ -64,7 +67,12 @@ function Tax({ windowToDisplay }: Props) {
   const { data, isError: fetchError } = useQuery({
     queryKey: ["fetch3"],
     queryFn: () =>
-      fetch(`${baseUrl}?email=jane.smith@example.com`)
+      fetch(`${baseUrl}?email=${user?.email}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${theToken}`,
+        },
+      })
         .then((response) => {
           if (!response.ok) {
             throw new Error(`Error Status: ${response.status}`);
@@ -75,6 +83,7 @@ function Tax({ windowToDisplay }: Props) {
         .catch((e) => {
           setfetchErrorLog(e.message);
         }),
+    enabled: () => !!user?.email && !!theToken,
   });
   const {
     mutate: deleteTaxCategory,
@@ -83,15 +92,33 @@ function Tax({ windowToDisplay }: Props) {
   } = useMutation<unknown, Error, deleteType>({
     mutationFn: ({ projectId, taxId }) =>
       fetch(
-        `http://localhost:8080/api/taxes/${taxId}?email=jane.smith@example.com&projectId=${projectId}`,
+        `http://localhost:8080/api/taxes/${taxId}?email=${user?.email}&projectId=${projectId}`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${theToken}`,
+          },
         }
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["fetch3"] });
     },
   });
+
+  useEffect(() => {
+    console.log("isauthenticated effect§");
+    if (isAuthenticated) {
+      console.log("yues");
+      getAccessTokenSilently()
+        .then((token) => {
+          console.log("token=", token);
+          setTheToken(token);
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
 
   useEffect(() => {
     if (deleteError) {

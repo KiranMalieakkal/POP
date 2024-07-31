@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import img from "../assets/financial-analysts-doing-income-statement-with-calculator-laptop-income-statement-company-financial-statement-balance-sheet-concept.png";
 import ClickableDiv from "../components/ClickableDiv";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export type requestType = {
   company: string | null;
@@ -72,6 +73,8 @@ function SelectTaxCategory3({
   // const [projectId, setProjectId] = useState<string>();
   // const [projectName, setprojectName] = useState("");
   const [activeProjectName, setActiveProjectName] = useState("");
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+  const [theToken, setTheToken] = useState<string>();
   // const baseUrl =
   //   "https://pop-app-backend.azurewebsites.net/api/projects/withoutTax";
   const baseUrl = "http://localhost:8080/api/projects/withoutTax";
@@ -83,7 +86,12 @@ function SelectTaxCategory3({
   } = useQuery({
     queryKey: ["fetch4"],
     queryFn: () =>
-      fetch(`${baseUrl}?email=jane.smith@example.com`)
+      fetch(`${baseUrl}?email=${user?.email}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${theToken}`,
+        },
+      })
         .then((response) => {
           if (!response.ok) {
             throw new Error(`Error Status: ${response.status}`);
@@ -94,12 +102,18 @@ function SelectTaxCategory3({
         .catch((e) => {
           setfetchErrorLog(e.message);
         }),
+    enabled: () => !!user?.email && !!theToken,
   });
 
   const { data: taxCategoriesData, isError: fetchError2 } = useQuery({
     queryKey: ["fetch5"],
     queryFn: () =>
-      fetch(`http://localhost:8080/api/taxes`)
+      fetch(`http://localhost:8080/api/taxes`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${theToken}`,
+        },
+      })
         .then((response) => {
           if (!response.ok) {
             throw new Error(`Error Status: ${response.status}`);
@@ -110,7 +124,23 @@ function SelectTaxCategory3({
         .catch((e) => {
           setfetchErrorLog(e.message);
         }),
+    enabled: () => !!theToken,
   });
+
+  useEffect(() => {
+    console.log("isauthenticated effect§");
+    if (isAuthenticated) {
+      console.log("yues");
+      getAccessTokenSilently()
+        .then((token) => {
+          console.log("token=", token);
+          setTheToken(token);
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
 
   useEffect(() => {
     setProjects(

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 /* import BottomNav from "../components/BottomNav"; */
 import FormChoices from "../components/FormChoices";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // Harald 240730: removing routing because desktop rebuild. therefore params is also removed
 /* type Params = {
@@ -66,22 +67,53 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
   const baseUrl2 = "http://localhost:8080/api/receipts";
 
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const [theToken, setTheToken] = useState<string>();
+
   useEffect(() => {
+    console.log("isauthenticated effect§");
+    if (isAuthenticated) {
+      console.log("yues");
+      getAccessTokenSilently()
+        .then((token) => {
+          console.log("token=", token);
+          setTheToken(token);
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
+
+  useEffect(() => {
+    if (!theToken) return;
     const fetchReceiptData = async () => {
-      const response = await fetch(`${baseUrl2}/${id}`);
+      const response = await fetch(`${baseUrl2}/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${theToken}`,
+        },
+      });
       const data = await response.json();
       //console.log(data);
       setReceiptData(data);
+      console.log("iam here " + data);
     };
+
     fetchReceiptData();
     const fetchImg = async () => {
-      const response = await fetch(`${baseUrl2}/${id}/img`);
+      const response = await fetch(`${baseUrl2}/${id}/img`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${theToken}`,
+        },
+      });
       const imgData = await response.blob();
       const url = URL.createObjectURL(imgData);
       setImgFile(url);
     };
     fetchImg();
-  }, [id]);
+  }, [id, theToken, isAuthenticated]);
 
   if (!receiptData) {
     return <div>Loading...</div>;
@@ -113,6 +145,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${theToken}`,
       },
       body: JSON.stringify(receiptData),
     });
@@ -139,6 +172,9 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
     if (confirmDelete) {
       const response = await fetch(`${baseUrl2}/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${theToken}`,
+        },
       });
       if (response.ok) {
         toast.success(`Receipt has been deleted successfully ♳.`);
@@ -195,18 +231,17 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
 
   return (
     <>
-     
       <div className="p-2 lg:p-5 lg:pt-2 max-w-4xl mx-auto pb-20 rounded-xl">
         <div className="bg-white shadow-xl  top-shadow  lg:shadow-none rounded-lg p-5 flex flex-col">
-         <div className="pt-0 pr-6  pb-2">
-        {/* <a href="/receipts">← Go back</a> */}
-        <button
-          onClick={() => windowToDisplay({ window: "hideViewReceipt" })}
-          className="badge p-4 bg-blue-100"
-        >
-          Close
-        </button>
-      </div>
+          <div className="pt-0 pr-6  pb-2">
+            {/* <a href="/receipts">← Go back</a> */}
+            <button
+              onClick={() => windowToDisplay({ window: "hideViewReceipt" })}
+              className="badge p-4 bg-blue-100"
+            >
+              Close
+            </button>
+          </div>
           {/* img section .......*/}
           <div className="border border-gray-300 rounded-lg p-5 h-full w-full md:pr-4 ms:w-full  ms:pr-0 h-112">
             <img
@@ -236,9 +271,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                   />
                 ) : (
                   <div className="input input-bordered w-full flex items-center bg-slate-100">
-                    <p className="w-full ">
-                      {receiptData.company}
-                    </p>
+                    <p className="w-full ">{receiptData.company}</p>
                   </div>
                 )}
               </div>
@@ -255,9 +288,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     />
                   ) : (
                     <div className="input input-bordered w-full flex items-center bg-slate-100">
-                      <p className=" ">
-                        {receiptData.amount}
-                      </p>
+                      <p className=" ">{receiptData.amount}</p>
                     </div>
                   )}
                 </div>
@@ -291,9 +322,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     </>
                   ) : (
                     <div className="input input-bordered w-full flex items-center bg-slate-100">
-                      <p className="">
-                        {receiptData.currency}
-                      </p>
+                      <p className="">{receiptData.currency}</p>
                     </div>
                   )}
                 </div>
@@ -310,9 +339,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                   />
                 ) : (
                   <div className="input input-bordered w-full flex items-center bg-slate-100">
-                    <p className="">
-                      {receiptData.purchaseDate}
-                    </p>
+                    <p className="">{receiptData.purchaseDate}</p>
                   </div>
                 )}
               </div>
@@ -362,9 +389,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                   </>
                 ) : (
                   <div className="input input-bordered w-full flex items-center bg-slate-100">
-                    <p className="">
-                      {receiptData.project}
-                    </p>
+                    <p className="">{receiptData.project}</p>
                   </div>
                 )}
               </div>
