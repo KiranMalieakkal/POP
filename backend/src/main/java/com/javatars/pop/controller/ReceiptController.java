@@ -4,6 +4,7 @@ import com.javatars.pop.model.*;
 import com.javatars.pop.service.BlobService;
 import com.javatars.pop.service.ProjectService;
 import com.javatars.pop.service.ReceiptService;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
