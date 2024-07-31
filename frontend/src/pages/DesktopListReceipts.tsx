@@ -73,8 +73,8 @@ function DesktopListReceipts() {
               )}
               {showViewReceipt && (
                 <ReceiptDetail
-                  receiptId={viewReceiptId!}
                   windowToDisplay={windowToDisplay}
+                  receiptId={viewReceiptId!}
                 />
               )}
             </div>

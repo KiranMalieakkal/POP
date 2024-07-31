@@ -3,7 +3,7 @@ import SelectTaxCategory1 from "./SelectTaxCategory1";
 import SelectTaxCategory2 from "./SelectTaxCategory2";
 import SelectTaxCategory3 from "./SelectTaxCategory3";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+/* import { useNavigate } from "react-router-dom"; */
 
 export type NewPost = {
   projectId: string;
@@ -23,7 +23,8 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
   const [taxId, setTaxId] = useState<number>();
   const [projectId, setProjectId] = useState<string>();
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  // Harald 240730: removing routing because desktop rebuild.
+  /*   const navigate = useNavigate(); */
 
   // This is used to scroll to the top of the parent div when moving between components.
   const scrollableDivRef = useRef<HTMLDivElement>(null);
@@ -48,7 +49,10 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
     onSuccess: () => {
       console.log("success");
       queryClient.invalidateQueries({ queryKey: ["fetch3"] });
-      navigate("/receipts/tax");
+      // Harald 240730: removing routing because desktop rebuild.
+      /* navigate("/receipts/tax"); */
+      // close this window
+      windowToDisplay({ window: "hideSelectTaxCategory" });
     },
   });
 

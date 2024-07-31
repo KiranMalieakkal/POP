@@ -11,6 +11,7 @@ function DesktopTax() {
   const { isMobile } = useScreenType();
   const [showTax, setShowTax] = useState<boolean>(true);
   const [showViewProject, setShowViewProject] = useState<boolean>(false);
+  const [viewProjectId, setViewProjectId] = useState<number | null>(null);
   const [showSelectTaxCategory, setShowSelectTaxCategory] =
     useState<boolean>(false);
 
@@ -20,7 +21,6 @@ function DesktopTax() {
   function windowToDisplay({ window, id }: { window: string; id?: number }) {
     switch (window) {
       case "SelectTaxCategory":
-        console.log("you want to open the STC");
         setShowSelectTaxCategory(true);
         setShowViewProject(false);
         if (!isMobile) {
@@ -30,9 +30,9 @@ function DesktopTax() {
         }
         break;
       case "ViewProject":
-        console.log("you want to view a Tax project");
         setShowSelectTaxCategory(false);
         setShowViewProject(true);
+        setViewProjectId(id ?? null);
         if (!isMobile) {
           setShowTax(true);
         } else {
@@ -40,8 +40,13 @@ function DesktopTax() {
         }
         break;
       case "hideSelectTaxCategory":
-        console.log("you wanted to close the STC");
         setShowSelectTaxCategory(false);
+        setShowViewProject(false);
+        setShowTax(true);
+        break;
+      case "hideViewProject":
+        setShowSelectTaxCategory(false);
+        setShowViewProject(false);
         setShowTax(true);
         break;
       default:
@@ -71,7 +76,12 @@ function DesktopTax() {
               {showSelectTaxCategory && (
                 <SelectTaxCategory windowToDisplay={windowToDisplay} />
               )}
-              {showViewProject && <ViewProject />}
+              {showViewProject && (
+                <ViewProject
+                  windowToDisplay={windowToDisplay}
+                  projectId={viewProjectId!}
+                />
+              )}
             </div>
           </div>
         )}
