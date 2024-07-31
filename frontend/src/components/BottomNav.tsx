@@ -47,7 +47,7 @@ function BottomNav() {
         </div>
       </Link>
       <Link
-        to="/desktop"
+        to="/receipts"
         className={
           activeButton === "receipts"
             ? "active bg-blue-100 border border-t-0 border-x-0 border-b-8 border-blue-900"
@@ -80,7 +80,7 @@ function BottomNav() {
         </div>
       </Link>
       <Link
-        to="/receipts/tax"
+        to="/tax"
         className={
           activeButton === "tax"
             ? "active  bg-blue-100 border border-t-0 border-x-0 border-b-8 border-blue-900"
@@ -113,7 +113,7 @@ function BottomNav() {
         </div>
       </Link>
       <Link
-        to="/receipts/profile"
+        to="/profile"
         className={
           activeButton === "profile"
             ? "active  bg-blue-100 border border-t-0 border-x-0 border-b-8 border-blue-900"

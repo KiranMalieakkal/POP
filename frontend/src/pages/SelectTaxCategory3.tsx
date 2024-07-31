@@ -137,11 +137,11 @@ function SelectTaxCategory3({
 
   return (
     <>
-      <div className="p-4">
+      <div className="flex flex-col text-center max-w-screen-sm mx-auto">
         <div className="flex justify-center items-center">
           <img src={img} alt="Card Image" className="object-scale-down h-40 " />
         </div>
-        <h1 className="text-2xl font-semibold text-gray-800  text-center">
+        <h1 className="text-2xl font-semibold text-gray-800  text-center mx-5">
           Link this tax deduction to a project
         </h1>
         <div className="flex flex-col justify-center items-center ">
