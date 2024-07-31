@@ -49,4 +49,7 @@ public class User {
     }
 
 
+    public void deleteReceipt(Receipt receipt) {
+        receipts.remove(receipt);
+    }
 }
