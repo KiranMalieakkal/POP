@@ -4,8 +4,6 @@ import com.javatars.pop.model.*;
 import com.javatars.pop.service.BlobService;
 import com.javatars.pop.service.ProjectService;
 import com.javatars.pop.service.ReceiptService;
-import jakarta.validation.constraints.Email;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +29,15 @@ public class ReceiptController {
         this.blobService = blobService;
         this.projectService = projectService;
     }
+
+//    @GetMapping("/auth")
+//    public String auth(Authentication authentication) {
+//        Jwt jwt = (Jwt) authentication.getPrincipal();
+//        String sub = jwt.getSubject();
+//        String sub2 = jwt.getClaimAsString("sub");
+//        System.out.println("sub2 = " + sub2);
+//        return "heyo " + sub;
+//    }
 
     @GetMapping
     public ResponseEntity<List<ReceiptDtoOut>> getReceipts(@RequestParam String email) {
