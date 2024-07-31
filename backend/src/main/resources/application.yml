@@ -22,29 +22,29 @@ spring:
 
   datasource:
     url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-  #        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    username: ${DATABASE_USERNAME}
+#    password: ${DATABASE_PASSWORD}
+#    driver-class-name: org.postgresql.Driver
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
-      hibernate:
-        #                dialect: org.hibernate.dialect.SQLServerDialect
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.SQLServerDialect
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
   sql:
     init:
-      mode: always
-      #            platform: mssql
-      platform: postgresql
-    cloud:
-      azure:
-        storage:
-          blob:
-            connection-string: ${BLOB_URL}
+#      mode: always
+      platform: mssql
+#      platform: postgresql
+  cloud:
+    azure:
+      storage:
+        blob:
+          connection-string: ${BLOB_URL}
+
 blob:
   containerForImages: ${BLOB_IMG_CONT}
 
