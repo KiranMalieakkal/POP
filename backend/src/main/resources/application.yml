@@ -9,8 +9,8 @@ spring:
           # Trailing slash is required in this case!
           # In others it's prohibited!
           # Make sure you double check your case
-          issuer-uri: ${ISSUER_URI}https://my-issuer.eu.auth0.com/
-          audiences: ${AUDIENCE}my-audience-name
+          issuer-uri: ${ISSUER_URI}
+#          audiences: ${AUDIENCE}
 
   application:
     name: pop
@@ -29,7 +29,7 @@ spring:
   jpa:
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
@@ -37,14 +37,14 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   sql:
     init:
-#      mode: always
+      mode: always
       #            platform: mssql
       platform: postgresql
-  cloud:
-    azure:
-      storage:
-        blob:
-          connection-string: ${BLOB_URL}
+    cloud:
+      azure:
+        storage:
+          blob:
+            connection-string: ${BLOB_URL}
 blob:
   containerForImages: ${BLOB_IMG_CONT}
 

@@ -84,7 +84,12 @@ function SelectTaxCategory3({
     queryKey: ["fetch4"],
     queryFn: () =>
       fetch(`${baseUrl}?email=jane.smith@example.com`)
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Error Status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then((data) => data)
         .catch((e) => {
           setfetchErrorLog(e.message);
@@ -95,7 +100,12 @@ function SelectTaxCategory3({
     queryKey: ["fetch5"],
     queryFn: () =>
       fetch(`http://localhost:8080/api/taxes`)
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Error Status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then((data) => data)
         .catch((e) => {
           setfetchErrorLog(e.message);

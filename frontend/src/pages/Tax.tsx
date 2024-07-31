@@ -67,7 +67,12 @@ function Tax({ windowToDisplay }: Props) {
     queryKey: ["fetch3"],
     queryFn: () =>
       fetch(`${baseUrl}?email=jane.smith@example.com`)
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Error Status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then((data) => data)
         .catch((e) => {
           setfetchErrorLog(e.message);
