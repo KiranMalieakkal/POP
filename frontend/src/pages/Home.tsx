@@ -5,6 +5,8 @@ import mainImg from "../assets/mainBlue1.jpg";
 import short from "../assets/short.jpeg";
 import largeMain from "../assets/mainShort.jpg";
 
+/* import popLogo from "../assets/pop-logo-white.svg"; */
+
 const Home = () => {
   const { isAuthenticated } = useAuth0();
 
@@ -23,7 +25,7 @@ const Home = () => {
         ></div>
 
         <div className="flex flex-col md:flex-row lg:flex-row items-center h-full relative">
-        {/* max-h-[90vh] */}
+          {/* max-h-[90vh] */}
           <div className="flex-1 flex items-center justify-center h-full px-4 ml-0 md:ml-6 ">
             <img
               src={short}
@@ -36,10 +38,14 @@ const Home = () => {
               className="h-full w-full object-cover hidden md:block "
             />
           </div>
+          {/* <div className="pop-logo w-56">
+            <img src={popLogo} alt="P.O.P. logotype" />
+          </div> */}
           <div className="">
             <h1 className="text-center text-3xl md:text-2xl lg:text-5xl lg:mb-4 md:mb-3 mt-2 text-white ">
               Proof Of Purchase
             </h1>
+
             <div className="flex-1 flex items-center justify-center py-7 mt-1 md:py-7 lg:py-10 md:px-5 px-3 lg:px-1 mr-7 m-7 xl:ml-16 bg-white bg-opacity-55 rounded-lg shadow-lg md:max-w-sm xl:max-w-2xl">
               <div className="text-center">
                 {isAuthenticated ? (
