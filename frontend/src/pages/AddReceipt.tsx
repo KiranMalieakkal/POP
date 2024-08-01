@@ -26,44 +26,46 @@ type Props = {
 };
 
 function AddReceipt({ windowToDisplay }: Props) {
-  // todo: this is the list of existing project the user can choose from.
-  // it should be sent to the component as a prop
-  // todo: make it a fetch instead.
-  /* const existingProjects = [
-    "Kirans work commute 2024",
-    "Tax evasion project 2025",
-    "Option 3",
-  ]; */
   const baseUrl = import.meta.env.VITE_BASE_URL;
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [theToken, setTheToken] = useState<string>();
   const [existingProjects, setExistingProjects] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      console.log("LOOK THE TOKEN: " + theToken);
-      try {
-        const response = await fetch(
-          `${baseUrl}/projects?email=${user?.email}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${theToken}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setExistingProjects(data);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      }
-    };
+    if (isAuthenticated) {
+      getAccessTokenSilently()
+        .then((token) => {
+          setTheToken(token);
+          return token;
+        })
+        .then((token) => {
+          fetchProjects(token);
+        })
+        .catch((err) => {
+          console.error("Error getting token:", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
 
-    fetchProjects();
-  }, []);
+  const fetchProjects = async (token: string) => {
+    try {
+      const response = await fetch(`${baseUrl}/projects?email=${user?.email}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      // Extract project titles and update state
+      const titles = data.map((project: { title: string }) => project.title);
+      setExistingProjects(titles);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
 
   // todo: get these as a prop from ListReceipts.tsx
   // todo: handle the case when the list is empty
@@ -167,20 +169,6 @@ function AddReceipt({ windowToDisplay }: Props) {
     }
   };
 
-  useEffect(() => {
-    console.log("isauthenticated effect§");
-    if (isAuthenticated) {
-      console.log("yues");
-      getAccessTokenSilently()
-        .then((token) => {
-          console.log("token=", token);
-          setTheToken(token);
-        })
-        .catch((err) => {
-          console.log("err=", err);
-        });
-    }
-  }, [isAuthenticated, getAccessTokenSilently]);
   // -------------------------------------------------------------------------------------
   // This function takes a Receipt object as argument and fills in the form fields
   // it only fills them if they are empty
@@ -230,6 +218,7 @@ function AddReceipt({ windowToDisplay }: Props) {
     // Here we call the tanstack query function
     postReceipt(objectToSendToTanstack);
   };
+
   // -------------------------------------------------------------------------------------
   // This is a tanstack query which does the post to our backend. But the function is called earlier.
   const queryClient = useQueryClient();
