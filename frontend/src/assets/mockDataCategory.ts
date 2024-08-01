@@ -66,8 +66,8 @@ const mockData = [
     title: "Home sale expenses",
     mainDescription:
       "When you sell your property, you can deduct related expenses such as realtor fees, inspection costs, home staging, and advertising fees.",
-    example: "N/A",
-    rules: "N/A",
+    example: null,
+    rules: null,
     approvedDescription:
       "Here are some examples of expenses related to the sale of a home to give you an idea of the type of expenses that are approved. ",
     approvedExamples: [

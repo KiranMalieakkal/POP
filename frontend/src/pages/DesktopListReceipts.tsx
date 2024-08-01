@@ -3,8 +3,6 @@ import useScreenType from "../components/useSceenType";
 import ListReceipts from "./ListReceipts";
 import AddReceipt from "./AddReceipt";
 import ReceiptDetail from "./ViewReceipt";
-import Top_Nav from "../components/Top_Nav";
-import BottomNav from "../components/BottomNav";
 import ReceiptGuide from "../components/ReceiptGuide";
 
 function DesktopListReceipts() {
