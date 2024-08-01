@@ -19,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       domain={domain}
       clientId={clientId}
       authorizationParams={{
-        redirect_uri: `${window.location.origin}/receipts`,
+        redirect_uri: `${window.location.origin}${
+          import.meta.env.VITE_REDIRECT_URI
+        }`,
         audience: import.meta.env.VITE_AUDIENCE,
       }}
       /*  authorizationParams={{
