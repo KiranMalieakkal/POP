@@ -274,7 +274,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   return (
     <>
       <div className="p-2 lg:p-5 lg:pt-2 max-w-4xl mx-auto pb-20 rounded-xl">
-        <div className="bg-white shadow-xl top-shadow lg:shadow-none rounded-lg p-5 flex flex-col">
+        <div className="bg-white rounded-lg p-5 flex flex-col">
           <div className="pt-0 pr-6  pb-2">
             <button
               onClick={() => windowToDisplay({ window: "hideViewReceipt" })}
