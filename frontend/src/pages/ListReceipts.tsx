@@ -4,7 +4,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import useScreenType from "../components/useSceenType";
 
 // Harald 240730: removing routing because desktop rebuild.
-/* import { useNavigate } from "react-router-dom"; */
+// import { useNavigate } from "react-router-dom";
 
 export type requestType = {
   company: string | null;
@@ -45,10 +45,7 @@ function ListReceipts({ windowToDisplay }: Props) {
   const [theToken, setTheToken] = useState<string>();
 
   // Harald 240730: removing routing because desktop rebuild.
-  /*   const navigate = useNavigate(); */
-
-  //const { user } = useAuth0();
-
+  // const navigate = useNavigate();
   const [filters, setFilters] = useState<requestType>({
     company: null,
     amountFrom: null,
