@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import FormChoices from "../components/FormChoices";
 import toast, { Toaster } from "react-hot-toast";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+/* import { json } from "react-router-dom"; */
 
 type Receipt = {
   company: string;
@@ -12,6 +14,11 @@ type Receipt = {
   purchaseDate: string;
   textContent: string;
   project?: string;
+};
+
+type FormDataWithBoolean = {
+  formData: FormData;
+  hasProject: boolean;
 };
 
 type Props = {
@@ -65,6 +72,7 @@ function AddReceipt({ windowToDisplay }: Props) {
       ...formData,
       [name]: value,
     });
+    console.log("THIS SHOULD SET THE PROJECT: " + formData.project);
   };
 
   // -------------------------------------------------------------------------------------
@@ -166,11 +174,12 @@ function AddReceipt({ windowToDisplay }: Props) {
   const submitForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log("1  project: " + formData.project);
+
     // Construct form data to send
     // Check if a file has been selected
     if (!file) {
       console.error("No file selected");
-      // todo: display user feedback if file is not present
       return;
     }
 
@@ -185,10 +194,24 @@ function AddReceipt({ windowToDisplay }: Props) {
     if (formData.project) {
       formDataToSend.append("projectTitle", formData.project!);
     }
+    formDataToSend.append("email", `${user?.email}`);
 
-    formDataToSend.append("email", `${user?.email}`); // todo: do not hardcode email. should come from Auth0s JWT
+    // Comment: we send both the payload (formData) AND a boolean. The boolean controls whether we
+    // send the request to the endpoint "withproject" or without project.
+    // This is not RESTful and should be handled on the backend, but it isn't...
+    console.log("2  project: " + formData.project);
+    const objectToSendToTanstack = {
+      formData: formDataToSend,
+      hasProject: formData.project ? true : false,
+    };
+    console.log("3  project: " + formData.project);
 
-    try {
+    console.log("the boolean is: " + objectToSendToTanstack.hasProject);
+    postReceipt(objectToSendToTanstack);
+
+    // I probably have to send an object instead of two parameters just like i do with the
+
+    /*     try {
       const response = await fetch(
         formData.project
           ? "http://localhost:8080/api/receipts/with-project"
@@ -205,15 +228,42 @@ function AddReceipt({ windowToDisplay }: Props) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
-      // Route back to ReceiptList.tsx once form is successfully submitted
-      // Harald 240730: removing routing because desktop rebuild.
-      /* navigate(-1); */
       windowToDisplay({ window: "hideAddReceipt" });
     } catch (error) {
       console.error("Error submitting form:", error);
-    }
+    } */
   };
+  // -------------------------------------------------------------------------------------
+  // TANSTACK REBUILD FOR SUBMIT
+  const queryClient = useQueryClient();
+  const { mutate: postReceipt } = useMutation<
+    unknown,
+    Error,
+    FormDataWithBoolean
+  >({
+    mutationFn: ({ formData, hasProject }) =>
+      fetch(
+        hasProject
+          ? "http://localhost:8080/api/receipts/with-project"
+          : "http://localhost:8080/api/receipts",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${theToken}`,
+          },
+          body: formData,
+        }
+      ).then((res) => {
+        if (!res.ok) {
+          throw new Error(`Error Status: ${res.status}`);
+        }
+        return res.json();
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["fetch2"] });
+      windowToDisplay({ window: "hideAddReceipt" });
+    },
+  });
 
   // -------------------------------------------------------------------------------------
   // Navigates back to the ReceiptsLists component
