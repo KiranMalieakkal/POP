@@ -157,7 +157,7 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
 
   return (
     <div
-      className="wizard max-h-[calc(100vh-150px)] overflow-y-auto max-w-md"
+      className="wizard max-h-[calc(100vh-150px)] overflow-y-auto mb-20 xl:mb-0 lg:mb-0"
       ref={scrollableDivRef}
     >
       <div className="navigation-buttons flex flex-row justify-between m-3">

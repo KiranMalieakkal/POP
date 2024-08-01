@@ -145,7 +145,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
         </h1> */}
         <button
           onClick={() => windowToDisplay({ window: "hideViewProject" })}
-          className="badge p-4 bg-blue-100 mt-5 ml-2 md:ml-2 xl:ml-5"
+          className="badge p-4 bg-blue-100 mt-5 ml-2 md:ml-2  lg:mt-2 xl:ml-5"
         >
           Close
         </button>
@@ -156,15 +156,15 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
           {taxCategory?.title} category
         </h2>
         <div className="bg-blue-100 p-9 rounded-lg  m-3 mt-4 flex justify-between items-center flex-col md:flex-row">
-          <p className="text-blue-800 md:text-2xl font-bold pb-1">
+          <p className="text-blue-800 md:text-2xl font-bold pb-1 lg:text-lg xl:text-xl">
             💙 Total Deductible:
           </p>
-          <p className="text-blue-800 text-3xl font-bold">
+          <p className="text-blue-800 text-3xl font-bold lg:text-xl ">
             {totalAmount.toFixed(2)} SEK
           </p>
         </div>
       </div>
-      <div className="bg-white shadow-md rounded-lg lg:p-6 p-1  mb-4  overflow-y-auto max-h-[500px] lg:max-h-[450px]">
+      <div className="bg-white shadow-md rounded-lg lg:p-0 lg:pt-2  pt-3 xl:p-5 p-1  mb-4  overflow-y-auto max-h-[500px] lg:max-h-[450px]">
         <h3 className="text-xl font-semibold mb-4 ml-3  text-blue-900 font-serif">
           Receipts
         </h3>
@@ -254,29 +254,29 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
               Must have been done within the last 5 years.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 h-64 w-full  lg:w-[46.8%] md:w-[45.7%]">
-            <img src={tool} alt="" className="w-16 h-16 mb-4" />
-            <p className="text-center">
+          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 h-64 w-full lg:w-[44.8%] xl:w-[46.8%] md:w-[45.7%]">
+            <img src={tool} alt="" className="w-16 h-16 mb-4 lg:h-10 lg:w-10" />
+            <p className="text-center lg:text-sm">
               The actions should have improved the condition of the property at
               the time of sale compared to when it was purchased.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 h-64 w-full  lg:w-[46.8%] md:w-[45.7%]">
-            <img src={vacuum} alt="" className="w-16 h-16 mb-4" />
-            <p className="text-center">
+          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 h-64 w-full lg:w-[44.8%] xl:w-[46.8%] md:w-[45.7%]">
+            <img src={vacuum} alt="" className="w-16 h-16 mb-4 lg:h-10 lg:w-10" />
+            <p className="text-center lg:text-sm">
               Expenses covered by ROT deductions cannot be included.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full  lg:w-[46.8%] md:w-[45.7%]">
-            <h2 className="text-4xl text-blue-300 font-bold mb-2">5000+</h2>
-            <p className="text-center">
+          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full lg:w-[44.8%] xl:w-[46.8%] md:w-[45.7%]">
+            <h2 className="text-4xl text-blue-300 font-bold mb-2 lg:text-md">5000+</h2>
+            <p className="text-center lg:text-sm">
               To qualify for deductions, the total improvement expenses in the
               calendar year must be at least 5,000 SEK.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full  lg:w-[46.8%] md:w-[45.7%]">
-            <img src={bill} alt="" className="w-16 h-16 mb-4" />
-            <p className="text-center">
+          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full lg:w-[44.8%] xl:w-[46.8%] md:w-[45.7%]">
+            <img src={bill} alt="" className="w-16 h-16 mb-4 lg:h-10 lg:w-10" />
+            <p className="text-cente lg:text-sm">
               The basic principle for eligibility is that expenses must be
               verified with invoices and receipts.
             </p>

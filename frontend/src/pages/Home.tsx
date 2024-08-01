@@ -4,6 +4,7 @@ import loginImg from "../assets/loginImg.jpg";
 import mainImg from "../assets/mainBlue1.jpg";
 import short from "../assets/short.jpeg";
 import largeMain from "../assets/mainShort.jpg";
+import Footer from "../components/Footer";
 
 /* import popLogo from "../assets/pop-logo-white.svg"; */
 
@@ -12,7 +13,6 @@ const Home = () => {
 
   return (
     <>
-      {/*  <Top_Nav /> */}
       <div className="hero  relative">
         <div
           className="absolute inset-0"
@@ -122,7 +122,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="hero bg-base-200 min-h-[40vh] p-2 mb-7">
+      <div className="hero bg-base-200 min-h-[40vh] p-2 pb-20">
         <div className="hero-content flex-col gap-20 md:flex-row">
           <div className="card glass w-90">
             <figure>
@@ -148,7 +148,7 @@ const Home = () => {
                 className=" h-60 w-76 object-cover"
               />
             </figure>
-            <div className="card-body text-center">
+            <div className="card-body text-center ">
               <h2 className="card-title self-center">Life hack</h2>
               <p>
                 Our app provides a seamless solution for organizing, storing,
@@ -159,7 +159,7 @@ const Home = () => {
         </div>
       </div>
       <div className="btm-nav border-transparent text-current btm-nav-lg bg-blue-100 shadow-sky-600 w-auto">
-        <LoginButton />
+        {isAuthenticated ? <Footer/> : <LoginButton />}
       </div>
     </>
   );
