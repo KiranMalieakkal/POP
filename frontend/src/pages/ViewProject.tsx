@@ -56,10 +56,12 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
   const [theToken, setTheToken] = useState<string>();
 
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/projects";
-  const baseUrl = "http://localhost:8080/api/projects";
+
+  // const baseUrl = "http://localhost:8080/api/projects";
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/projects";
-  const baseUrl2 = "http://localhost:8080/api/taxes";
+  // const baseUrl2 = "http://localhost:8080/api/taxes";
 
   useEffect(() => {
     console.log("isauthenticated effect§");
@@ -84,12 +86,15 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
         console.log(
           "From the useEffect inside ViewProject.tsx. The id is: " + id
         );
-        const response = await fetch(`${baseUrl}/${id}?email=${user?.email}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${theToken}`,
-          },
-        });
+        const response = await fetch(
+          `${baseUrl}/projects/${id}?email=${user?.email}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${theToken}`,
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch project data");
         }
@@ -100,7 +105,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
       }
     };
     fetchProjectData();
-  }, [id, theToken, user?.email]);
+  }, [baseUrl, id, theToken, user?.email]);
 
   useEffect(() => {
     const fetchTaxCategories = async () => {
@@ -108,7 +113,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
       try {
         console.log("taxCategoryID: " + projectData?.tax_category);
         const response = await fetch(
-          `${baseUrl2}/${projectData?.tax_category}/category`,
+          `${baseUrl}/taxes/${projectData?.tax_category}/category`,
           {
             method: "GET",
             headers: {
@@ -126,7 +131,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
       }
     };
     fetchTaxCategories();
-  }, [projectData?.tax_category, theToken]);
+  }, [baseUrl, projectData?.tax_category, theToken]);
 
   if (!projectData || !projectData.receiptList) {
     return <div>Loading...</div>;
@@ -262,13 +267,19 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 h-64 w-full lg:w-[44.8%] xl:w-[46.8%] md:w-[45.7%]">
-            <img src={vacuum} alt="" className="w-16 h-16 mb-4 lg:h-10 lg:w-10" />
+            <img
+              src={vacuum}
+              alt=""
+              className="w-16 h-16 mb-4 lg:h-10 lg:w-10"
+            />
             <p className="text-center lg:text-sm">
               Expenses covered by ROT deductions cannot be included.
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full lg:w-[44.8%] xl:w-[46.8%] md:w-[45.7%]">
-            <h2 className="text-4xl text-blue-300 font-bold mb-2 lg:text-md lg:text-xl">5000+</h2>
+            <h2 className="text-4xl text-blue-300 font-bold mb-2 lg:text-md lg:text-xl">
+              5000+
+            </h2>
             <p className="text-center lg:text-sm">
               To qualify for deductions, the total improvement expenses in the
               calendar year must be at least 5,000 SEK.

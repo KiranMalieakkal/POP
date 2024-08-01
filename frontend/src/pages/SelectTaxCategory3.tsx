@@ -77,7 +77,8 @@ function SelectTaxCategory3({
   const [theToken, setTheToken] = useState<string>();
   // const baseUrl =
   //   "https://pop-app-backend.azurewebsites.net/api/projects/withoutTax";
-  const baseUrl = "http://localhost:8080/api/projects/withoutTax";
+  // const baseUrl = "http://localhost:8080/api/projects/withoutTax";
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const {
     data: projectsData,
@@ -86,7 +87,7 @@ function SelectTaxCategory3({
   } = useQuery({
     queryKey: ["fetch4"],
     queryFn: () =>
-      fetch(`${baseUrl}?email=${user?.email}`, {
+      fetch(`${baseUrl}/projects/withoutTax?email=${user?.email}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${theToken}`,
@@ -108,7 +109,7 @@ function SelectTaxCategory3({
   const { data: taxCategoriesData, isError: fetchError2 } = useQuery({
     queryKey: ["fetch5"],
     queryFn: () =>
-      fetch(`http://localhost:8080/api/taxes`, {
+      fetch(`${baseUrl}/taxes`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${theToken}`,

@@ -164,7 +164,7 @@ public class ReceiptController {
 
             Project project = receiptService.findProjectByTitle(updatedReceipt.project());
             if (project == null) {
-                projectService.createProject(receipt.getUser().getEmail(), updatedReceipt.project());
+                project = projectService.createProject(receipt.getUser().getEmail(), updatedReceipt.project());
             }
             receipt.setProject(project);
 //            Category category = receiptService.findCategoryByTitle(updatedReceipt.category());

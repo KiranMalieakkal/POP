@@ -61,7 +61,8 @@ function ListReceipts({ windowToDisplay }: Props) {
   >([]);
   const [search, setSearch] = useState("");
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
-  const baseUrl = "http://localhost:8080/api/receipts";
+  // const baseUrl = "http://localhost:8080/api/receipts";
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   // const { data, isError: fetchError } = useQuery({
   //   queryKey: ["fetch1"],
@@ -81,7 +82,7 @@ function ListReceipts({ windowToDisplay }: Props) {
   } = useQuery({
     queryKey: ["fetch2"],
     queryFn: () =>
-      fetch(`${baseUrl}/filters?email=${user?.email}`, {
+      fetch(`${baseUrl}/receipts/filters?email=${user?.email}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
