@@ -180,13 +180,10 @@ function Tax({ windowToDisplay }: Props) {
   return (
     <>
       <div className="mb-20">
-        <h1 className="text-center mt-4">
-          Here are your current tax projects. Select a project or create a new
-          project.
-        </h1>
+        {/* <h1 className="text-center mt-4 font-extrabold">TAX</h1> */}
 
         <div className="w-full p-4">
-          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto">
+          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto border-2 rounded-lg p-4">
             <table className="receipt-table w-full border-collapse ">
               <thead>
                 <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,0.2fr]">
@@ -248,6 +245,14 @@ function Tax({ windowToDisplay }: Props) {
             </table>
           </div>
         </div>
+        {taxCategories?.length === 0 && (
+          <div className="flex justify-center items-center p-4 text-center rounded m-2">
+            <p className="text-gray-400">
+              Hi {user?.name}, start linking your existing projects to a tax
+              category by clicking the "Add Tax Project" Button
+            </p>
+          </div>
+        )}
         <div className="flex justify-center items-center">
           <button
             className="btn bg-blue-800 text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6"
