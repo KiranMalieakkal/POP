@@ -20,7 +20,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       clientId={clientId}
       authorizationParams={{
         redirect_uri: `${window.location.origin}${
-          import.meta.env.VITE_REDIRECT_URI
+          import.meta.env.VITE_REDIRECT_URI !== undefined
+            ? import.meta.env.VITE_REDIRECT_URI
+            : ""
         }`,
         audience: import.meta.env.VITE_AUDIENCE,
       }}
