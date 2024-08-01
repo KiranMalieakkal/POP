@@ -90,7 +90,7 @@ const Home = () => {
             className="md:max-w-sm max-w-auto rounded-full h-48 w-48 object-cover"
           />
           <div className="text-center">
-            <h1 className="text-5xl font-bold">Turn paper into PDFs.</h1>
+            <h1 className="text-5xl font-bold">Turn paper into a digital file.</h1>
             <p className="py-6">
               Prepare for tax season with ease by utilizing our app to complete
               the tax reduction form. Our app helps you keep track of your
@@ -111,10 +111,9 @@ const Home = () => {
               AI cleans up your scans in seconds.
             </h1>
             <p className="py-6">
-              Scan your receipt and turn it into an editable, searchable PDF
-              instantly with our AI-driven mobile app. OCR (optical character
+              Scan your receipt and turn it into an editable, OCR (optical character
               recognition) corrects image perspective, sharpens handwritten or
-              printed text, and removes glares and shadows. Once your doc is
+              printed text, and removes glares and shadows. Once your receipt is
               scanned, you can delete text or add new text to match your
               original font.
             </p>
@@ -148,9 +147,9 @@ const Home = () => {
                 className=" h-60 w-76 object-cover"
               />
             </figure>
-            <div className="card-body text-center ">
+            <div className="card-body text-center">
               <h2 className="card-title self-center">Life hack</h2>
-              <p>
+              <p >
                 Our app provides a seamless solution for organizing, storing,
                 and accessing your receipts.
               </p>
