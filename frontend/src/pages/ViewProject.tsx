@@ -144,29 +144,28 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
 
   return (
     <div className="container mx-auto p-4 pt-2 md:p-1 md:mb-20 lg:mb-0">
-      <div className="bg-blue-900 pb-4 rounded-xl">
+      <div className="bg-blue-900 pb-1 rounded-xl">
         {/* <h1 className="pt-3 pr-6 pl-3 pb-2 text-white">
           <a href="/receipts/tax">← Go back</a>
         </h1> */}
         <button
           onClick={() => windowToDisplay({ window: "hideViewProject" })}
-          className="badge p-4 md: bg-blue-100 mt-5 ml-2 md:ml-2  lg:mt-2 xl:ml-5"
+          className="badge p-4 md: bg-blue-100 mt-5 ml-2 md:ml-2  lg:mt-2 xl:ml-2"
         >
           Close
         </button>
         <h1 className="font-bold mb-4 text-white text-center text-xl md:text-xl md:mt-2 xl:text-3xl ">
           {projectData.title}
         </h1>
-        <h2 className="text-md font-semibold text-center text-white lg:text-lg">
+        <h2 className="text-md text-center text-blue-300 lg:text-lg">
           {taxCategory?.title} category
         </h2>
-        <div className="bg-blue-100 p-9 rounded-lg  m-3 mt-4 flex justify-between items-center flex-col xl:flex-row">
-          <p className="text-blue-800 md:text-2xl font-bold pb-1 lg:text-lg xl:text-xl">
-            💙 Total Deductible:
-          </p>
-          <p className="text-blue-800 text-3xl font-bold lg:text-xl ">
+
+        <div className="bg-blue-100 p-4 rounded-lg  m-3 mt-4 flex justify-between items-center flex-col">
+          <p className="text-blue-800 text-6xl font-bold">
             {totalAmount.toFixed(2)} SEK
           </p>
+          <p className="text-blue-800  text-sm  pb-1">💙 Total deductible</p>
         </div>
       </div>
       <div className="bg-white shadow-md rounded-lg lg:p-0 lg:pt-2  pt-3 xl:p-5 p-1  mb-4  overflow-y-auto max-h-[500px] lg:max-h-[450px]">
@@ -207,7 +206,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
         </div>
       </div>
 
-      <div className="bg-blue-50  shadow-2xl rounded-lg p-6 mx-auto w-full  md:w-full lg:w-full lg:p-4 mb-10 border border-gray-800">
+      <div className="bg-blue-50  shadow-2xl rounded-lg p-6 mx-auto w-full  md:w-full lg:w-full lg:p-4 my-10 border border-gray-800">
         <h2 className="text-2xl font-semibold mb-2 text-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -247,7 +246,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
         </div>
       </div>
 
-      <div className="shadow-2xl items-center justify-center p-4 border border-gray-300 rounded-lg bg-blue-900 mb-16 md:mb-0">
+      <div className="shadow-2xl items-center justify-center p-4 border border-gray-300 rounded-xl bg-blue-900 mb-16 md:mb-0">
         <h1 className="text-3xl text-white font-bold mb-1 text-center">
           Rules
         </h1>
