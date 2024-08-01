@@ -35,8 +35,8 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
         <p className="text-center font-semibold ">Explore this topic</p>
       </div>
 
-      <div className="shadow-2xl items-center justify-center p-4 xl:mb-0 lg:mb-0">
-        <div className="flex flex-wrap max-h-[550px] lg:max-h-none xl:max-h-none mb-2 overflow-y-auto">
+      <div className="items-center justify-center p-4 xl:mb-0 lg:mb-0">
+        <div className="flex flex-wrap mb-2">
           <div className="flex flex-col items-center justify-center w-74 w-full  lg:w-[488.3%] md:w-[477.7%]">
             <div
               tabIndex={0}
@@ -50,18 +50,8 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center w-74 w-full my-5 lg:w-[488.3%] md:w-[477.7%]">
-            <div
-              tabIndex={0}
-              className="collapse collapse-plus border-base-300 bg-base-200 border"
-            >
-              <div className="collapse-title text-xl font-medium">Examples</div>
-              <div className="collapse-content">
-                <p>{categoryData.example}</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-col items-center justify-center w-74 w-full lg:w-[488.3%] md:w-[477.7%]">
+
+          <div className="flex flex-col items-center justify-center my-5 w-74 w-full lg:w-[488.3%] md:w-[477.7%]">
             <div
               tabIndex={0}
               className="collapse collapse-plus border-base-300 border  bg-gray-100"
@@ -81,7 +71,19 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center p-2 border bg-gray-200 rounded-lg m-2 h-full w-full  lg:w-[488.3%] md:w-[477.7%] flex-wrap max-h-[550px] lg:max-h-none xl:max-h-none mb-2 overflow-y-auto">
+          <div className="flex flex-col items-center justify-center w-74 w-full lg:w-[488.3%] md:w-[477.7%]">
+            <div
+              tabIndex={0}
+              className="collapse collapse-plus border-base-300 bg-base-200 border"
+            >
+              <div className="collapse-title text-xl font-medium">Examples</div>
+              <div className="collapse-content">
+                <p>{categoryData.example}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center p-2 border bg-gray-200 rounded-lg mx-1 mt-5 h-full w-full lg:w-[488.3%] md:w-[477.7%] flex-wrap mb-2">
             <div className="flex flex-col items-center justify-center mt-50 p-5 border bg-gray-100 rounded-lg m-2  h-64 w-full  ">
               <h2 className="text-4xl text-blue-300 font-bold mb-2">5 Years</h2>
               <p className="text-center">
