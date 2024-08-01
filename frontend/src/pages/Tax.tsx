@@ -1,8 +1,10 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 // Harald 240730: removing routing because desktop rebuild.
 /* import { useNavigate } from "react-router-dom"; */
 import toast, { Toaster } from "react-hot-toast";
+import useScreenType from "../components/useSceenType";
 // import projectData from "../assets/projectData";
 
 export type requestType = {
@@ -51,12 +53,15 @@ type Props = {
 };
 
 function Tax({ windowToDisplay }: Props) {
+  const { isMobile } = useScreenType();
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [taxCategories, setTaxCategories] = useState([]);
   // Harald 240730: removing routing because desktop rebuild.
   /*   const navigate = useNavigate(); */
   const [deleteErrorDisplay, setDeleteErrorDisplay] = useState(false);
   const queryClient = useQueryClient();
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+  const [theToken, setTheToken] = useState<string>();
 
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/taxes/user";
   const baseUrl = "http://localhost:8080/api/taxes/user";
@@ -64,12 +69,23 @@ function Tax({ windowToDisplay }: Props) {
   const { data, isError: fetchError } = useQuery({
     queryKey: ["fetch3"],
     queryFn: () =>
-      fetch(`${baseUrl}?email=jane.smith@example.com`)
-        .then((response) => response.json())
+      fetch(`${baseUrl}?email=${user?.email}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${theToken}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Error Status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then((data) => data)
         .catch((e) => {
           setfetchErrorLog(e.message);
         }),
+    enabled: () => !!user?.email && !!theToken,
   });
   const {
     mutate: deleteTaxCategory,
@@ -78,15 +94,33 @@ function Tax({ windowToDisplay }: Props) {
   } = useMutation<unknown, Error, deleteType>({
     mutationFn: ({ projectId, taxId }) =>
       fetch(
-        `http://localhost:8080/api/taxes/${taxId}?email=jane.smith@example.com&projectId=${projectId}`,
+        `http://localhost:8080/api/taxes/${taxId}?email=${user?.email}&projectId=${projectId}`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${theToken}`,
+          },
         }
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["fetch3"] });
     },
   });
+
+  useEffect(() => {
+    console.log("isauthenticated effect§");
+    if (isAuthenticated) {
+      console.log("yues");
+      getAccessTokenSilently()
+        .then((token) => {
+          console.log("token=", token);
+          setTheToken(token);
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
 
   useEffect(() => {
     if (deleteError) {
@@ -147,14 +181,14 @@ function Tax({ windowToDisplay }: Props) {
 
   return (
     <>
-      <div className="mb-20">
+      <div className="">
         <h1 className="text-center mt-4">
           Here are your current tax projects. Select a project or create a new
           project.
         </h1>
 
         <div className="w-full p-4">
-          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto">
+          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto border-2 rounded-lg p-4">
             <table className="receipt-table w-full border-collapse ">
               <thead>
                 <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,0.2fr]">
@@ -216,9 +250,19 @@ function Tax({ windowToDisplay }: Props) {
             </table>
           </div>
         </div>
+        {taxCategories?.length === 0 && (
+          <div className="flex justify-center items-center p-4 text-center rounded m-2">
+            <p className="text-gray-400">
+              Hi {user?.name}, start linking your existing projects to a tax
+              category by clicking the "Add Tax Project" Button
+            </p>
+          </div>
+        )}
         <div className="flex justify-center items-center">
           <button
-            className="btn bg-blue-800 text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6"
+            className={`fixed m-5 btn bg-blue-800 btn-primary text-white md:w-1/3 lg:w-1/3 w-1/2 ${
+              isMobile ? "bottom-20" : "bottom-0"
+            }`}
             onClick={() => windowToDisplay({ window: "SelectTaxCategory" })}
           >
             Add Tax Project

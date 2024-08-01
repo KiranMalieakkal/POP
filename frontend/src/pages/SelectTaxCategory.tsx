@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SelectTaxCategory1 from "./SelectTaxCategory1";
 import SelectTaxCategory2 from "./SelectTaxCategory2";
 import SelectTaxCategory3 from "./SelectTaxCategory3";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuth0 } from "@auth0/auth0-react";
 /* import { useNavigate } from "react-router-dom"; */
 
 export type NewPost = {
@@ -23,6 +24,8 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
   const [taxId, setTaxId] = useState<number>();
   const [projectId, setProjectId] = useState<string>();
   const queryClient = useQueryClient();
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+  const [theToken, setTheToken] = useState<string>();
   // Harald 240730: removing routing because desktop rebuild.
   /*   const navigate = useNavigate(); */
 
@@ -32,11 +35,12 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
   const { mutate: postTaxCategory } = useMutation<unknown, Error, NewPost>({
     mutationFn: (newPost) =>
       fetch(
-        `http://localhost:8080/api/taxes/${taxId}?email=jane.smith@example.com&projectId=${projectId}`,
+        `http://localhost:8080/api/taxes/${taxId}?email=${user?.email}&projectId=${projectId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${theToken}`,
           },
           body: JSON.stringify(newPost),
         }
@@ -56,6 +60,20 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
     },
   });
 
+  useEffect(() => {
+    console.log("isauthenticated effect§");
+    if (isAuthenticated) {
+      console.log("yues");
+      getAccessTokenSilently()
+        .then((token) => {
+          console.log("token=", token);
+          setTheToken(token);
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
   // -------------------------------------------------------------------------------------
   // nextStep and prevStep help us render the different components.
   const nextStep = () => {

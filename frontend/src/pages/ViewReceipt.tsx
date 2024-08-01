@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 /* import BottomNav from "../components/BottomNav"; */
 import FormChoices from "../components/FormChoices";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // Harald 240730: removing routing because desktop rebuild. therefore params is also removed
 /* type Params = {
@@ -45,7 +46,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   });
   const [imgFile, setImgFile] = useState(" ");
   const [message, setMessage] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
+  // const [alertMessage, setAlertMessage] = useState("");
 
   // todo: this is the list of existing project the user can choose from.
   // it should be sent to the component as a prop
@@ -66,22 +67,53 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
   const baseUrl2 = "http://localhost:8080/api/receipts";
 
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const [theToken, setTheToken] = useState<string>();
+
   useEffect(() => {
+    console.log("isauthenticated effect§");
+    if (isAuthenticated) {
+      console.log("yues");
+      getAccessTokenSilently()
+        .then((token) => {
+          console.log("token=", token);
+          setTheToken(token);
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
+
+  useEffect(() => {
+    if (!theToken) return;
     const fetchReceiptData = async () => {
-      const response = await fetch(`${baseUrl2}/${id}`);
+      const response = await fetch(`${baseUrl2}/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${theToken}`,
+        },
+      });
       const data = await response.json();
       //console.log(data);
       setReceiptData(data);
+      console.log("iam here " + data);
     };
+
     fetchReceiptData();
     const fetchImg = async () => {
-      const response = await fetch(`${baseUrl2}/${id}/img`);
+      const response = await fetch(`${baseUrl2}/${id}/img`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${theToken}`,
+        },
+      });
       const imgData = await response.blob();
       const url = URL.createObjectURL(imgData);
       setImgFile(url);
     };
     fetchImg();
-  }, [id]);
+  }, [id, theToken, isAuthenticated]);
 
   if (!receiptData) {
     return <div>Loading...</div>;
@@ -113,6 +145,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${theToken}`,
       },
       body: JSON.stringify(receiptData),
     });
@@ -133,26 +166,96 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   };
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this receipt?"
-    );
-    if (confirmDelete) {
-      const response = await fetch(`${baseUrl2}/${id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        toast.success(`Receipt has been deleted successfully ♳.`);
-        setTimeout(() => {
-          setAlertMessage("");
-          // Harald 240730: removing routing because desktop rebuild.
-          /* navigate("/receipts"); */
-          windowToDisplay({ window: "hideViewReceipt" });
-        }, 2000);
-      } else {
-        console.log("Failed to delete receipt.");
-      }
-    }
+    // const confirmDelete = window.confirm(
+    //   "Are you sure you want to delete this receipt?"
+    // );
+    // if (confirmDelete) {
+    //   const response = await fetch(`${baseUrl2}/${id}`, {
+    //     method: "DELETE",
+    //     headers: {
+    //       Authorization: `Bearer ${theToken}`,
+    //     },
+    //   });
+    //   if (response.ok) {
+    //     toast.success(`Receipt has been deleted successfully ♳.`);
+    //     setTimeout(() => {
+    //       setAlertMessage("");
+    //       // Harald 240730: removing routing because desktop rebuild.
+    //       /* navigate("/receipts"); */
+    //       windowToDisplay({ window: "hideViewReceipt" });
+    //     }, 2000);
+    //   } else {
+    //     console.log("Failed to delete receipt.");
+    //   }
+    // }
+
+    toast((t) => (
+      <span>
+        Are you sure you want to delete this receipt?
+        <div className="flex justify-center mt-2">
+          <button
+            className="bg-red-500 text-white py-1 px-3 rounded-lg text-sm mr-2"
+            onClick={() => {
+              fetch(`${baseUrl2}/${id}`, {
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${theToken}`,
+                },
+              }).then((response) => {
+                if (!response.ok) {
+                  throw new Error(`Error Status: ${response.status}`);
+                } else windowToDisplay({ window: "hideViewReceipt" });
+                toast.dismiss(t.id);
+              });
+            }}
+          >
+            Yes
+          </button>
+          <button
+            className="bg-gray-300 text-black py-1 px-3 rounded-lg text-sm"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </button>
+        </div>
+      </span>
+    ));
   };
+
+  // const handleDelete = async () => {
+  //   const confirmDelete = () => (
+  //     <div>
+  //       <p>Are you sure you want to delete this receipt?</p>
+  //       <button onClick={() => confirmDeleteAction(true)} className="btn">Yes</button>
+  //       <button onClick={() => confirmDeleteAction(false)} className="btn">No</button>
+  //     </div>
+  //   );
+
+  //   const confirmDeleteAction = async (confirmed: boolean) => {
+  //     if (confirmed) {
+  //       const response = await fetch(`${baseUrl2}/${id}`, {
+  //         method: "DELETE",
+  //       });
+  //       if (response.ok) {
+  //         toast.dismiss();
+  //         toast.success(`Receipt has been deleted successfully ♳.`);
+  //         setTimeout(() => {
+  //           setAlertMessage("");
+  //           navigate("/receipts");
+  //         }, 2000);
+  //       } else {
+  //         console.log("Failed to delete receipt.");
+  //       }
+  //     } else {
+  //       toast.dismiss();
+  //     }
+  //   };
+
+  //   toast.custom(confirmDelete, {
+  //     position: "top-center",
+  //     style: {border: "1px solid black", },
+  //   });
+  // };
 
   const handleBack = () => {
     setEditMode(false);
@@ -162,15 +265,15 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
     <>
       <div className="p-2 lg:p-5 lg:pt-2 max-w-4xl mx-auto pb-20 rounded-xl">
         <div className="bg-white shadow-xl  top-shadow  lg:shadow-none rounded-lg p-5 flex flex-col">
-         <div className="pt-0 pr-6  pb-2">
-        {/* <a href="/receipts">← Go back</a> */}
-        <button
-          onClick={() => windowToDisplay({ window: "hideViewReceipt" })}
-          className="badge p-4 bg-blue-100"
-        >
-          Close
-        </button>
-      </div>
+          <div className="pt-0 pr-6  pb-2">
+            {/* <a href="/receipts">← Go back</a> */}
+            <button
+              onClick={() => windowToDisplay({ window: "hideViewReceipt" })}
+              className="badge p-4 bg-blue-100"
+            >
+              Close
+            </button>
+          </div>
           {/* img section .......*/}
           <div className="border border-gray-300 rounded-lg p-5 h-full w-full md:pr-4 ms:w-full  ms:pr-0 h-112">
             <img
@@ -181,11 +284,11 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
           </div>
           {/* form section .......*/}
           <div className="w-full sm:text-center md:text-left">
-            {alertMessage && (
+            {/* {alertMessage && (
               <div className="alert alert-error mb-4">
                 <div>{alertMessage}</div>
               </div>
-            )}
+            )} */}
             {message && <div className="text-green-500 mb-4">{message}</div>}
             <div className="space-y-4 text-left">
               <div>
@@ -203,6 +306,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     <p className="w-full ">
                       {receiptData.company}
                     </p>
+                  <div className="input input-bordered w-full flex items-center bg-slate-100">
+                    <p className="w-full ">{receiptData.company}</p>
                   </div>
                 )}
               </div>
@@ -222,6 +327,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       <p className=" ">
                         {receiptData.amount}
                       </p>
+                    <div className="input input-bordered w-full flex items-center bg-slate-100">
+                      <p className=" ">{receiptData.amount}</p>
                     </div>
                   )}
                 </div>
@@ -258,6 +365,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       <p className="">
                         {receiptData.currency}
                       </p>
+                    <div className="input input-bordered w-full flex items-center bg-slate-100">
+                      <p className="">{receiptData.currency}</p>
                     </div>
                   )}
                 </div>
@@ -277,6 +386,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     <p className="">
                       {receiptData.purchaseDate}
                     </p>
+                  <div className="input input-bordered w-full flex items-center bg-slate-100">
+                    <p className="">{receiptData.purchaseDate}</p>
                   </div>
                 )}
               </div>
@@ -329,6 +440,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     <p className="">
                       {receiptData.project}
                     </p>
+                  <div className="input input-bordered w-full flex items-center bg-slate-100">
+                    <p className="">{receiptData.project}</p>
                   </div>
                 )}
               </div>

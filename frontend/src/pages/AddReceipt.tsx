@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Harald 240730: removing routing because desktop rebuild.
 /* import { useNavigate } from "react-router-dom"; */
 import FormChoices from "../components/FormChoices";
 import toast, { Toaster } from "react-hot-toast";
+import { useAuth0 } from "@auth0/auth0-react";
 
 type Receipt = {
   company: string;
@@ -49,6 +50,8 @@ function AddReceipt({ windowToDisplay }: Props) {
     project: "",
   });
 
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+  const [theToken, setTheToken] = useState<string>();
   // -------------------------------------------------------------------------------------
   // Function to handle changes in the form fields
   // When a change is made this function updates the useState that stores the field data
@@ -107,6 +110,9 @@ function AddReceipt({ windowToDisplay }: Props) {
           "http://localhost:8080/api/receipts/textextraction",
           {
             method: "POST",
+            headers: {
+              Authorization: `Bearer ${theToken}`,
+            },
             body: formData,
           }
         );
@@ -128,6 +134,20 @@ function AddReceipt({ windowToDisplay }: Props) {
     }
   };
 
+  useEffect(() => {
+    console.log("isauthenticated effect§");
+    if (isAuthenticated) {
+      console.log("yues");
+      getAccessTokenSilently()
+        .then((token) => {
+          console.log("token=", token);
+          setTheToken(token);
+        })
+        .catch((err) => {
+          console.log("err=", err);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
   // -------------------------------------------------------------------------------------
   // This function takes a Receipt object as argument and fills in the form fields
   // it only fills them if they are empty
@@ -162,14 +182,25 @@ function AddReceipt({ windowToDisplay }: Props) {
     formDataToSend.append("currency", formData.currency);
     formDataToSend.append("purchaseDate", formData.purchaseDate);
     formDataToSend.append("textContent", formData.textContent);
-    formDataToSend.append("project", formData.project || "");
-    formDataToSend.append("email", "jane.smith@example.com"); // todo: do not hardcode email. should come from Auth0s JWT
+    if (formData.project) {
+      formDataToSend.append("projectTitle", formData.project!);
+    }
+
+    formDataToSend.append("email", `${user?.email}`); // todo: do not hardcode email. should come from Auth0s JWT
 
     try {
-      const response = await fetch("http://localhost:8080/api/receipts", {
-        method: "POST",
-        body: formDataToSend,
-      });
+      const response = await fetch(
+        formData.project
+          ? "http://localhost:8080/api/receipts/with-project"
+          : "http://localhost:8080/api/receipts",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${theToken}`,
+          },
+          body: formDataToSend,
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -205,6 +236,7 @@ function AddReceipt({ windowToDisplay }: Props) {
             <input
               type="file"
               id="fileInput"
+              required
               className="w-full absolute inset-0 opacity-0 cursor-pointer"
               onChange={handleFileChange}
             />
@@ -243,6 +275,7 @@ function AddReceipt({ windowToDisplay }: Props) {
                 step="0.01"
                 id="amount"
                 name="amount"
+                required
                 className="input w-full bg-slate-100"
                 value={formData.amount}
                 onChange={handleChange}
@@ -255,6 +288,7 @@ function AddReceipt({ windowToDisplay }: Props) {
                 list="existingCurrency"
                 id="currency"
                 name="currency"
+                autoComplete="off"
                 className="input w-full bg-slate-100"
                 value={formData.currency}
                 onChange={handleChange}
@@ -283,6 +317,7 @@ function AddReceipt({ windowToDisplay }: Props) {
             type="date"
             id="date"
             name="purchaseDate"
+            required
             className="input w-full bg-slate-100"
             value={formData.purchaseDate}
             onChange={handleChange}
@@ -308,6 +343,7 @@ function AddReceipt({ windowToDisplay }: Props) {
               list="existingProjects"
               id="project"
               name="project"
+              autoComplete="off"
               className="input w-full bg-slate-100"
               value={formData.project}
               onChange={handleChange}
