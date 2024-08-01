@@ -82,6 +82,7 @@ function AddReceipt({ windowToDisplay }: Props) {
   // State to manage the selected file
   const [file, setFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   // -------------------------------------------------------------------------------------
   // Function to handle file selection
@@ -106,16 +107,13 @@ function AddReceipt({ windowToDisplay }: Props) {
       const loadingToastId = toast.loading("Uploading and extracting text...");
 
       try {
-        const response = await fetch(
-          "http://localhost:8080/api/receipts/textextraction",
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${theToken}`,
-            },
-            body: formData,
-          }
-        );
+        const response = await fetch(`${baseUrl}/receipts/textextraction`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${theToken}`,
+          },
+          body: formData,
+        });
 
         if (!response.ok) {
           toast.error("Error extracting text from file");
@@ -191,8 +189,8 @@ function AddReceipt({ windowToDisplay }: Props) {
     try {
       const response = await fetch(
         formData.project
-          ? "http://localhost:8080/api/receipts/with-project"
-          : "http://localhost:8080/api/receipts",
+          ? `${baseUrl}/receipts/with-project`
+          : `${baseUrl}/receipts`,
         {
           method: "POST",
           headers: {

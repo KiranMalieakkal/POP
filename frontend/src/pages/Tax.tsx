@@ -64,12 +64,13 @@ function Tax({ windowToDisplay }: Props) {
   const [theToken, setTheToken] = useState<string>();
 
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/taxes/user";
-  const baseUrl = "http://localhost:8080/api/taxes/user";
+  // const baseUrl = "http://localhost:8080/api/taxes/user";
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const { data, isError: fetchError } = useQuery({
     queryKey: ["fetch3"],
     queryFn: () =>
-      fetch(`${baseUrl}?email=${user?.email}`, {
+      fetch(`${baseUrl}/taxes/user?email=${user?.email}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${theToken}`,
@@ -94,7 +95,7 @@ function Tax({ windowToDisplay }: Props) {
   } = useMutation<unknown, Error, deleteType>({
     mutationFn: ({ projectId, taxId }) =>
       fetch(
-        `http://localhost:8080/api/taxes/${taxId}?email=${user?.email}&projectId=${projectId}`,
+        `${baseUrl}/taxes/${taxId}?email=${user?.email}&projectId=${projectId}`,
         {
           method: "DELETE",
           headers: {
