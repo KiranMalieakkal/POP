@@ -26,7 +26,7 @@ function FormChoices(props: Props) {
 
   return (
     <>
-      <div className="absolute w-full rounded bg-gray-100 pr-2">
+      <div className="absolute w-full max-h-32 overflow-y-auto rounded bg-gray-100 pr-2">
         {props.items.map((item, index) => (
           <button
             key={index}
