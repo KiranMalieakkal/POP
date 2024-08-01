@@ -292,20 +292,16 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
             {message && <div className="text-green-500 mb-4">{message}</div>}
             <div className="space-y-4 text-left">
               <div>
-                <label className="label text-gray-400 mt-4 p-0 ">Company</label>
+                <label className="label text-gray-900 mt-4 p-0 ">Company</label>
                 {editMode ? (
                   <input
                     type="text"
                     name="company"
                     value={receiptData.company}
                     onChange={handleChange}
-                    className="input bg-slate-200 w-full"
+                    className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-slate-50">
-                    <p className="w-full ">
-                      {receiptData.company}
-                    </p>
                   <div className="input input-bordered w-full flex items-center bg-slate-100">
                     <p className="w-full ">{receiptData.company}</p>
                   </div>
@@ -313,27 +309,23 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
               </div>
               <div className="grid grid-cols-[3fr_1fr]">
                 <div className="pr-5">
-                  <label className="label text-gray-400 mt-0 p-0">Amount</label>
+                  <label className="label text-gray-900 mt-0 p-0">Amount</label>
                   {editMode ? (
                     <input
                       type="text"
                       name="amount"
                       value={receiptData.amount}
                       onChange={handleChange}
-                      className="input bg-slate-200 w-full"
+                      className="input bg-slate-100 w-full"
                     />
                   ) : (
-                    <div className="input input-bordered w-full flex items-center bg-slate-50">
-                      <p className=" ">
-                        {receiptData.amount}
-                      </p>
                     <div className="input input-bordered w-full flex items-center bg-slate-100">
                       <p className=" ">{receiptData.amount}</p>
                     </div>
                   )}
                 </div>
                 <div className="relative">
-                  <label className="label text-gray-400 mt-0 p-0">
+                  <label className="label text-gray-900 mt-0 p-0">
                     Currency
                   </label>
                   {editMode ? (
@@ -342,7 +334,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                         list="existingCurrency"
                         id="currency"
                         name="currency"
-                        className="input w-full bg-slate-200"
+                        className="input w-full bg-slate-100"
                         value={receiptData.currency}
                         onChange={handleChange}
                         onFocus={() => setFocusedField("currency")}
@@ -361,10 +353,6 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       )}
                     </>
                   ) : (
-                    <div className="input input-bordered w-full flex items-center bg-slate-50">
-                      <p className="">
-                        {receiptData.currency}
-                      </p>
                     <div className="input input-bordered w-full flex items-center bg-slate-100">
                       <p className="">{receiptData.currency}</p>
                     </div>
@@ -372,27 +360,23 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                 </div>
               </div>
               <div>
-                <label className="label text-gray-400 mt-0 p-0">Date</label>
+                <label className="label text-gray-900 mt-0 p-0">Date</label>
                 {editMode ? (
                   <input
                     type="date"
                     name="purchaseDate"
                     value={receiptData.purchaseDate}
                     onChange={handleChange}
-                    className="input bg-slate-200 w-full"
+                    className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-slate-50">
-                    <p className="">
-                      {receiptData.purchaseDate}
-                    </p>
                   <div className="input input-bordered w-full flex items-center bg-slate-100">
                     <p className="">{receiptData.purchaseDate}</p>
                   </div>
                 )}
               </div>
               <div>
-                <label className="label text-gray-400 mt-0 p-0">
+                <label className="label text-gray-900 mt-0 p-0">
                   Text Content
                 </label>
                 {editMode ? (
@@ -400,10 +384,10 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     name="textContent"
                     value={receiptData.textContent}
                     onChange={handleChange}
-                    className="textarea bg-slate-200 w-full h-40"
+                    className="textarea bg-slate-100 w-full h-40"
                   />
                 ) : (
-                  <div className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-slate-50 p-3 pl-5 ">
+                  <div className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-slate-100 p-3 pl-5 ">
                     {" "}
                     {/* w-full items-center rounded-lg border border-slate-300 p-3  */}
                     <p className="">{receiptData.textContent}</p>
@@ -411,7 +395,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                 )}
               </div>
               <div className="relative">
-                <label className="label text-gray-400 mt-0 p-0">Project</label>
+                <label className="label text-gray-900 mt-0 p-0">Project</label>
                 {editMode ? (
                   <>
                     <input
@@ -419,7 +403,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       name="project"
                       value={receiptData.project ?? ""}
                       onChange={handleChange}
-                      className="input bg-slate-200 w-full"
+                      className="input bg-slate-100 w-full"
                       onFocus={() => setFocusedField("project")}
                       onBlur={() =>
                         setFocusedField(
@@ -436,10 +420,6 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     )}
                   </>
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-slate-50">
-                    <p className="">
-                      {receiptData.project}
-                    </p>
                   <div className="input input-bordered w-full flex items-center bg-slate-100">
                     <p className="">{receiptData.project}</p>
                   </div>
@@ -451,13 +431,13 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                 {editMode ? (
                   <>
                     <button
-                      className="badge p-4 badge-outline mr-3 mt-2 hover:text-blue-700"
+                      className="btn badge-outline p-4 mr-3 mt-2 hover:text-blue-700"
                       onClick={handleBack}
                     >
                       Cancel
                     </button>
                     <button
-                      className="badge p-4 badge-outline  mt-2 bg-blue-800 text-white hover:bg-blue-700 hover:text-white"
+                      className="btn badge-outline  mt-2 bg-blue-800 text-white hover:bg-blue-700 hover:text-white"
                       onClick={handleSave}
                     >
                       Save Changes
@@ -465,7 +445,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                   </>
                 ) : (
                   <button
-                    className="badge p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
+                    className="btn p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
                     onClick={handleEdit}
                   >
                     <svg
@@ -489,7 +469,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
               <div className="flex justify-end mt-6">
                 {!editMode && (
                   <button
-                    className="badge p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
+                    className="btn p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
                     onClick={handleDelete}
                   >
                     <svg
@@ -521,34 +501,3 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
 };
 
 export default ReceiptDetail;
-
-
-
-
-
-/* function handleDelete(projectId: number, taxId: number) {
-  toast((t) => (
-    <span>
-      Are you sure you want to delete this tax category?
-      <div className="flex justify-center mt-2">
-        <button
-          className="bg-red-500 text-white py-1 px-3 rounded-lg text-sm mr-2"
-          onClick={() => {
-            deleteTaxCategory({ projectId, taxId });
-            toast.dismiss(t.id);
-          }}
-        >
-          Yes
-        </button>
-        <button
-          className="bg-gray-300 text-black py-1 px-3 rounded-lg text-sm"
-          onClick={() => toast.dismiss(t.id)}
-        >
-          No
-        </button>
-      </div>
-    </span>
-  ));
-} */
-
-

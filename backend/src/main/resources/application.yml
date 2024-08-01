@@ -2,15 +2,15 @@ spring:
   config:
     import: optional:file:.env[.properties]
 
-    security:
-        oauth2:
-            resource server:
-                jwt:
-                    # Trailing slash is required in this case!
-                    # In others it's prohibited!
-                    # Make sure you double check your case
-                    issuer-uri: ${ISSUER_URI}https://my-issuer.eu.auth0.com/
-                    audiences: ${AUDIENCE}my-audience-name
+  security:
+    oauth2:
+      resource server:
+        jwt:
+          # Trailing slash is required in this case!
+          # In others it's prohibited!
+          # Make sure you double check your case
+          issuer-uri: ${ISSUER_URI}
+  #          audiences: ${AUDIENCE}
 
   application:
     name: pop
@@ -20,35 +20,33 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
+  datasource:
+    url: ${DATABASE_URL}
+    #    username: ${DATABASE_USERNAME}
+    #    password: ${DATABASE_PASSWORD}
+    #    driver-class-name: org.postgresql.Driver
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      dialect: org.hibernate.dialect.SQLServerDialect
+  #        dialect: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      #      mode: always
+      platform: mssql
+  #      platform: postgresql
+  cloud:
+    azure:
+      storage:
+        blob:
+          connection-string: ${BLOB_URL}
 
-    datasource:
-        url: ${DATABASE_URL}
-        username: ${DATABASE_USERNAME}
-        password: ${DATABASE_PASSWORD}
-        driver-class-name: org.postgresql.Driver
-    #        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    jpa:
-        defer-datasource-initialization: true
-        hibernate:
-            ddl-auto: create-drop
-        show-sql: true
-        properties:
-            hibernate:
-                #                dialect: org.hibernate.dialect.SQLServerDialect
-                dialect: org.hibernate.dialect.PostgreSQLDialect
-    sql:
-        init:
-            mode: always
-            #            platform: mssql
-            platform: postgresql
-    cloud:
-        azure:
-            storage:
-                blob:
-                    connection-string: ${BLOB_URL}
 blob:
   containerForImages: ${BLOB_IMG_CONT}
 
+keys:
   openai: ${OPENAI_API_KEY}
-
-    openai: ${OPENAI_API_KEY}
