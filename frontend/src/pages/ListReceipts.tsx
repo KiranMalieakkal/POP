@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
 // Harald 240730: removing routing because desktop rebuild.
-/* import { useNavigate } from "react-router-dom"; */
+// import { useNavigate } from "react-router-dom";
 
 export type requestType = {
   company: string | null;
@@ -41,7 +41,7 @@ function ListReceipts({ windowToDisplay }: Props) {
   const [theToken, setTheToken] = useState<string>();
 
   // Harald 240730: removing routing because desktop rebuild.
-  /*   const navigate = useNavigate(); */
+  // const navigate = useNavigate();
   const [filters, setFilters] = useState<requestType>({
     company: null,
     amountFrom: null,
