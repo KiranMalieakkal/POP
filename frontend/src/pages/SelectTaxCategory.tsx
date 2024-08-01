@@ -26,6 +26,7 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
   const queryClient = useQueryClient();
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [theToken, setTheToken] = useState<string>();
+  const baseUrl = import.meta.env.VITE_BASE_URL;
   // Harald 240730: removing routing because desktop rebuild.
   /*   const navigate = useNavigate(); */
 
@@ -35,7 +36,7 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
   const { mutate: postTaxCategory } = useMutation<unknown, Error, NewPost>({
     mutationFn: (newPost) =>
       fetch(
-        `http://localhost:8080/api/taxes/${taxId}?email=${user?.email}&projectId=${projectId}`,
+        `${baseUrl}/taxes/${taxId}?email=${user?.email}&projectId=${projectId}`,
         {
           method: "POST",
           headers: {

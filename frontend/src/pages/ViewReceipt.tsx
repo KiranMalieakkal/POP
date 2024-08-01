@@ -65,7 +65,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   const [focusedField, setFocusedField] = useState("");
 
   // const baseUrl = "https://pop-app-backend.azurewebsites.net/api/receipts";
-  const baseUrl2 = "http://localhost:8080/api/receipts";
+  // const baseUrl2 = "http://localhost:8080/api/receipts";
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [theToken, setTheToken] = useState<string>();
@@ -88,7 +89,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   useEffect(() => {
     if (!theToken) return;
     const fetchReceiptData = async () => {
-      const response = await fetch(`${baseUrl2}/${id}`, {
+      const response = await fetch(`${baseUrl}/receipts/${id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${theToken}`,
@@ -102,7 +103,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
 
     fetchReceiptData();
     const fetchImg = async () => {
-      const response = await fetch(`${baseUrl2}/${id}/img`, {
+      const response = await fetch(`${baseUrl}/receipts/${id}/img`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${theToken}`,
@@ -113,7 +114,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
       setImgFile(url);
     };
     fetchImg();
-  }, [id, theToken, isAuthenticated]);
+  }, [id, theToken, isAuthenticated, baseUrl]);
 
   if (!receiptData) {
     return <div>Loading...</div>;
@@ -141,7 +142,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   // -------------------------------------------------------------------------------------
 
   const handleSave = async () => {
-    const response = await fetch(`${baseUrl2}/${id}`, {
+    const response = await fetch(`${baseUrl}/receipts/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -196,7 +197,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
           <button
             className="bg-red-500 text-white py-1 px-3 rounded-lg text-sm mr-2"
             onClick={() => {
-              fetch(`${baseUrl2}/${id}`, {
+              fetch(`${baseUrl}/receipts/${id}`, {
                 method: "DELETE",
                 headers: {
                   Authorization: `Bearer ${theToken}`,
