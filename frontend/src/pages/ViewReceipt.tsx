@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 /* import BottomNav from "../components/BottomNav"; */
 import FormChoices from "../components/FormChoices";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 // Harald 240730: removing routing because desktop rebuild. therefore params is also removed
 /* type Params = {
@@ -45,7 +46,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
     fileName: "",
   });
   const [imgFile, setImgFile] = useState(" ");
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
+  // const [patchErrorDisplay, setPatchErrorDisplay] = useState(false);
   // const [alertMessage, setAlertMessage] = useState("");
 
   // todo: this is the list of existing project the user can choose from.
@@ -70,6 +72,28 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
 
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [theToken, setTheToken] = useState<string>();
+  const queryClient = useQueryClient();
+
+  const { mutate: patchReceipt, error: patchError } = useMutation<
+    unknown,
+    Error,
+    unknown
+  >({
+    mutationFn: (newPost) =>
+      fetch(`${baseUrl}/receipts/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${theToken}`,
+        },
+        body: JSON.stringify(newPost),
+      }).then((res) => res.json()),
+    onSuccess: () => {
+      setEditMode(false);
+      queryClient.invalidateQueries({ queryKey: ["fetch2"] });
+      toast.success("Changes saved successfully 🎉");
+    },
+  });
 
   useEffect(() => {
     console.log("isauthenticated effect§");
@@ -85,6 +109,16 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
         });
     }
   }, [isAuthenticated, getAccessTokenSilently]);
+
+  useEffect(() => {
+    if (patchError) {
+      // setPatchErrorDisplay(true);
+      toast.error("Please try again");
+      // setTimeout(() => {
+      //   setPatchErrorDisplay(false);
+      // }, 2000);
+    }
+  }, [patchError]);
 
   useEffect(() => {
     if (!theToken) return;
@@ -140,24 +174,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   // -------------------------------------------------------------------------------------
 
   const handleSave = async () => {
-    const response = await fetch(`${baseUrl}/receipts/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${theToken}`,
-      },
-      body: JSON.stringify(receiptData),
-    });
-    if (response.ok) {
-      setEditMode(false);
-      toast.success("Changes saved successfully 🎉");
-
-      setTimeout(() => {
-        setMessage("");
-      }, 2000);
-    } else {
-      console.log("Failed to save changes.");
-    }
+    patchReceipt(receiptData);
   };
 
   const handleEdit = () => {
@@ -252,7 +269,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                 <div>{alertMessage}</div>
               </div>
             )} */}
-            {message && <div className="text-green-500 mb-4">{message}</div>}
+            {/* {message && <div className="text-green-500 mb-4">{message}</div>} */}
             <div className="space-y-4 text-left">
               <div>
                 <label className="label text-gray-900 mt-4 p-0 ">Company</label>
@@ -389,6 +406,9 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                 )}
               </div>
             </div>
+            {/* {true && (
+              <p className="text-blue-500 break-words whitespace-normal text-center mt-2">{`Sorry, Changes could not be saved. Please try again later.`}</p>
+            )} */}
             <div className="flex items-center justify-between">
               <div className="flex justify-end mt-6">
                 {editMode ? (
