@@ -1,9 +1,6 @@
-// import { useParams } from "react-router-dom";
 import tax_1 from "../assets/tax_1.svg";
 import tax_2 from "../assets/tax_2.svg";
 import tax_3 from "../assets/tax_3.svg";
-// Harald 240730: removing routing because desktop rebuild.
-/* import BottomNav from "../components/BottomNav"; */
 import vacuum from "../assets/vacuum_1059226.png";
 import bill from "../assets/bill_9564931.png";
 import tool from "../assets/tool-utensils_5790423.png";
@@ -38,7 +35,7 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
         <p className="text-center font-semibold ">Explore this topic</p>
       </div>
 
-      <div className="shadow-2xl items-center justify-center p-4 border border-gray-300 rounded-lg xl:mb-0 lg:mb-0 bg-blue-900">
+      <div className="shadow-2xl items-center justify-center p-4 xl:mb-0 lg:mb-0">
         <div className="flex flex-wrap max-h-[550px] lg:max-h-none xl:max-h-none mb-2 overflow-y-auto">
           <div className="flex flex-col items-center justify-center w-74 w-full  lg:w-[488.3%] md:w-[477.7%]">
             <div
@@ -73,15 +70,10 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
                 Approved expenses
               </div>
               <div className="collapse-content">
-                <h6 className=" text-lg font-serif">
-                  {categoryData.approvedDescription}
-                </h6>
+                <h6 className="">{categoryData.approvedDescription}</h6>
                 <ul className="mt-2">
                   {categoryData.approvedExamples.map((example, index) => (
-                    <li
-                      className="bg-blue-50 border p-2 rounded-lg m-1"
-                      key={index}
-                    >
+                    <li className="p-2 rounded-lg m-1" key={index}>
                       • {example}
                     </li>
                   ))}
