@@ -2,6 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
 import useScreenType from "../components/useSceenType";
+
 // Harald 240730: removing routing because desktop rebuild.
 /* import { useNavigate } from "react-router-dom"; */
 
@@ -45,6 +46,9 @@ function ListReceipts({ windowToDisplay }: Props) {
 
   // Harald 240730: removing routing because desktop rebuild.
   /*   const navigate = useNavigate(); */
+
+  //const { user } = useAuth0();
+
   const [filters, setFilters] = useState<requestType>({
     company: null,
     amountFrom: null,
