@@ -5,14 +5,12 @@ import mainImg from "../assets/mainBlue1.jpg";
 import short from "../assets/short.jpeg";
 import largeMain from "../assets/mainShort.jpg";
 import Footer from "../components/Footer";
-import Top_Nav from "../components/Top_Nav";
 
 const Home = () => {
   const { isAuthenticated } = useAuth0();
 
   return (
     <>
-    <Top_Nav/>
       <div className="hero  relative">
         <div
           className="absolute inset-0"
