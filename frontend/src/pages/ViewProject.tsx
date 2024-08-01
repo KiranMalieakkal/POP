@@ -126,7 +126,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
       }
     };
     fetchTaxCategories();
-  }, [projectData?.tax_category]);
+  }, [projectData?.tax_category, theToken]);
 
   if (!projectData || !projectData.receiptList) {
     return <div>Loading...</div>;
@@ -145,17 +145,17 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
         </h1> */}
         <button
           onClick={() => windowToDisplay({ window: "hideViewProject" })}
-          className="badge p-4 bg-blue-100 mt-5 ml-2 md:ml-2  lg:mt-2 xl:ml-5"
+          className="badge p-4 md: bg-blue-100 mt-5 ml-2 md:ml-2  lg:mt-2 xl:ml-5"
         >
           Close
         </button>
-        <h1 className="text-3xl font-bold mb-4 text-white text-center">
+        <h1 className="font-bold mb-4 text-white text-center text-xl md:text-xl md:mt-2 xl:text-3xl ">
           {projectData.title}
         </h1>
-        <h2 className="text-lg font-semibold text-center text-white">
+        <h2 className="text-md font-semibold text-center text-white lg:text-lg">
           {taxCategory?.title} category
         </h2>
-        <div className="bg-blue-100 p-9 rounded-lg  m-3 mt-4 flex justify-between items-center flex-col md:flex-row">
+        <div className="bg-blue-100 p-9 rounded-lg  m-3 mt-4 flex justify-between items-center flex-col xl:flex-row">
           <p className="text-blue-800 md:text-2xl font-bold pb-1 lg:text-lg xl:text-xl">
             💙 Total Deductible:
           </p>
@@ -186,13 +186,13 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
             <tbody className="bg-white divide-y divide-gray-200">
               {projectData.receiptList.map((receipt) => (
                 <tr key={receipt.id}>
-                  <td className="px-6 py-4 whitespace-nowrap font-semibold text-blue-900">
+                  <td className="px-1 py-4 whitespace-nowrap font-semibold text-blue-900 text-sm xl:px-5 xl:py-4">
                     {receipt.company}
                   </td>
-                  <td className="px-1 py-4 whitespace-nowrap ">
+                  <td className="px-1 py-4 whitespace-nowrap text-sm">
                     {receipt.purchaseDate}
                   </td>
-                  <td className="px-1 py-4 whitespace-nowrap ">
+                  <td className="px-1 py-4 whitespace-nowrap text-sm">
                     {receipt.amount.toFixed(2)} {receipt.currency}
                   </td>
                 </tr>
@@ -242,7 +242,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
         </div>
       </div>
 
-      <div className="shadow-2xl items-center justify-center p-4 border border-gray-300 rounded-lg bg-blue-900">
+      <div className="shadow-2xl items-center justify-center p-4 border border-gray-300 rounded-lg bg-blue-900 mb-16 md:mb-0">
         <h1 className="text-3xl text-white font-bold mb-1 text-center">
           Rules
         </h1>
@@ -268,7 +268,7 @@ const ViewProject = ({ windowToDisplay, projectId }: Props) => {
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 7-64 h-64 w-full lg:w-[44.8%] xl:w-[46.8%] md:w-[45.7%]">
-            <h2 className="text-4xl text-blue-300 font-bold mb-2 lg:text-md">5000+</h2>
+            <h2 className="text-4xl text-blue-300 font-bold mb-2 lg:text-md lg:text-xl">5000+</h2>
             <p className="text-center lg:text-sm">
               To qualify for deductions, the total improvement expenses in the
               calendar year must be at least 5,000 SEK.

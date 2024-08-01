@@ -95,9 +95,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
         },
       });
       const data = await response.json();
-      //console.log(data);
       setReceiptData(data);
-      console.log("iam here " + data);
     };
 
     fetchReceiptData();
@@ -222,41 +220,6 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
     ));
   };
 
-  // const handleDelete = async () => {
-  //   const confirmDelete = () => (
-  //     <div>
-  //       <p>Are you sure you want to delete this receipt?</p>
-  //       <button onClick={() => confirmDeleteAction(true)} className="btn">Yes</button>
-  //       <button onClick={() => confirmDeleteAction(false)} className="btn">No</button>
-  //     </div>
-  //   );
-
-  //   const confirmDeleteAction = async (confirmed: boolean) => {
-  //     if (confirmed) {
-  //       const response = await fetch(`${baseUrl2}/${id}`, {
-  //         method: "DELETE",
-  //       });
-  //       if (response.ok) {
-  //         toast.dismiss();
-  //         toast.success(`Receipt has been deleted successfully ♳.`);
-  //         setTimeout(() => {
-  //           setAlertMessage("");
-  //           navigate("/receipts");
-  //         }, 2000);
-  //       } else {
-  //         console.log("Failed to delete receipt.");
-  //       }
-  //     } else {
-  //       toast.dismiss();
-  //     }
-  //   };
-
-  //   toast.custom(confirmDelete, {
-  //     position: "top-center",
-  //     style: {border: "1px solid black", },
-  //   });
-  // };
-
   const handleBack = () => {
     setEditMode(false);
   };
@@ -264,9 +227,8 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   return (
     <>
       <div className="p-2 lg:p-5 lg:pt-2 max-w-4xl mx-auto pb-20 rounded-xl">
-        <div className="bg-white shadow-xl  top-shadow  lg:shadow-none rounded-lg p-5 flex flex-col">
+        <div className="bg-white shadow-xl top-shadow lg:shadow-none rounded-lg p-5 flex flex-col">
           <div className="pt-0 pr-6  pb-2">
-            {/* <a href="/receipts">← Go back</a> */}
             <button
               onClick={() => windowToDisplay({ window: "hideViewReceipt" })}
               className="badge p-4 bg-blue-100"
@@ -299,10 +261,10 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     name="company"
                     value={receiptData.company}
                     onChange={handleChange}
-                    className="input bg-slate-100 w-full"
+                    className="input bg-slate-200 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-slate-100">
+                  <div className="input input-bordered w-full flex items-center bg-slate-50">
                     <p className="w-full ">{receiptData.company}</p>
                   </div>
                 )}
@@ -316,10 +278,10 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       name="amount"
                       value={receiptData.amount}
                       onChange={handleChange}
-                      className="input bg-slate-100 w-full"
+                      className="input bg-slate-200 w-full"
                     />
                   ) : (
-                    <div className="input input-bordered w-full flex items-center bg-slate-100">
+                    <div className="input input-bordered w-full flex items-center bg-slate-50">
                       <p className=" ">{receiptData.amount}</p>
                     </div>
                   )}
@@ -334,7 +296,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                         list="existingCurrency"
                         id="currency"
                         name="currency"
-                        className="input w-full bg-slate-100"
+                        className="input w-full bg-slate-200"
                         value={receiptData.currency}
                         onChange={handleChange}
                         onFocus={() => setFocusedField("currency")}
@@ -353,7 +315,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       )}
                     </>
                   ) : (
-                    <div className="input input-bordered w-full flex items-center bg-slate-100">
+                    <div className="input input-bordered w-full flex items-center bg-slate-50">
                       <p className="">{receiptData.currency}</p>
                     </div>
                   )}
@@ -367,10 +329,10 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     name="purchaseDate"
                     value={receiptData.purchaseDate}
                     onChange={handleChange}
-                    className="input bg-slate-100 w-full"
+                    className="input bg-slate-200 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-slate-100">
+                  <div className="input input-bordered w-full flex items-center bg-slate-50">
                     <p className="">{receiptData.purchaseDate}</p>
                   </div>
                 )}
@@ -384,10 +346,10 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     name="textContent"
                     value={receiptData.textContent}
                     onChange={handleChange}
-                    className="textarea bg-slate-100 w-full h-40"
+                    className="textarea bg-slate-200 w-full h-40 word-spacing-2"
                   />
                 ) : (
-                  <div className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-slate-100 p-3 pl-5 ">
+                  <div className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-slate-50 p-3 pl-5 ">
                     {" "}
                     {/* w-full items-center rounded-lg border border-slate-300 p-3  */}
                     <p className="">{receiptData.textContent}</p>
@@ -403,7 +365,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       name="project"
                       value={receiptData.project ?? ""}
                       onChange={handleChange}
-                      className="input bg-slate-100 w-full"
+                      className="input bg-slate-200 w-full"
                       onFocus={() => setFocusedField("project")}
                       onBlur={() =>
                         setFocusedField(
@@ -420,7 +382,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     )}
                   </>
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-slate-100">
+                  <div className="input input-bordered w-full flex items-center bg-slate-50">
                     <p className="">{receiptData.project}</p>
                   </div>
                 )}
@@ -431,13 +393,13 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                 {editMode ? (
                   <>
                     <button
-                      className="btn badge-outline p-4 mr-3 mt-2 hover:text-blue-700"
+                      className="badge badge-outline p-4 mr-3 mt-2 hover:text-blue-700"
                       onClick={handleBack}
                     >
                       Cancel
                     </button>
                     <button
-                      className="btn badge-outline  mt-2 bg-blue-800 text-white hover:bg-blue-700 hover:text-white"
+                      className="badge p-4 badge-outline  mt-2 bg-blue-800 text-white hover:bg-blue-700 hover:text-white"
                       onClick={handleSave}
                     >
                       Save Changes
@@ -445,7 +407,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                   </>
                 ) : (
                   <button
-                    className="btn p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
+                    className="badge p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
                     onClick={handleEdit}
                   >
                     <svg
@@ -469,7 +431,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
               <div className="flex justify-end mt-6">
                 {!editMode && (
                   <button
-                    className="btn p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
+                    className="badge p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
                     onClick={handleDelete}
                   >
                     <svg

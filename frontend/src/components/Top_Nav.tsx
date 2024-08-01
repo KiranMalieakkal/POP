@@ -9,7 +9,7 @@ const Top_Nav = () => {
   }
   return (
     <>
-      <div className="navbar bg-blue-800">
+      <div className="navbar bg-blue-900">
         <div className="navbar-start w-20">
           <a className="text-2xl text-white flex mx-3">POP</a>
         </div>
