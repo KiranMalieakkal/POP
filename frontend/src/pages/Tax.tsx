@@ -190,7 +190,7 @@ function Tax({ windowToDisplay }: Props) {
         </h1>
 
         <div className="w-full p-4">
-          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto border-2 rounded-lg p-4">
+          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto  p-4">
             <table className="receipt-table w-full border-collapse ">
               <thead>
                 <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,0.2fr]">
@@ -198,7 +198,7 @@ function Tax({ windowToDisplay }: Props) {
                     Project
                   </th>
                   <th className="p-2 border-b-2 border-black text-left text-lg">
-                    Tax Category
+                    Tax type
                   </th>
                   <th className="p-2 border-b-2 border-black text-left text-lg">
                     Deductible
