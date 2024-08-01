@@ -236,6 +236,7 @@ function AddReceipt({ windowToDisplay }: Props) {
             <input
               type="file"
               id="fileInput"
+              required
               className="w-full absolute inset-0 opacity-0 cursor-pointer"
               onChange={handleFileChange}
             />
@@ -274,6 +275,7 @@ function AddReceipt({ windowToDisplay }: Props) {
                 step="0.01"
                 id="amount"
                 name="amount"
+                required
                 className="input w-full bg-slate-100"
                 value={formData.amount}
                 onChange={handleChange}
@@ -286,6 +288,7 @@ function AddReceipt({ windowToDisplay }: Props) {
                 list="existingCurrency"
                 id="currency"
                 name="currency"
+                autoComplete="off"
                 className="input w-full bg-slate-100"
                 value={formData.currency}
                 onChange={handleChange}
@@ -314,6 +317,7 @@ function AddReceipt({ windowToDisplay }: Props) {
             type="date"
             id="date"
             name="purchaseDate"
+            required
             className="input w-full bg-slate-100"
             value={formData.purchaseDate}
             onChange={handleChange}
@@ -339,6 +343,7 @@ function AddReceipt({ windowToDisplay }: Props) {
               list="existingProjects"
               id="project"
               name="project"
+              autoComplete="off"
               className="input w-full bg-slate-100"
               value={formData.project}
               onChange={handleChange}

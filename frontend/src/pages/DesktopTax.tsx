@@ -56,8 +56,6 @@ function DesktopTax() {
 
   return (
     <>
-      {/* {!isMobile && <Top_Nav />} */}
-
       <div className={`main_container ${isMobile ? "" : "grid grid-cols-2"}`}>
         {showTax && (
           <div className="left_side">
@@ -83,13 +81,12 @@ function DesktopTax() {
             </div>
           </div>
         )}
-        {!showSelectTaxCategory && !showViewProject && (
-          <div className="right_side  text-center mt-20 flex justify-center">
+        {!showSelectTaxCategory && !showViewProject && !isMobile && (
+          <div className="right_side text-center mt-20 flex justify-center">
             <TaxGuide />
           </div>
         )}
       </div>
-      {/* {isMobile && <BottomNav />} */}
     </>
   );
 }

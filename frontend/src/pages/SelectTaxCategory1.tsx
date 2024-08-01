@@ -15,7 +15,7 @@ type Props = {
 function SelectTaxCategory1({ openTaxCategory }: Props) {
   return (
     <>
-      <div className="flex flex-col text-center max-w-screen-sm mx-auto">
+      <div className="flex flex-col text-center  mx-auto">
         <div className="flex flex-col m-5">
           <h1 className="text-4xl">Select a topic</h1>
           <p>Let's find the right deduction for you</p>

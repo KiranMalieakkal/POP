@@ -10,7 +10,7 @@ spring:
           # In others it's prohibited!
           # Make sure you double check your case
           issuer-uri: ${ISSUER_URI}
-#          audiences: ${AUDIENCE}
+  #          audiences: ${AUDIENCE}
 
   application:
     name: pop
@@ -22,9 +22,9 @@ spring:
 
   datasource:
     url: ${DATABASE_URL}
-#    username: ${DATABASE_USERNAME}
-#    password: ${DATABASE_PASSWORD}
-#    driver-class-name: org.postgresql.Driver
+    #    username: ${DATABASE_USERNAME}
+    #    password: ${DATABASE_PASSWORD}
+    #    driver-class-name: org.postgresql.Driver
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     defer-datasource-initialization: true
@@ -32,13 +32,13 @@ spring:
       ddl-auto: update
     show-sql: true
     properties:
-        dialect: org.hibernate.dialect.SQLServerDialect
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
+      dialect: org.hibernate.dialect.SQLServerDialect
+  #        dialect: org.hibernate.dialect.PostgreSQLDialect
   sql:
     init:
-#      mode: always
+      #      mode: always
       platform: mssql
-#      platform: postgresql
+  #      platform: postgresql
   cloud:
     azure:
       storage:
