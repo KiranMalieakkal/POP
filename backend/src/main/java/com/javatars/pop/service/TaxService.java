@@ -70,7 +70,6 @@ public class TaxService {
         return projects;
     }
 
-    
     public TaxCategory getTaxCategoryById(Long id) {
             return taxRepo.getTaxById(id);
         }
