@@ -1,6 +1,8 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useEffect, useState } from "react";
+import useScreenType from "../components/useSceenType";
+
 // Harald 240730: removing routing because desktop rebuild.
 // import { useNavigate } from "react-router-dom";
 
@@ -37,6 +39,8 @@ function ListReceipts({ windowToDisplay }: Props) {
   const [receipts, setReceipts] = useState<receiptsType>([]);
   const [filteredReceipts, setFilteredReceipts] = useState<receiptsType>([]);
   const [showFilter, setShowFilter] = useState(false);
+  //const { user } = useAuth0();
+  const { isMobile } = useScreenType();
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [theToken, setTheToken] = useState<string>();
 
@@ -195,10 +199,10 @@ function ListReceipts({ windowToDisplay }: Props) {
 
   return (
     <>
-      <div className="mb-20">
+      <div className={`h-screen ${isMobile ? "mt-5" : "ml-5 mt-10"}`}>
         {/* <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1> */}
-        <div className="flex justify-center items-center">
-          <div className="input input-bordered flex items-center gap-2 md:w-1/3 lg:w-1/3 w-1/2 m-4">
+        <div className="flex justify-center items-center  mr-5">
+          <div className="input flex items-center gap-2 w-full mx-5 bg-slate-100">
             <input
               type="text"
               value={search}
@@ -243,7 +247,7 @@ function ListReceipts({ windowToDisplay }: Props) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center mb-4">
                 <label htmlFor="company" className="mr-2">
-                  Company:
+                  Company
                 </label>
                 <input
                   id="company"
@@ -252,13 +256,13 @@ function ListReceipts({ windowToDisplay }: Props) {
                   value={filters.company !== null ? filters.company : ""}
                   onChange={handleFilterChange}
                   placeholder="Company"
-                  className="input input-bordered w-full"
+                  className="input w-full bg-slate-100"
                 />
               </div>
 
               <div className="flex items-center mb-4">
                 <label htmlFor="amountFrom" className="mr-2">
-                  Amount From:
+                  Amount From
                 </label>
                 <input
                   id="amountFrom"
@@ -267,13 +271,13 @@ function ListReceipts({ windowToDisplay }: Props) {
                   value={filters.amountFrom !== null ? filters.amountFrom : ""}
                   onChange={handleFilterChange}
                   placeholder="Amount From"
-                  className="input input-bordered w-full"
+                  className="input w-full bg-slate-100"
                 />
               </div>
 
               <div className="flex items-center mb-4">
                 <label htmlFor="amountTo" className="mr-2">
-                  Amount To:
+                  Amount To
                 </label>
                 <input
                   id="amountTo"
@@ -282,13 +286,13 @@ function ListReceipts({ windowToDisplay }: Props) {
                   value={filters.amountTo !== null ? filters.amountTo : ""}
                   onChange={handleFilterChange}
                   placeholder="Amount To"
-                  className="input input-bordered w-full"
+                  className="input w-full bg-slate-100"
                 />
               </div>
 
               <div className="flex items-center mb-4">
                 <label htmlFor="currency" className="mr-2">
-                  Currency:
+                  Currency
                 </label>
                 <input
                   id="currency"
@@ -297,13 +301,13 @@ function ListReceipts({ windowToDisplay }: Props) {
                   value={filters.currency !== null ? filters.currency : ""}
                   onChange={handleFilterChange}
                   placeholder="Currency"
-                  className="input input-bordered w-full"
+                  className="input w-full bg-slate-100"
                 />
               </div>
 
               <div className="flex items-center mb-4">
                 <label htmlFor="dateFrom" className="mr-2">
-                  Date From:
+                  Date From
                 </label>
                 <input
                   id="dateFrom"
@@ -312,13 +316,13 @@ function ListReceipts({ windowToDisplay }: Props) {
                   value={filters.dateFrom !== null ? filters.dateFrom : ""}
                   onChange={handleFilterChange}
                   placeholder="Date From"
-                  className="input input-bordered w-full"
+                  className="input w-full bg-slate-100"
                 />
               </div>
 
               <div className="flex items-center mb-4">
                 <label htmlFor="dateTo" className="mr-2">
-                  Date To:
+                  Date To
                 </label>
                 <input
                   id="dateTo"
@@ -327,13 +331,13 @@ function ListReceipts({ windowToDisplay }: Props) {
                   value={filters.dateTo !== null ? filters.dateTo : ""}
                   onChange={handleFilterChange}
                   placeholder="Date To"
-                  className="input input-bordered w-full"
+                  className="input w-full bg-slate-100"
                 />
               </div>
 
               <div className="flex items-center mb-4">
                 <label htmlFor="project" className="mr-2">
-                  Project:
+                  Project
                 </label>
                 <input
                   id="project"
@@ -342,13 +346,13 @@ function ListReceipts({ windowToDisplay }: Props) {
                   value={filters.project !== null ? filters.project : ""}
                   onChange={handleFilterChange}
                   placeholder="Project"
-                  className="input input-bordered w-full"
+                  className="input w-full bg-slate-100"
                 />
               </div>
 
               <div className="flex items-center mb-4">
                 <label htmlFor="category" className="mr-2">
-                  Category:
+                  Category
                 </label>
                 <input
                   id="category"
@@ -357,7 +361,7 @@ function ListReceipts({ windowToDisplay }: Props) {
                   value={filters.category !== null ? filters.category : ""}
                   onChange={handleFilterChange}
                   placeholder="Category"
-                  className="input input-bordered w-full"
+                  className="input w-full bg-slate-100"
                 />
               </div>
             </div>
@@ -385,8 +389,8 @@ function ListReceipts({ windowToDisplay }: Props) {
           ""
         )}
         <div className="w-full p-4 ">
-          <div className="max-h-[350px] hover:h-full overflow-y-auto border-2 rounded-lg p-4 relative ">
-            <table className="receipt-table w-full border-collapse">
+          <div className=" hover:h-full overflow-y-auto rounded-lg relative ">
+            <table className="receipt-table w-full border-collapse mb-36">
               <thead className=" ">
                 <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,1fr] ">
                   {/* <th className="p-2 border-b-2 border-black text-left">
@@ -458,13 +462,23 @@ function ListReceipts({ windowToDisplay }: Props) {
             </p>
           </div>
         )}
-        <div className="flex justify-center items-center  ">
-          <button
-            className="btn bg-blue-800 btn-primary text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6 mt-2"
-            onClick={() => windowToDisplay({ window: "AddReceipt" })}
-          >
-            Add Receipt
-          </button>
+        <div className="">
+          {!showFilter && (
+            <div
+              className={`fixed bg-gradient-to-t from-white flex justify-center ${
+                isMobile ? "w-full bottom-20" : "w-1/2 bottom-0"
+              }`}
+            >
+              <button
+                className={`m-5 btn bg-blue-800 btn-primary text-white md:w-1/3 lg:w-1/3 w-1/2 ${
+                  isMobile ? "" : ""
+                }`}
+                onClick={() => windowToDisplay({ window: "AddReceipt" })}
+              >
+                Add Receipt
+              </button>
+            </div>
+          )}
         </div>
         {fetchError && (
           <p className="text-red-500 break-words whitespace-normal text-center">{`Sorry, we are unable to retrieve your data. Please try again later. ERROR MESSAGE - ${fetchErrorLog}`}</p>

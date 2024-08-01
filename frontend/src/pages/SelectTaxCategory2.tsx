@@ -38,9 +38,9 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
         <p className="text-center font-semibold ">Explore this topic</p>
       </div>
 
-      <div className="shadow-2xl items-center justify-center p-4 border border-gray-300 rounded-lg mb-24 bg-blue-900">
+      <div className="items-center justify-center p-4 mb-24">
         <div className="flex flex-wrap max-h-[550px] lg:max-h-none xl:max-h-none mb-2 overflow-y-auto">
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 w-full  lg:w-[488.3%] md:w-[477.7%]">
+          <div className="flex flex-col items-center justify-center w-74 w-full  lg:w-[488.3%] md:w-[477.7%]">
             <div
               tabIndex={0}
               className="collapse collapse-plus border-base-300 bg-base-200 border"
@@ -53,7 +53,7 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 w-full  lg:w-[488.3%] md:w-[477.7%]">
+          <div className="flex flex-col items-center justify-center w-74 w-full my-5 lg:w-[488.3%] md:w-[477.7%]">
             <div
               tabIndex={0}
               className="collapse collapse-plus border-base-300 bg-base-200 border"
@@ -64,10 +64,10 @@ const SelectTaxCategory2 = ({ taxCategory }: Props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center p-5 border bg-gray-100 rounded-lg m-2 w-74 w-full lg:w-[488.3%] md:w-[477.7%]">
+          <div className="flex flex-col items-center justify-center w-74 w-full lg:w-[488.3%] md:w-[477.7%]">
             <div
               tabIndex={0}
-              className="collapse collapse-plus border-base-300 border"
+              className="collapse collapse-plus border-base-300 border  bg-gray-100"
             >
               <div className="collapse-title text-xl font-medium">
                 Approved expenses

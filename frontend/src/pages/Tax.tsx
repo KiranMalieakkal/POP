@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 // Harald 240730: removing routing because desktop rebuild.
 /* import { useNavigate } from "react-router-dom"; */
 import toast, { Toaster } from "react-hot-toast";
+import useScreenType from "../components/useSceenType";
 // import projectData from "../assets/projectData";
 
 export type requestType = {
@@ -52,6 +53,7 @@ type Props = {
 };
 
 function Tax({ windowToDisplay }: Props) {
+  const { isMobile } = useScreenType();
   const [fetchErrorLog, setfetchErrorLog] = useState("");
   const [taxCategories, setTaxCategories] = useState([]);
   // Harald 240730: removing routing because desktop rebuild.
@@ -179,8 +181,11 @@ function Tax({ windowToDisplay }: Props) {
 
   return (
     <>
-      <div className="mb-20">
-        {/* <h1 className="text-center mt-4 font-extrabold">TAX</h1> */}
+      <div className="">
+        <h1 className="text-center mt-4">
+          Here are your current tax projects. Select a project or create a new
+          project.
+        </h1>
 
         <div className="w-full p-4">
           <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto border-2 rounded-lg p-4">
@@ -255,7 +260,9 @@ function Tax({ windowToDisplay }: Props) {
         )}
         <div className="flex justify-center items-center">
           <button
-            className="btn bg-blue-800 text-white md:w-1/3 lg:w-1/3 w-1/2 mb-6"
+            className={`fixed m-5 btn bg-blue-800 btn-primary text-white md:w-1/3 lg:w-1/3 w-1/2 ${
+              isMobile ? "bottom-20" : "bottom-0"
+            }`}
             onClick={() => windowToDisplay({ window: "SelectTaxCategory" })}
           >
             Add Tax Project
