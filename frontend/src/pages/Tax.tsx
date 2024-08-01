@@ -104,6 +104,7 @@ function Tax({ windowToDisplay }: Props) {
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["fetch3"] });
+      queryClient.invalidateQueries({ queryKey: ["fetch4"] });
     },
   });
 
@@ -272,7 +273,7 @@ function Tax({ windowToDisplay }: Props) {
           <p className="text-red-500 break-words whitespace-normal text-center">{`Sorry, we are unable to retrieve your data. Please try again later. ERROR MESSAGE - ${fetchErrorLog}`}</p>
         )}
         {deleteStatus && (
-          <p className="text-red-500 break-words whitespace-normal">{`Loading...`}</p>
+          <p className="text-blue-800 break-words whitespace-normal text-center">{`Loading...`}</p>
         )}
         {deleteErrorDisplay && (
           <p className="text-red-500 break-words whitespace-normal">{`Sorry, Delete did not work. Please try again later. ${deleteError}`}</p>
