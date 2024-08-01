@@ -72,7 +72,6 @@ function AddReceipt({ windowToDisplay }: Props) {
       ...formData,
       [name]: value,
     });
-    console.log("THIS SHOULD SET THE PROJECT: " + formData.project);
   };
 
   // -------------------------------------------------------------------------------------
@@ -174,8 +173,6 @@ function AddReceipt({ windowToDisplay }: Props) {
   const submitForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("1  project: " + formData.project);
-
     // Construct form data to send
     // Check if a file has been selected
     if (!file) {
@@ -199,42 +196,16 @@ function AddReceipt({ windowToDisplay }: Props) {
     // Comment: we send both the payload (formData) AND a boolean. The boolean controls whether we
     // send the request to the endpoint "withproject" or without project.
     // This is not RESTful and should be handled on the backend, but it isn't...
-    console.log("2  project: " + formData.project);
     const objectToSendToTanstack = {
       formData: formDataToSend,
       hasProject: formData.project ? true : false,
     };
-    console.log("3  project: " + formData.project);
 
-    console.log("the boolean is: " + objectToSendToTanstack.hasProject);
+    // Here we call the tanstack query function
     postReceipt(objectToSendToTanstack);
-
-    // I probably have to send an object instead of two parameters just like i do with the
-
-    /*     try {
-      const response = await fetch(
-        formData.project
-          ? "http://localhost:8080/api/receipts/with-project"
-          : "http://localhost:8080/api/receipts",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${theToken}`,
-          },
-          body: formDataToSend,
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      windowToDisplay({ window: "hideAddReceipt" });
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    } */
   };
   // -------------------------------------------------------------------------------------
-  // TANSTACK REBUILD FOR SUBMIT
+  // This is a tanstack query which does the post to our backend. But the function is called earlier.
   const queryClient = useQueryClient();
   const { mutate: postReceipt } = useMutation<
     unknown,
@@ -266,12 +237,6 @@ function AddReceipt({ windowToDisplay }: Props) {
   });
 
   // -------------------------------------------------------------------------------------
-  // Navigates back to the ReceiptsLists component
-  // Harald 240730: removing routing because desktop rebuild.
-  /* function handleClick() {
-    navigate(-1);
-  } */
-
   return (
     <>
       <div className="size-full">
