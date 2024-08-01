@@ -2,15 +2,15 @@ function ReceiptGuide() {
   return (
     <>
       <div className="text-gray-400 px-5 max-w-md">
-        <p className="pb-2">Guide</p>
+        <p className="pb-2">Get started with receipts</p>
         <p className="text-left  pb-5">
-          Receipt text to guide the user. We can talk about how things are done.
-          What features are available and show some nice soft icons.
+          This is where all your receipts live. Start by clicking the blue
+          button. Add and categorize as much as you want.
         </p>
-        <p className="py-2">Features</p>
+        <p className="py-2">Tip</p>
         <p className="text-left pb-5">
-          Text to guide the user. We can talk about how things are done. What
-          features are available and show some nice soft icons.
+          When you're ready for something more advanced, feel free to check out
+          the tax section. It's not as scary as it sounds.
         </p>
         <p className="underline">contact us</p>
       </div>
