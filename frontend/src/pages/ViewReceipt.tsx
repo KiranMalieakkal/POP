@@ -91,7 +91,28 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
     onSuccess: () => {
       setEditMode(false);
       queryClient.invalidateQueries({ queryKey: ["fetch2"] });
-      toast.success("Changes saved successfully 🎉");
+      // toast.success("Changes saved successfully 🎉");
+    },
+  });
+
+  const { mutate: deleteReceipt, error: deleteError } = useMutation<
+    unknown,
+    Error,
+    unknown
+  >({
+    mutationFn: (id) =>
+      fetch(`${baseUrl}/receipts/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${theToken}`,
+        },
+      }),
+    onSuccess: () => {
+      setEditMode(false);
+      console.log("deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["fetch2"] });
+      // toast.success("Receipt deleted successfully 🎉");
+      windowToDisplay({ window: "hideViewReceipt" });
     },
   });
 
@@ -112,13 +133,19 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
 
   useEffect(() => {
     if (patchError) {
-      // setPatchErrorDisplay(true);
-      toast.error("Please try again");
-      // setTimeout(() => {
-      //   setPatchErrorDisplay(false);
-      // }, 2000);
+      setTimeout(() => {
+        toast.error("Please try again");
+      }, 2000);
     }
   }, [patchError]);
+
+  useEffect(() => {
+    if (deleteError) {
+      setTimeout(() => {
+        toast.error("Delete Failed. Please try again");
+      }, 2000);
+    }
+  }, [deleteError]);
 
   useEffect(() => {
     if (!theToken) return;
@@ -212,17 +239,19 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
           <button
             className="bg-red-500 text-white py-1 px-3 rounded-lg text-sm mr-2"
             onClick={() => {
-              fetch(`${baseUrl}/receipts/${id}`, {
-                method: "DELETE",
-                headers: {
-                  Authorization: `Bearer ${theToken}`,
-                },
-              }).then((response) => {
-                if (!response.ok) {
-                  throw new Error(`Error Status: ${response.status}`);
-                } else windowToDisplay({ window: "hideViewReceipt" });
-                toast.dismiss(t.id);
-              });
+              // fetch(`${baseUrl}/receipts/${id}`, {
+              //   method: "DELETE",
+              //   headers: {
+              //     Authorization: `Bearer ${theToken}`,
+              //   },
+              // }).then((response) => {
+              //   if (!response.ok) {
+              //     throw new Error(`Error Status: ${response.status}`);
+              //   } else windowToDisplay({ window: "hideViewReceipt" });
+              //   toast.dismiss(t.id);
+              // });
+              deleteReceipt(id);
+              toast.dismiss(t.id);
             }}
           >
             Yes
