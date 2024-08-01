@@ -62,7 +62,9 @@ function DesktopListReceipts() {
         {(showAddReceipt || showViewReceipt) && (
           <div className="right_side md:px-40  md:pt-10 lg:px-20">
             <div
-              className={`${isMobile ? "" : "border border-black rounded-2xl"}`}
+              className={`${
+                isMobile ? "mb-16" : "border border-black rounded-2xl"
+              }`}
             >
               {showAddReceipt && (
                 <AddReceipt windowToDisplay={windowToDisplay} />

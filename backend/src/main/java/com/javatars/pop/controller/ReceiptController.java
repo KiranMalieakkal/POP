@@ -162,14 +162,26 @@ public class ReceiptController {
             receipt.setCurrency(updatedReceipt.currency());
             receipt.setPurchaseDate(updatedReceipt.purchaseDate());
 
-            Project project = receiptService.findProjectByTitle(updatedReceipt.project());
-            if (project == null) {
-                projectService.createProject(receipt.getUser().getEmail(), updatedReceipt.project());
+            if(updatedReceipt.project().isEmpty()) {
+                Project project = receipt.getProject();
+                if(project != null ) {
+                    project.deleteReceipt(receipt);
+                    projectService.save(receipt.getProject());
+                    receipt.setProject(null);
+                };
+            } else {
+                Project project = receiptService.findProjectByTitle(updatedReceipt.project());
+                if (project == null) {
+                    project = projectService.createProject(receipt.getUser().getEmail(), updatedReceipt.project());
+                }
+                receipt.setProject(project);
+                project.addReceipt(receipt);
+                projectService.save(project);
             }
-            receipt.setProject(project);
 //            Category category = receiptService.findCategoryByTitle(updatedReceipt.category());
 //            receipt.setCategory(category);
             Receipt updated = receiptService.save(receipt);
+
             return ResponseEntity.ok(updated.getDtoOut());
         } else {
             return ResponseEntity.notFound().build();
