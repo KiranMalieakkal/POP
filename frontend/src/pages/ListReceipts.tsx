@@ -140,7 +140,8 @@ function ListReceipts({ windowToDisplay }: Props) {
         return (
           receipt.company.toLowerCase().includes(search.toLowerCase()) ||
           receipt.textContent.toLowerCase().includes(search.toLowerCase()) ||
-          receipt.purchaseDate.toLowerCase().includes(search.toLowerCase())
+          receipt.purchaseDate.toLowerCase().includes(search.toLowerCase()) ||
+          (receipt.project?.toLowerCase() || "").includes(search.toLowerCase())
         );
       })
     );
