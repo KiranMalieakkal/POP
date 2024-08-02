@@ -15,7 +15,7 @@ const Top_Nav = () => {
           className={({ isActive }) =>
             `flex items-center h-full px-4 ${
               isActive
-                ? "text-blue-300 border-t-8 border-blue-300"
+                ? "text-blue-300 border-t-8 border-blue-200"
                 : "text-white hover:text-blue-300"
             }`
           }
@@ -27,7 +27,7 @@ const Top_Nav = () => {
           className={({ isActive }) =>
             `flex items-center h-full px-4 ${
               isActive
-                ? "text-blue-300 border-t-8 border-blue-300"
+                ? "text-blue-300 border-t-8 border-blue-200"
                 : "text-white hover:text-blue-300"
             }`
           }
@@ -39,7 +39,7 @@ const Top_Nav = () => {
           className={({ isActive }) =>
             `flex items-center h-full px-4 ${
               isActive
-                ? "text-blue-300 border-t-8 border-blue-300"
+                ? "text-blue-300 border-t-8 border-blue-200"
                 : "text-white hover:text-blue-300"
             }`
           }
@@ -51,7 +51,7 @@ const Top_Nav = () => {
           className={({ isActive }) =>
             `flex items-center h-full px-4 ${
               isActive
-                ? "text-blue-300 border-t-8 border-blue-300"
+                ? "text-blue-300 border-t-8 border-blue-200"
                 : "text-white hover:text-blue-300"
             }`
           }
