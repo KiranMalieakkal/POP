@@ -6,7 +6,7 @@ import short from "../assets/short.jpeg";
 import largeMain from "../assets/mainShort.jpg";
 import Footer from "../components/Footer";
 
-/* import popLogo from "../assets/pop-logo-white.svg"; */
+ import popLogo from "../assets/pop-logo-white.svg"; 
 
 const Home = () => {
   const { isAuthenticated } = useAuth0();
@@ -20,21 +20,20 @@ const Home = () => {
             backgroundImage: `url(${isAuthenticated ? loginImg : mainImg})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            filter: "brightness(50%)",
+            filter: "brightness(90%)",
           }}
         ></div>
 
         <div className="flex flex-col md:flex-row lg:flex-row items-center h-full relative">
-          {/* max-h-[90vh] */}
           <div className="flex-1 flex items-center justify-center h-full px-4 ml-0 md:ml-6 ">
             <img
               src={short}
-              alt="Central Image"
+              alt="short Image"
               className="h-full w-full object-cover block md:hidden"
             />
             <img
               src={largeMain}
-              alt="Central Image"
+              alt="large Image"
               className="h-full w-full object-cover hidden md:block "
             />
           </div>
@@ -42,24 +41,26 @@ const Home = () => {
             <img src={popLogo} alt="P.O.P. logotype" />
           </div> */}
           <div className="">
-            <h1 className="text-center text-3xl md:text-2xl lg:text-5xl lg:mb-4 md:mb-3 mt-2 text-white ">
-              Proof Of Purchase
+          <div className=" flex items-center justify-center p-4">
+                <img className=" w-12 h-12  xl:mb-20  lg:mb-14 " src={popLogo} alt="P.O.P. logotype" />
+                <h1 className="text-center text-3xl md:text-2xl lg:text-3xl xl:text-5xl xl:mb-20 lg:mb-14 font-serif md:mb-3 mt-2 text-yellow-200 ml-2">
+              Proof Of Purchase{" "}
             </h1>
-
-            <div className="flex-1 flex items-center justify-center py-7 mt-1 md:py-7 lg:py-10 md:px-5 px-3 lg:px-1 mr-7 m-7 xl:ml-16 bg-white bg-opacity-55 rounded-lg shadow-lg md:max-w-sm xl:max-w-2xl">
+              </div>
+            <div className="flex-1 flex items-center justify-center py-7 mt-1 md:py-7 lg:py-10 md:px-5 px-3 lg:px-1 mr-7 m-7 xl:ml-16 bg-white bg-opacity-65 rounded-lg shadow-lg md:max-w-sm xl:max-w-2xl">
               <div className="text-center">
                 {isAuthenticated ? (
                   <>
-                    <h3 className="mb-1 text-xl font-bold lg:p-1 md:text-xl lg:text-3xl ">
+                    <h3 className="mb-1 text-xl font-bold lg:p-1 md:text-xl lg:text-2xl ">
                       POP is here to help you stay on top of your finances
                       effortlessly
                     </h3>
-                    <p className="mb-5 text-sm p-2 lg:text-lg">
+                    <p className=" text-sm p-2 lg:text-lg">
                       Let us handle the details, making it easy for you to
                       manage receipts, view them anytime and ensure you have all
                       receipts handy to benefit from potential deductions!
                     </p>
-                    <p className="text-lg font-semibold border rounded-lg p-2 lg:mx-3">
+                    <p className="text-lg font-semibold p-2 lg:mx-3 ">
                       Enjoy having everything in order!
                     </p>
                   </>
@@ -68,11 +69,11 @@ const Home = () => {
                     <h3 className="mb-1 text-xl font-bold lg:p-1 md:text-xl lg:text-3xl ">
                       Now you can upload and categorize your receipt anywhere.
                     </h3>
-                    <p className="mb-5 text-sm p-2 lg:text-lg">
+                    <p className=" text-sm p-2 lg:text-lg">
                       Our app allows you to store all your receipts in one
                       place, making it simple to track your expenses.
                     </p>
-                    <div className="bg-blue-400 text-white font-bold py-2 px-4 rounded-md text-center mx-10 bg-opacity-55">
+                    <div className=" text-blue-900 font-bold py-2 px-4 rounded-md text-center mx-10">
                       <p>POP Always!</p>
                     </div>
                   </>
@@ -90,7 +91,9 @@ const Home = () => {
             className="md:max-w-sm max-w-auto rounded-full h-48 w-48 object-cover"
           />
           <div className="text-center">
-            <h1 className="text-5xl font-bold">Turn paper into a digital file.</h1>
+            <h1 className="text-5xl font-bold">
+              Turn paper into a digital file.
+            </h1>
             <p className="py-6">
               Prepare for tax season with ease by utilizing our app to complete
               the tax reduction form. Our app helps you keep track of your
@@ -111,11 +114,11 @@ const Home = () => {
               AI cleans up your scans in seconds.
             </h1>
             <p className="py-6">
-              Scan your receipt and turn it into an editable, OCR (optical character
-              recognition) corrects image perspective, sharpens handwritten or
-              printed text, and removes glares and shadows. Once your receipt is
-              scanned, you can delete text or add new text to match your
-              original font.
+              Scan your receipt and turn it into an editable, OCR (optical
+              character recognition) corrects image perspective, sharpens
+              handwritten or printed text, and removes glares and shadows. Once
+              your receipt is scanned, you can delete text or add new text to
+              match your original font.
             </p>
           </div>
         </div>
@@ -149,7 +152,7 @@ const Home = () => {
             </figure>
             <div className="card-body text-center">
               <h2 className="card-title self-center">Life hack</h2>
-              <p >
+              <p>
                 Our app provides a seamless solution for organizing, storing,
                 and accessing your receipts.
               </p>
@@ -158,7 +161,7 @@ const Home = () => {
         </div>
       </div>
       <div className="btm-nav border-transparent text-current btm-nav-lg bg-blue-100 shadow-sky-600 w-auto">
-        {isAuthenticated ? <Footer/> : <LoginButton />}
+        {isAuthenticated ? <Footer /> : <LoginButton />}
       </div>
     </>
   );

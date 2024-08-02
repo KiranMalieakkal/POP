@@ -2,10 +2,10 @@
 const Footer = () => {
   return (
     <>
-      <footer className="footer bg-white text-black items-center py-1 px-4 flex flex-col md:flex-row md:justify-between">
+      <footer className="footer bg-white text-blue-900 items-center py-1 px-7 flex flex-col md:flex-row md:justify-between">
   <aside className="grid-flow-col items-center">
     
-    <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
+    <p className="text-black">Copyright © {new Date().getFullYear()} - All right reserved</p>
   </aside>
   <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
     <a>
