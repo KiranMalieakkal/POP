@@ -393,7 +393,7 @@ function ListReceipts({ windowToDisplay }: Props) {
           <div className=" hover:h-full overflow-y-auto rounded-lg relative ">
             <table className="receipt-table w-full border-collapse mb-36">
               <thead className=" ">
-                <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,1fr] ">
+                <tr className=" text-blue-900 grid grid-cols-[1fr,1fr,1fr,1fr] ">
                   {/* <th className="p-2 border-b-2 border-black text-left">
                     <label>
                       <input
@@ -423,7 +423,7 @@ function ListReceipts({ windowToDisplay }: Props) {
                       handleViewReceipt(receipt);
                     }}
                     key={receipt.id}
-                    className="hover:bg-gray-100 hover:cursor-pointer transition-transform transform hover:scale-[1.01] grid grid-cols-[1fr,1fr,1fr,1fr]"
+                    className="hover:bg-gray-100 hover:cursor-pointer  grid grid-cols-[1fr,1fr,1fr,1fr]"
                   >
                     {/* <th>
                       <label>

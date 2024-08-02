@@ -184,21 +184,21 @@ function Tax({ windowToDisplay }: Props) {
   return (
     <>
       <div className="">
-        <h1 className="text-center mt-4">
+        {/* <h1 className="text-center mt-4">
           Here are your current tax projects. Select a project or create a new
           project.
-        </h1>
+        </h1> */}
 
         <div className="w-full p-4">
-          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto border-2 rounded-lg p-4">
+          <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto  p-4">
             <table className="receipt-table w-full border-collapse ">
               <thead>
-                <tr className=" text-black grid grid-cols-[1fr,1fr,1fr,0.2fr]">
+                <tr className=" text-blue-900 grid grid-cols-[1fr,1fr,1fr,0.2fr]">
                   <th className="p-2 border-b-2 border-black text-left text-lg">
                     Project
                   </th>
                   <th className="p-2 border-b-2 border-black text-left text-lg">
-                    Tax Category
+                    Tax type
                   </th>
                   <th className="p-2 border-b-2 border-black text-left text-lg">
                     Deductible
@@ -214,7 +214,7 @@ function Tax({ windowToDisplay }: Props) {
                         handleClick(project);
                       }}
                       key={project.id}
-                      className="hover:bg-gray-100 hover:cursor-pointer transition-transform transform hover:scale-[1.01] grid grid-cols-[1fr,1fr,1fr,0.2fr]"
+                      className="hover:bg-gray-100 hover:cursor-pointer grid grid-cols-[1fr,1fr,1fr,0.2fr]"
                     >
                       <td className="p-2 border-b border-gray-300 text-left">
                         {project?.title}
