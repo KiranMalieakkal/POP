@@ -204,7 +204,7 @@ function ListReceipts({ windowToDisplay }: Props) {
       <div className={`h-screen ${isMobile ? "mt-5" : "ml-5 mt-10"}`}>
         {/* <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1> */}
         <div className="flex justify-center items-center  mr-5">
-          <div className="input flex items-center gap-2 w-full mx-5 bg-slate-100">
+          <div className="input flex items-center gap-2 w-full mx-5 shadow-[0_0_7px_1px_rgba(0,0,0,0.3)]">
             <input
               type="text"
               value={search}
@@ -225,15 +225,17 @@ function ListReceipts({ windowToDisplay }: Props) {
               />
             </svg>
           </div>
-          <div className="border-black border-inherit rounded ">
+          <div className="border-black border-inherit rounded">
             <svg
               onClick={() => setShowFilter(!showFilter)}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-10 hover:bg-gray-300 hover:cursor-pointer"
+              viewBox="-4 -4 32 32"
+              strokeWidth={1}
+              stroke={`${showFilter ? "white" : "gray"}`}
+              className={`size-10 rounded hover:cursor-pointer ${
+                showFilter ? "bg-blue-800" : ""
+              }`}
             >
               <path
                 strokeLinecap="round"
@@ -245,7 +247,7 @@ function ListReceipts({ windowToDisplay }: Props) {
         </div>
 
         {showFilter && (
-          <div className="p-4 border-2 rounded-lg m-4">
+          <div className="p-4 rounded-lg m-4 shadow-[0_0_7px_1px_rgba(0,0,0,0.3)]">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center mb-4">
                 <label htmlFor="company" className="mr-2">
