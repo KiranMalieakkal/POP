@@ -36,3 +36,7 @@ build/
 .vscode/
 data
 docker-compose.yml
+
+### POP ###
+.data
+backup_folder
