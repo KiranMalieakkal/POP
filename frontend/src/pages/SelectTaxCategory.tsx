@@ -4,6 +4,7 @@ import SelectTaxCategory2 from "./SelectTaxCategory2";
 import SelectTaxCategory3 from "./SelectTaxCategory3";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth0 } from "@auth0/auth0-react";
+import useScreenType from "../components/useSceenType";
 /* import { useNavigate } from "react-router-dom"; */
 
 export type NewPost = {
@@ -27,6 +28,7 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [theToken, setTheToken] = useState<string>();
   const baseUrl = import.meta.env.VITE_BASE_URL;
+  const { isMobile } = useScreenType();
   // Harald 240730: removing routing because desktop rebuild.
   /*   const navigate = useNavigate(); */
 
@@ -158,7 +160,9 @@ function SelectTaxCategory({ windowToDisplay }: Props) {
 
   return (
     <div
-      className="wizard max-h-[calc(100vh-150px)] overflow-y-auto mb-20 xl:mb-0 lg:mb-0"
+      className={`wizard overflow-y-auto mb-20 xl:mb-0 lg:mb-0 ${
+        isMobile ? "" : "max-h-[calc(100vh-150px)]"
+      }`}
       ref={scrollableDivRef}
     >
       <div className="navigation-buttons flex flex-row justify-between m-3">

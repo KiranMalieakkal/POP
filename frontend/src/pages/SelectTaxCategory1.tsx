@@ -4,9 +4,9 @@
 // This component fetches a list of tax categories from the backend. (well maybe it's just hardcoded for now)
 // The backend will give us an id, title and description
 
-import tax1 from "../assets/tax_1.svg";
-import tax2 from "../assets/tax_2.svg";
-import tax3 from "../assets/tax_3.svg";
+import tax1 from "../assets/tax_1.png";
+import tax2 from "../assets/tax_2.png";
+import tax3 from "../assets/tax_3.png";
 
 type Props = {
   openTaxCategory: (taxCategory: number) => void;
@@ -21,8 +21,8 @@ function SelectTaxCategory1({ openTaxCategory }: Props) {
           <p>Let's find the right deduction for you</p>
         </div>
 
-        <div className=" bg-blue-800 rounded-3xl mx-5 mb-10 flex flex-col p-5 shadow-md shadow-slate-500">
-          <img src={tax1} alt="Person selling home" className="w-full" />
+        <div className="bg-blue-800 rounded-3xl mx-5 mb-10 flex flex-col items-center justify-center p-5 shadow-md shadow-slate-500">
+          <img src={tax1} alt="Person selling home" className="w-4/5" />
           <h1 className="text-2xl text-white py-5">I'm selling my home</h1>
           <p className="text-white p-2 pb-5 text-sm text-left">
             When you sell your property, you can deduct related expenses such as
@@ -36,8 +36,8 @@ function SelectTaxCategory1({ openTaxCategory }: Props) {
           </button>
         </div>
 
-        <div className=" bg-blue-800 rounded-3xl mx-5 mb-10 flex flex-col p-5 shadow-md shadow-slate-500">
-          <img src={tax2} alt="Person selling home" className="w-full" />
+        <div className="bg-blue-800 rounded-3xl mx-5 mb-10 flex flex-col items-center justify-center p-5 shadow-md shadow-slate-500">
+          <img src={tax2} alt="Person selling home" className="w-4/5" />
           <h1 className="text-2xl text-white py-5">I’m upgrading my home</h1>
           <p className="text-white p-2 pb-5 text-sm text-left">
             If you sell your home with profit this deduction is great if you’ve
@@ -53,8 +53,8 @@ function SelectTaxCategory1({ openTaxCategory }: Props) {
           </button>
         </div>
 
-        <div className=" bg-blue-800 rounded-3xl mx-5 mb-10 flex flex-col p-5 shadow-md shadow-slate-500">
-          <img src={tax3} alt="Person selling home" className="w-full" />
+        <div className="bg-blue-800 rounded-3xl mx-5 mb-10 flex flex-col items-center justify-center p-5 shadow-md shadow-slate-500">
+          <img src={tax3} alt="Person selling home" className="w-4/5" />
           <h1 className="text-2xl text-white py-5">
             Home repair & maintenance
           </h1>
