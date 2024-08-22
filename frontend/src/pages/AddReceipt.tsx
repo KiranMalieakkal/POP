@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-// Harald 240730: removing routing because desktop rebuild.
-/* import { useNavigate } from "react-router-dom"; */
 import FormChoices from "../components/FormChoices";
 import toast, { Toaster } from "react-hot-toast";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-/* import { json } from "react-router-dom"; */
+import heic2any from "heic2any";
 
 type Receipt = {
   company: string;
@@ -75,12 +73,9 @@ function AddReceipt({ windowToDisplay }: Props) {
   // When a certain field is focused we can display FormChoices.tsx (for example)
   const [focusedField, setFocusedField] = useState("");
 
-  // Harald 240730: removing routing because desktop rebuild.
-  /* const navigate = useNavigate(); */
-
   // -------------------------------------------------------------------------------------
   // formData is just a useState that stores an object.
-  // This object contains the current value of all the text fields.
+  // This object contains the current data of all the text fields.
   const [formData, setFormData] = useState<Receipt>({
     company: "",
     amount: 0,
@@ -124,25 +119,81 @@ function AddReceipt({ windowToDisplay }: Props) {
   // -------------------------------------------------------------------------------------
   // Function to handle file selection
   // It gets the file from the event and then sets the useState to that file
+  // This function sends the image to the server for text extraction
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      setFile(file);
+      //setFile(file);
 
-      // Reader to display image preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-
-      // Create FormData and append the file
       const formData = new FormData();
-      formData.append("file", file);
+
+      // Convert Heic file & append file to formData
+      // If the image is of type heic it can not be handled by the server.
+      // So we convert it to jpeg instead.
+      if (file.type === "image/heic") {
+        // Show toast that image is converting (or uploading)
+        // Show loading toast
+        const loadingToastId = toast.loading("Converting image...");
+        try {
+          // Wait for the HEIC to JPEG conversion
+          const convertedBlob = await heic2any({
+            blob: file,
+            toType: "image/jpeg",
+            quality: 0.2, // this also reduces the file size
+          });
+
+          // Check if convertedBlob is an array
+          // This step is done because heic2any can return either a single blob or an array of blobs
+          // An array is returned if its a gif or a photo burst. But we only want one image.
+          const blobPart = Array.isArray(convertedBlob)
+            ? convertedBlob[0]
+            : convertedBlob;
+
+          // Create a new File from the Blob
+          const jpegFile = new File(
+            [blobPart],
+            file.name.replace(/\.[^/.]+$/, ".jpeg"),
+            {
+              type: "image/jpeg",
+              lastModified: Date.now(),
+            }
+          );
+
+          // We do setFile() because the file will be used later when submitting the new receipt.
+          setFile(jpegFile);
+          formData.append("file", jpegFile);
+
+          // hide toast
+          toast.dismiss(loadingToastId);
+          toast.success("Text extracted successfully");
+
+          // Reader to display image preview
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setImagePreview(reader.result as string);
+          };
+          reader.readAsDataURL(jpegFile);
+        } catch (error) {
+          console.error("Conversion to JPEG failed:", error);
+          return; // Stop submission if conversion fails
+        }
+      } else {
+        // if the image is not of type heic then we just set and append it
+        setFile(file);
+        formData.append("file", file);
+
+        // Reader to display image preview
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
 
       // Show loading toast
-      const loadingToastId = toast.loading("Uploading and extracting text...");
+      const loadingToastId = toast.loading("Extracting text...");
 
+      // Text extraction
       try {
         const response = await fetch(`${baseUrl}/receipts/textextraction`, {
           method: "POST",
