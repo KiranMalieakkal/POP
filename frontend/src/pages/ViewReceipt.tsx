@@ -396,7 +396,10 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     className="textarea bg-slate-200 w-full h-40 word-spacing-2"
                   />
                 ) : (
-                  <div className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-slate-50 p-3 pl-5 ">
+                  <div
+                    className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-slate-50 p-3 pl-5"
+                    style={{ whiteSpace: "pre-line" }}
+                  >
                     {" "}
                     {/* w-full items-center rounded-lg border border-slate-300 p-3  */}
                     <p className="">{receiptData.textContent}</p>
