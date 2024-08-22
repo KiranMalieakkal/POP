@@ -1,16 +1,8 @@
-// Harald 240730: removing routing because desktop rebuild. therefore params is also removed
-/* import { useNavigate, useParams } from "react-router-dom"; */
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-/* import BottomNav from "../components/BottomNav"; */
 import FormChoices from "../components/FormChoices";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-
-// Harald 240730: removing routing because desktop rebuild. therefore params is also removed
-/* type Params = {
-  id: string;
-}; */
 
 type Receipt = {
   id: number;
@@ -29,11 +21,7 @@ type Props = {
 };
 
 const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
-  // Harald 240730: removing routing because desktop rebuild. therefore params is also removed
-  /*   const { id } = useParams<Params>(); */
   const id = receiptId;
-  // Harald 240730: removing routing because desktop rebuild.
-  /*   const navigate = useNavigate(); */
   const [editMode, setEditMode] = useState(false);
   const [receiptData, setReceiptData] = useState<Receipt>({
     id: 0,
