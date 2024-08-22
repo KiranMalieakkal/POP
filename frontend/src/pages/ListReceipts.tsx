@@ -396,7 +396,7 @@ function ListReceipts({ windowToDisplay }: Props) {
           <div className=" hover:h-full overflow-y-auto rounded-lg relative ">
             <table className="receipt-table w-full border-collapse mb-36">
               <thead className=" ">
-                <tr className=" text-blue-900 grid grid-cols-[1fr,1fr,1fr,1fr] ">
+                <tr className="text-gray-300 grid grid-cols-[1fr,1fr,1fr,1fr] ">
                   {/* <th className="p-2 border-b-2 border-black text-left">
                     <label>
                       <input
@@ -405,16 +405,16 @@ function ListReceipts({ windowToDisplay }: Props) {
                       />
                     </label>
                   </th> */}
-                  <th className="p-2 border-b-2 border-black text-left text-lg">
+                  <th className="p-2 border-b border-gray-300 text-left text-lg">
                     Company
                   </th>
-                  <th className="p-2 border-b-2 border-black text-left text-lg">
+                  <th className="p-2 border-b border-gray-300 text-left text-lg">
                     Date
                   </th>
-                  <th className="p-2 border-b-2 border-black text-left text-lg">
+                  <th className="p-2 border-b border-gray-300 text-left text-lg">
                     Project
                   </th>
-                  <th className="p-2 border-b-2 border-black text-right text-lg">
+                  <th className="p-2 border-b border-gray-300 text-right text-lg">
                     Amount
                   </th>
                 </tr>
@@ -474,7 +474,7 @@ function ListReceipts({ windowToDisplay }: Props) {
               }`}
             >
               <button
-                className={`m-5 btn bg-blue-800 btn-primary text-white md:w-1/3 lg:w-1/3 w-1/2 ${
+                className={`m-5 btn text-white md:w-1/3 lg:w-1/3 w-1/2 ${
                   isMobile ? "" : ""
                 }`}
                 onClick={() => windowToDisplay({ window: "AddReceipt" })}
