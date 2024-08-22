@@ -289,40 +289,40 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
             {/* {message && <div className="text-green-500 mb-4">{message}</div>} */}
             <div className="space-y-4 text-left">
               <div>
-                <label className="label text-gray-900 mt-4 p-0 ">Company</label>
+                <label className="label text-gray-400 mt-4 p-0 ">Company</label>
                 {editMode ? (
                   <input
                     type="text"
                     name="company"
                     value={receiptData.company}
                     onChange={handleChange}
-                    className="input bg-slate-200 w-full"
+                    className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-slate-50">
+                  <div className="input input-bordered w-full flex items-center">
                     <p className="w-full ">{receiptData.company}</p>
                   </div>
                 )}
               </div>
               <div className="grid grid-cols-[3fr_1fr]">
                 <div className="pr-5">
-                  <label className="label text-gray-900 mt-0 p-0">Amount</label>
+                  <label className="label text-gray-400 mt-0 p-0">Amount</label>
                   {editMode ? (
                     <input
                       type="text"
                       name="amount"
                       value={receiptData.amount}
                       onChange={handleChange}
-                      className="input bg-slate-200 w-full"
+                      className="input bg-slate-100 w-full"
                     />
                   ) : (
-                    <div className="input input-bordered w-full flex items-center bg-slate-50">
+                    <div className="input input-bordered w-full flex items-center">
                       <p className=" ">{receiptData.amount}</p>
                     </div>
                   )}
                 </div>
                 <div className="relative">
-                  <label className="label text-gray-900 mt-0 p-0">
+                  <label className="label text-gray-400 mt-0 p-0">
                     Currency
                   </label>
                   {editMode ? (
@@ -331,7 +331,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                         list="existingCurrency"
                         id="currency"
                         name="currency"
-                        className="input w-full bg-slate-200"
+                        className="input w-full bg-slate-100"
                         value={receiptData.currency}
                         onChange={handleChange}
                         onFocus={() => setFocusedField("currency")}
@@ -350,42 +350,42 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       )}
                     </>
                   ) : (
-                    <div className="input input-bordered w-full flex items-center bg-slate-50">
+                    <div className="input input-bordered w-full flex items-center">
                       <p className="">{receiptData.currency}</p>
                     </div>
                   )}
                 </div>
               </div>
               <div>
-                <label className="label text-gray-900 mt-0 p-0">Date</label>
+                <label className="label text-gray-400 mt-0 p-0">Date</label>
                 {editMode ? (
                   <input
                     type="date"
                     name="purchaseDate"
                     value={receiptData.purchaseDate}
                     onChange={handleChange}
-                    className="input bg-slate-200 w-full"
+                    className="input bg-slate-100 w-full"
                   />
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-slate-50">
+                  <div className="input input-bordered w-full flex items-center">
                     <p className="">{receiptData.purchaseDate}</p>
                   </div>
                 )}
               </div>
               <div>
-                <label className="label text-gray-900 mt-0 p-0">
-                  Text Content
+                <label className="label text-gray-400 mt-0 p-0">
+                  Text content
                 </label>
                 {editMode ? (
                   <textarea
                     name="textContent"
                     value={receiptData.textContent}
                     onChange={handleChange}
-                    className="textarea bg-slate-200 w-full h-40 word-spacing-2"
+                    className="textarea bg-slate-100 w-full h-40 text-base"
                   />
                 ) : (
                   <div
-                    className="max-h-[140px] lg:max-h-[160px] xl:max-h-[140px] mb-2 overflow-y-auto  border rounded-lg bg-slate-50 p-3 pl-5"
+                    className="h-40 mb-2 overflow-y-auto border rounded-lg p-3 pl-4 pt-2"
                     style={{ whiteSpace: "pre-line" }}
                   >
                     {" "}
@@ -395,7 +395,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                 )}
               </div>
               <div className="relative">
-                <label className="label text-gray-900 mt-0 p-0">Project</label>
+                <label className="label text-gray-400 mt-0 p-0">Project</label>
                 {editMode ? (
                   <>
                     <input
@@ -403,7 +403,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                       name="project"
                       value={receiptData.project ?? ""}
                       onChange={handleChange}
-                      className="input bg-slate-200 w-full"
+                      className="input bg-slate-100 w-full"
                       onFocus={() => setFocusedField("project")}
                       onBlur={() =>
                         setFocusedField(
@@ -420,7 +420,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                     )}
                   </>
                 ) : (
-                  <div className="input input-bordered w-full flex items-center bg-slate-50">
+                  <div className="input input-bordered w-full flex items-center">
                     <p className="">{receiptData.project}</p>
                   </div>
                 )}
