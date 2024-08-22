@@ -122,22 +122,21 @@ function AddReceipt({ windowToDisplay }: Props) {
   // This function sends the image to the server for text extraction
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      //setFile(file);
+      const selectedFile = e.target.files[0];
 
       const formData = new FormData();
 
       // Convert Heic file & append file to formData
       // If the image is of type heic it can not be handled by the server.
       // So we convert it to jpeg instead.
-      if (file.type === "image/heic") {
+      if (selectedFile.type === "image/heic") {
         // Show toast that image is converting (or uploading)
         // Show loading toast
         const loadingToastId = toast.loading("Converting image...");
         try {
           // Wait for the HEIC to JPEG conversion
           const convertedBlob = await heic2any({
-            blob: file,
+            blob: selectedFile,
             toType: "image/jpeg",
             quality: 0.2, // this also reduces the file size
           });
@@ -152,7 +151,7 @@ function AddReceipt({ windowToDisplay }: Props) {
           // Create a new File from the Blob
           const jpegFile = new File(
             [blobPart],
-            file.name.replace(/\.[^/.]+$/, ".jpeg"),
+            selectedFile.name.replace(/\.[^/.]+$/, ".jpeg"),
             {
               type: "image/jpeg",
               lastModified: Date.now(),
@@ -179,15 +178,15 @@ function AddReceipt({ windowToDisplay }: Props) {
         }
       } else {
         // if the image is not of type heic then we just set and append it
-        setFile(file);
-        formData.append("file", file);
+        setFile(selectedFile);
+        formData.append("file", selectedFile);
 
         // Reader to display image preview
         const reader = new FileReader();
         reader.onloadend = () => {
           setImagePreview(reader.result as string);
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(selectedFile);
       }
 
       // Show loading toast
