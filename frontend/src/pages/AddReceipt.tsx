@@ -132,7 +132,7 @@ function AddReceipt({ windowToDisplay }: Props) {
       if (selectedFile.type === "image/heic") {
         // Show toast that image is converting (or uploading)
         // Show loading toast
-        const loadingToastId = toast.loading("Converting image...");
+        const loadingToastConvertImage = toast.loading("Converting image...");
         try {
           // Wait for the HEIC to JPEG conversion
           const convertedBlob = await heic2any({
@@ -162,9 +162,9 @@ function AddReceipt({ windowToDisplay }: Props) {
           setFile(jpegFile);
           formData.append("file", jpegFile);
 
-          // hide toast
-          toast.dismiss(loadingToastId);
-          toast.success("Text extracted successfully");
+          // hide toast for converting image
+          toast.dismiss(loadingToastConvertImage);
+          toast.success("Image converted");
 
           // Reader to display image preview
           const reader = new FileReader();
@@ -407,7 +407,7 @@ function AddReceipt({ windowToDisplay }: Props) {
           <textarea
             id="text_content"
             name="textContent"
-            className="input w-full bg-slate-100"
+            className="input w-full h-40 bg-slate-100"
             value={formData.textContent}
             onChange={handleChange}
           />
@@ -445,7 +445,7 @@ function AddReceipt({ windowToDisplay }: Props) {
           <input
             type="submit"
             value="Save"
-            className="btn bg-blue-800 w-full text-white"
+            className="btn rounded-2xl bg-gradient-to-b from-lightblue to-darkblue bg-blue-800 w-full text-white"
           />
           <br></br>
         </form>
