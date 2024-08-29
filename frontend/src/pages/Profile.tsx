@@ -7,7 +7,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen bg-gray-100 h-full text-white">
+      <div className="flex items-center justify-center min-h-screen bg-gray-50 h-full text-white">
         <div className="w-full max-w-xl p-4 text-white rounded-lg m-5">
           {isAuthenticated && (
             <article className="container  text-blue-800 p-6 ">
