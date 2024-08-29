@@ -63,7 +63,9 @@ function DesktopListReceipts() {
           <div className="right_side md:px-40  md:pt-10 lg:px-20">
             <div
               className={`${
-                isMobile ? "mb-16" : "border border-black rounded-2xl"
+                isMobile
+                  ? "mb-16"
+                  : "rounded-3xl bg-white shadow-[0_0_7px_1px_rgba(0,0,0,0.3)] mb-20"
               }`}
             >
               {showAddReceipt && (
