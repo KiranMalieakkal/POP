@@ -1,168 +1,158 @@
 import LoginButton from "../components/LoginButton";
 import { useAuth0 } from "@auth0/auth0-react";
-import loginImg from "../assets/loginImg.jpg";
+import useScreenType from "../components/useSceenType";
+/* import loginImg from "../assets/loginImg.jpg";
 import mainImg from "../assets/mainBlue1.jpg";
 import short from "../assets/short.jpeg";
 import largeMain from "../assets/mainShort.jpg";
-import Footer from "../components/Footer";
 
- import popLogo from "../assets/pop-logo-white.svg"; 
+import popLogo from "../assets/pop-logo-white.svg"; */
+// images and icon imports
+import handHoldingPhone from "../assets/receipt-and-phone.png";
+import perfectReceiptCopy from "../assets/perfect-copy.png";
+import iconRecycle from "../assets/icon-recycle.svg";
+import iconJustice from "../assets/icon-justice.svg";
+import iconHelp from "../assets/icon-help.svg";
+import iconSearch from "../assets/icon-search.svg";
+import decisionTree from "../assets/decision-tree.png";
 
 const Home = () => {
+  const { isMobile } = useScreenType();
   const { isAuthenticated } = useAuth0();
 
   return (
     <>
-      <div className="hero  relative">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url(${isAuthenticated ? loginImg : mainImg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            filter: "brightness(90%)",
-          }}
-        ></div>
-
-        <div className="flex flex-col md:flex-row lg:flex-row items-center h-full relative">
-          <div className="flex-1 flex items-center justify-center h-full px-4 ml-0 md:ml-6 ">
-            <img
-              src={short}
-              alt="short Image"
-              className="h-full w-full object-cover block md:hidden"
-            />
-            <img
-              src={largeMain}
-              alt="large Image"
-              className="h-full w-full object-cover hidden md:block "
-            />
-          </div>
-          {/* <div className="pop-logo w-56">
-            <img src={popLogo} alt="P.O.P. logotype" />
-          </div> */}
-          <div className="">
-          <div className=" flex items-center justify-center p-4">
-                <img className=" w-12 h-12  xl:mb-20  lg:mb-14 " src={popLogo} alt="P.O.P. logotype" />
-                <h1 className="text-center text-3xl md:text-2xl lg:text-3xl xl:text-5xl xl:mb-20 lg:mb-14 font-serif md:mb-3 mt-2 text-yellow-200 ml-2">
-              Proof Of Purchase{" "}
-            </h1>
-              </div>
-            <div className="flex-1 flex items-center justify-center py-7 mt-1 md:py-7 lg:py-10 md:px-5 px-3 lg:px-1 mr-7 m-7 xl:ml-16 bg-white bg-opacity-65 rounded-lg shadow-lg md:max-w-sm xl:max-w-2xl">
-              <div className="text-center">
-                {isAuthenticated ? (
-                  <>
-                    <h3 className="mb-1 text-xl font-bold lg:p-1 md:text-xl lg:text-2xl ">
-                      POP is here to help you stay on top of your finances
-                      effortlessly
-                    </h3>
-                    <p className=" text-sm p-2 lg:text-lg">
-                      Let us handle the details, making it easy for you to
-                      manage receipts, view them anytime and ensure you have all
-                      receipts handy to benefit from potential deductions!
-                    </p>
-                    <p className="text-lg font-semibold p-2 lg:mx-3 ">
-                      Enjoy having everything in order!
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <h3 className="mb-1 text-xl font-bold lg:p-1 md:text-xl lg:text-3xl ">
-                      Now you can upload and categorize your receipt anywhere.
-                    </h3>
-                    <p className=" text-sm p-2 lg:text-lg">
-                      Our app allows you to store all your receipts in one
-                      place, making it simple to track your expenses.
-                    </p>
-                    <div className=" text-blue-900 font-bold py-2 px-4 rounded-md text-center mx-10">
-                      <p>POP Always!</p>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="hero bg-white min-h-[40vh]">
-        <div className=" max-w-2xl md:max-w-4xl mx-auto hero-content flex-col gap-12 lg:flex-row">
-          <img
-            src="https://img.freepik.com/free-photo/hand-holding-receipt-shopping-campaign_53876-129567.jpg?uid=R157119579&ga=GA1.1.759350799.1721280675&semt=ais_hybrid"
-            className="md:max-w-sm max-w-auto rounded-full h-48 w-48 object-cover"
-          />
-          <div className="text-center">
-            <h1 className="text-5xl font-bold">
-              Turn paper into a digital file.
-            </h1>
-            <p className="py-6">
-              Prepare for tax season with ease by utilizing our app to complete
-              the tax reduction form. Our app helps you keep track of your
-              deductible expenses, ensuring you never miss out on potential tax
-              savings.
+      <div
+        className={`first_container ${
+          isMobile
+            ? "flex flex-col border-b-2 border-gray-400"
+            : "grid grid-cols-2 justify-center items-center border-b-2 border-gray-400"
+        }`}
+      >
+        <div className="flex justify-center lg:justify-end">
+          <div>
+            <p className="text-indigo-900 font-mono font-extrabold text-5xl text-center pt-10 lg:text-8xl lg:text-left lg:pt-0">
+              Digitized
+            </p>
+            <p className="text-indigo-900 font-mono font-extrabold text-5xl text-center lg:text-8xl lg:text-left">
+              Receipts
+            </p>
+            <p className="py-5 text-indigo-900 text-lg px-10 md:w-96 lg:w-96 lg:px-0">
+              Time to throw away your physical receipts. Save them digitally.
+              Make them fully searchable, always accessible, and retain 100%
+              validity!
             </p>
           </div>
         </div>
-      </div>
-      <div className="hero bg-white min-h-[40vh]">
-        <div className=" max-w-2xl  md:max-w-4xl mx-auto hero-content flex-col lg:flex-row-reverse">
-          <img
-            src="https://img.freepik.com/free-photo/hand-holding-calculator-finance-concept_53876-129568.jpg?t=st=1722388650~exp=1722392250~hmac=a375c8a80e17dd006eba83ee0708aa8dfad8487b34efac7bb456812a2b686163&w=1380"
-            className="md:max-w-sm max-w-auto rounded-full h-48 w-48 object-cover"
-          />
-          <div className="text-center">
-            <h1 className="text-5xl font-bold">
-              AI cleans up your scans in seconds.
-            </h1>
-            <p className="py-6">
-              Scan your receipt and turn it into an editable, OCR (optical
-              character recognition) corrects image perspective, sharpens
-              handwritten or printed text, and removes glares and shadows. Once
-              your receipt is scanned, you can delete text or add new text to
-              match your original font.
-            </p>
-          </div>
+        <div className=" flex  justify-center lg:justify-start">
+          <img src={handHoldingPhone} alt="Logo" className="w-3/5" />
         </div>
       </div>
 
-      <div className="hero bg-base-200 min-h-[40vh] p-2 pb-20">
-        <div className="hero-content flex-col gap-20 md:flex-row">
-          <div className="card glass w-90">
-            <figure>
-              <img
-                src="https://img.freepik.com/free-photo/top-view-smartphone-template-workspace_23-2148175198.jpg?t=st=1722388831~exp=1722392431~hmac=a5c784576eb4a196d253afdb99ffcc80e6a9c2960b06b96f5b3ec6e0ff65c607&w=2000"
-                alt="car!"
-                className=" h-60 w-75 object-cover"
-              />
-            </figure>
-            <div className="card-body text-center">
-              <h2 className="card-title self-center">Track your expenses.</h2>
-              <p>
-                Our app allows you to store all your receipts in one place,
-                making it simple to track your expenses.
-              </p>
-            </div>
-          </div>
-          <div className="card glass w-90">
-            <figure>
-              <img
-                src="https://img.freepik.com/free-photo/excited-young-woman-hold-paper-letter-feel-euphoric-receiving-job-promotion-tax-refund-from-bank-happy-woman-reading-paperwork-document-smiling-good-pleasant-news-getting-student-scholarship_657921-661.jpg?t=st=1722389231~exp=1722392831~hmac=65429f0e00834fc15534b08cd17ab172f4c06f5cae85b668dd40ff66b17db026&w=1800"
-                alt="car!"
-                className=" h-60 w-76 object-cover"
-              />
-            </figure>
-            <div className="card-body text-center">
-              <h2 className="card-title self-center">Life hack</h2>
-              <p>
-                Our app provides a seamless solution for organizing, storing,
-                and accessing your receipts.
-              </p>
-            </div>
+      <div
+        className={`second_container mt-10 ${
+          isMobile
+            ? "flex flex-col mb-20 border-b-2 border-gray-400"
+            : "grid grid-cols-2 justify-center items-center border-b-2 border-gray-400"
+        }`}
+      >
+        <div className="flex justify-center lg:justify-end">
+          <div>
+            <p className="text-indigo-900 font-mono font-extrabold text-5xl text-center pt-10 lg:text-8xl lg:text-left lg:pt-0">
+              Perfect
+            </p>
+            <p className="text-indigo-900 font-mono font-extrabold text-5xl text-center lg:text-8xl lg:text-left lg:pt-0">
+              copies
+            </p>
+            <p className="py-5 text-indigo-900 text-lg px-10 md:w-96 lg:w-96 lg:px-0">
+              Text recognition identifies all text from your image.
+            </p>
           </div>
         </div>
+        <div className="flex justify-center lg:justify-start">
+          <img src={perfectReceiptCopy} alt="Logo" className="w-3/5" />
+        </div>
       </div>
-      <div className="btm-nav border-transparent text-current btm-nav-lg bg-blue-100 shadow-sky-600 w-auto">
-        {isAuthenticated ? <Footer /> : <LoginButton />}
+
+      <div className="flex flex-wrap justify-center pb-20 border-b-2 border-gray-400">
+        <div className="p-16">
+          <img
+            src={iconRecycle}
+            alt="Recycle icon"
+            className="w-32 mx-auto pb-5"
+          />
+          <p className="w-44">
+            Throw away your physical receipts. On POP they live forever.
+          </p>
+        </div>
+        <div className="p-16">
+          <img
+            src={iconJustice}
+            alt="Justice icon"
+            className="w-32 mx-auto pb-5"
+          />
+          <p className="w-44">
+            Warranty ready. Digital receipts retain 100% validity.
+          </p>
+        </div>
+        <div className="p-16">
+          <img
+            src={iconHelp}
+            alt="Two hands coupled"
+            className="w-32 mx-auto pb-5"
+          />
+          <p className="w-44">
+            Get help with warranty law. Straightforward and easy to follow.
+          </p>
+        </div>
+        <div className="p-16">
+          <img
+            src={iconSearch}
+            alt="Magnifying glass"
+            className="w-32 mx-auto pb-5"
+          />
+          <p className="w-44">
+            Fully searchable. All text is saved, works for every word and number
+            on the receipt.{" "}
+          </p>
+        </div>
       </div>
+
+      <div
+        className={`second_container py-10 bg-indigo-900 ${
+          isMobile
+            ? "flex flex-col pb-20 mb-20"
+            : "grid grid-cols-2 justify-center items-center py-40"
+        }`}
+      >
+        <div className="flex justify-center lg:justify-end">
+          <div>
+            <p className="text-indigo-300 font-mono font-extrabold text-3xl text-center pt-10 lg:text-5xl lg:text-left lg:pt-0">
+              Tax deductions
+            </p>
+            <p className="text-indigo-300 font-mono font-extrabold text-3xl text-center lg:text-5xl lg:text-left lg:pt-0">
+              made easy
+            </p>
+            <p className="text-indigo-400 py-5 px-10 md:w-96 lg:w-96 lg:px-0">
+              Receipts and tax rules can be overwhelming, but they don’t have to
+              be. With POP, anyone can easily navigate tax regulations and
+              uncover deductions without the stress. Our intuitive click-through
+              wizard guides you step-by-step, breaking down complex tax rules
+              into straightforward, digestible information — so you can maximize
+              your deductions with confidence.
+            </p>
+          </div>
+        </div>
+        <div className="flex justify-center lg:justify-start">
+          <img src={decisionTree} alt="Logo" className="w-3/5" />
+        </div>
+      </div>
+
+      {!isAuthenticated && (
+        <div className="btm-nav border-transparent text-current btm-nav-lg bg-blue-100 shadow-sky-600 w-auto">
+          {isAuthenticated ? "" : <LoginButton />}
+        </div>
+      )}
     </>
   );
 };
