@@ -177,15 +177,8 @@ function ListReceipts({ windowToDisplay }: Props) {
     console.log("Applying filters:", filters);
   };
 
-  /*   function addReceipt(window: string) {
-    // Harald 240730: removing routing because desktop rebuild.
-    //navigate("/receipts/addReceipt");
-  } */
-
   function handleViewReceipt(receipt: receiptType) {
     console.log(`You are viewing receipt with id  ${receipt.id}`);
-    // Harald 240730: removing routing because desktop rebuild.
-    /*     navigate(`${receipt.id}`); */
     windowToDisplay({ window: "ViewReceipt", id: receipt.id });
   }
 
@@ -201,10 +194,10 @@ function ListReceipts({ windowToDisplay }: Props) {
 
   return (
     <>
-      <div className={`h-screen ${isMobile ? "mt-5" : "ml-5 mt-10"}`}>
+      <div className={`h-screen ${isMobile ? "pt-5" : "ml-5 mt-10"}`}>
         {/* <h1 className="text-center mt-4 text-2xl font-semibold">Receipts</h1> */}
         <div className="flex justify-center items-center  mr-5">
-          <div className="input flex items-center gap-2 w-full mx-5 shadow-[0_0_7px_1px_rgba(0,0,0,0.3)]">
+          <div className="input flex items-center gap-2 w-full mx-5 shadow-[0_0_7px_1px_rgba(0,0,0,0.3)] rounded-full">
             <input
               type="text"
               value={search}
@@ -234,7 +227,7 @@ function ListReceipts({ windowToDisplay }: Props) {
               strokeWidth={1}
               stroke={`${showFilter ? "white" : "gray"}`}
               className={`size-10 rounded hover:cursor-pointer ${
-                showFilter ? "bg-blue-800" : ""
+                showFilter ? "bg-gradient-to-b from-lightblue to-darkblue" : ""
               }`}
             >
               <path
@@ -247,7 +240,7 @@ function ListReceipts({ windowToDisplay }: Props) {
         </div>
 
         {showFilter && (
-          <div className="p-4 rounded-lg m-4 shadow-[0_0_7px_1px_rgba(0,0,0,0.3)]">
+          <div className="p-4 rounded-3xl m-5 shadow-[0_0_7px_1px_rgba(0,0,0,0.3)] bg-white">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center mb-4">
                 <label htmlFor="company" className="mr-2">
@@ -266,7 +259,7 @@ function ListReceipts({ windowToDisplay }: Props) {
 
               <div className="flex items-center mb-4">
                 <label htmlFor="amountFrom" className="mr-2">
-                  Amount From
+                  Amount from
                 </label>
                 <input
                   id="amountFrom"
@@ -281,7 +274,7 @@ function ListReceipts({ windowToDisplay }: Props) {
 
               <div className="flex items-center mb-4">
                 <label htmlFor="amountTo" className="mr-2">
-                  Amount To
+                  Amount to
                 </label>
                 <input
                   id="amountTo"
@@ -311,7 +304,7 @@ function ListReceipts({ windowToDisplay }: Props) {
 
               <div className="flex items-center mb-4">
                 <label htmlFor="dateFrom" className="mr-2">
-                  Date From
+                  Date from
                 </label>
                 <input
                   id="dateFrom"
@@ -326,7 +319,7 @@ function ListReceipts({ windowToDisplay }: Props) {
 
               <div className="flex items-center mb-4">
                 <label htmlFor="dateTo" className="mr-2">
-                  Date To
+                  Date to
                 </label>
                 <input
                   id="dateTo"
@@ -372,9 +365,9 @@ function ListReceipts({ windowToDisplay }: Props) {
             <div className="flex justify-center items-center mt-4">
               <button
                 onClick={applyFilters}
-                className="btn bg-blue-800 text-white"
+                className="btn bg-gradient-to-b from-lightblue to-darkblue text-white"
               >
-                Apply Filters
+                Apply filters
               </button>
             </div>
           </div>
@@ -396,7 +389,7 @@ function ListReceipts({ windowToDisplay }: Props) {
           <div className=" hover:h-full overflow-y-auto rounded-lg relative ">
             <table className="receipt-table w-full border-collapse mb-36">
               <thead className=" ">
-                <tr className="text-gray-300 grid grid-cols-[1fr,1fr,1fr,1fr] ">
+                <tr className="text-gray-400 grid grid-cols-[1fr,1fr,1fr,1fr] ">
                   {/* <th className="p-2 border-b-2 border-black text-left">
                     <label>
                       <input
@@ -405,16 +398,16 @@ function ListReceipts({ windowToDisplay }: Props) {
                       />
                     </label>
                   </th> */}
-                  <th className="p-2 border-b border-gray-300 text-left text-lg">
+                  <th className="p-2 border-b border-gray-300 text-left text-base font-normal">
                     Company
                   </th>
-                  <th className="p-2 border-b border-gray-300 text-left text-lg">
+                  <th className="p-2 border-b border-gray-300 text-left text-base font-normal">
                     Date
                   </th>
-                  <th className="p-2 border-b border-gray-300 text-left text-lg">
+                  <th className="p-2 border-b border-gray-300 text-left text-base font-normal">
                     Project
                   </th>
-                  <th className="p-2 border-b border-gray-300 text-right text-lg">
+                  <th className="p-2 border-b border-gray-300 text-right text-base font-normal">
                     Amount
                   </th>
                 </tr>
@@ -469,12 +462,12 @@ function ListReceipts({ windowToDisplay }: Props) {
         <div className="">
           {!showFilter && (
             <div
-              className={`fixed bg-gradient-to-t from-white flex justify-center ${
+              className={`fixed bg-gradient-to-t from-gray-50 flex justify-center ${
                 isMobile ? "w-full bottom-20" : "w-1/2 bottom-0"
               }`}
             >
               <button
-                className={`m-5 btn text-white md:w-1/3 lg:w-1/3 w-1/2 ${
+                className={`m-5 btn bg-gradient-to-b from-lightblue to-darkblue text-white md:w-1/3 lg:w-1/3 w-1/2 ${
                   isMobile ? "" : ""
                 }`}
                 onClick={() => windowToDisplay({ window: "AddReceipt" })}

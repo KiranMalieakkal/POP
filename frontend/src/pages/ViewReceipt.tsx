@@ -41,9 +41,9 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
   // todo: this is the list of existing project the user can choose from.
   // it should be sent to the component as a prop
   const existingProjects = [
-    "Kirans work commute 2024",
-    "Tax evasion project 2025",
-    "Option 3",
+    "Work commute 2024",
+    "Renovations",
+    "Dual residence",
   ];
 
   // todo: get these as a prop from ListReceipts.tsx
@@ -448,7 +448,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
                   </>
                 ) : (
                   <button
-                    className="badge p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
+                    className="badge p-4 bg-blue-100 hover:text-blue-700"
                     onClick={handleEdit}
                   >
                     <svg
@@ -472,7 +472,7 @@ const ReceiptDetail = ({ windowToDisplay, receiptId }: Props) => {
               <div className="flex justify-end mt-6">
                 {!editMode && (
                   <button
-                    className="badge p-4 bg-blue-100 border border-blue-300 hover:text-blue-700"
+                    className="badge p-4 bg-blue-100 hover:text-blue-700"
                     onClick={handleDelete}
                   >
                     <svg

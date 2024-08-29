@@ -183,7 +183,7 @@ function Tax({ windowToDisplay }: Props) {
 
   return (
     <>
-      <div className="">
+      <div className="h-screen">
         {/* <h1 className="text-center mt-4">
           Here are your current tax projects. Select a project or create a new
           project.
@@ -193,17 +193,17 @@ function Tax({ windowToDisplay }: Props) {
           <div className="max-h-[400px] lg:max-h-[350px] hover:h-full overflow-y-auto  p-4">
             <table className="receipt-table w-full border-collapse ">
               <thead>
-                <tr className=" text-blue-900 grid grid-cols-[1fr,1fr,1fr,0.2fr]">
-                  <th className="p-2 border-b-2 border-black text-left text-lg">
+                <tr className=" text-gray-400 grid grid-cols-[1fr,1fr,1fr,0.2fr]">
+                  <th className="p-2 border-b border-gray-300 text-left text-base font-normal">
                     Project
                   </th>
-                  <th className="p-2 border-b-2 border-black text-left text-lg">
+                  <th className="p-2 border-b border-gray-300 text-left text-base font-normal">
                     Tax type
                   </th>
-                  <th className="p-2 border-b-2 border-black text-left text-lg">
+                  <th className="p-2 border-b border-gray-300 text-left text-base font-normal">
                     Deductible
                   </th>
-                  <th className="p-2 border-b-2 border-black text-center text-lg"></th>
+                  <th className="p-2 border-b border-gray-300 text-center text-base font-normal"></th>
                 </tr>
               </thead>
               <tbody>
@@ -262,7 +262,7 @@ function Tax({ windowToDisplay }: Props) {
         )}
         <div className="flex justify-center items-center">
           <button
-            className={`fixed m-5 btn bg-blue-800 btn-primary text-white md:w-1/3 lg:w-1/3 w-1/2 ${
+            className={`fixed m-5 btn bg-gradient-to-b from-lightblue to-darkblue text-white md:w-1/3 lg:w-1/3 w-1/2 ${
               isMobile ? "bottom-20" : "bottom-0"
             }`}
             onClick={() => windowToDisplay({ window: "SelectTaxCategory" })}
