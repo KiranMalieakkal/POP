@@ -24,8 +24,8 @@ spring:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-    #driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    #driver-class-name: org.postgresql.Driver
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     defer-datasource-initialization: true
     hibernate:
@@ -33,13 +33,13 @@ spring:
       ddl-auto: update
     show-sql: true
     properties:
-      #dialect: org.hibernate.dialect.SQLServerDialect
-      dialect: org.hibernate.dialect.PostgreSQLDialect
+      dialect: org.hibernate.dialect.SQLServerDialect
+      #dialect: org.hibernate.dialect.PostgreSQLDialect
   sql:
     init:
       #      mode: always
-      #platform: mssql
-      platform: postgresql
+      platform: mssql
+      #platform: postgresql
   cloud:
     azure:
       storage:
