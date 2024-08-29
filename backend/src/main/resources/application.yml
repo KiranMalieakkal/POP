@@ -22,9 +22,9 @@ spring:
 
   datasource:
     url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
-    #driver-class-name: org.postgresql.Driver
+    #    username: ${DATABASE_USERNAME}
+    #    password: ${DATABASE_PASSWORD}
+    #    driver-class-name: org.postgresql.Driver
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     defer-datasource-initialization: true
